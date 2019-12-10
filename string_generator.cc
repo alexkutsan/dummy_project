@@ -1,5 +1,4 @@
 #include "string_generator.h"
-#include <sstream>
 
 namespace dev {
     StringGenerator::StringGenerator(std::string basic)

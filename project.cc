@@ -1,6 +1,4 @@
 #include "project.h"
-#include <iostream>
-#include <sstream>
 
 namespace dev {
 
@@ -13,10 +11,9 @@ float Project::run(std::string expression) {
     float result = 0;
 
     auto stuff = [this](std::string operation) {
-        std::cout << _queue.size() << "kek";
         if (2 != _queue.size()) {
-            std::cout << "UNDEFINED!!!" << std::endl;
-            throw;
+            // UNDEFINED!!!
+            throw std::exception();
         }
 
         float operand1 = _queue.front();
@@ -33,8 +30,8 @@ float Project::run(std::string expression) {
         } else if (StringGenerator::cDiv == operation.front()) {
             return operand1 / operand2;
         } else {
-            std::cout << "UNREACHABLE!!!" << std::endl;
-            throw;
+            // UNREACHABLE!!!
+            throw std::exception();
         }
     };
 
@@ -51,7 +48,8 @@ float Project::run(std::string expression) {
         }
 
         if (StringGenerator::isOperation(item)) {
-            stuff(item);
+            float result = stuff(item);
+            _queue.push(result);
             continue;
         }
 
@@ -59,8 +57,8 @@ float Project::run(std::string expression) {
             break;
         }
 
-        std::cout << item << "UNREACHABLE KEK!!!" << std::endl;
-        throw;
+        // UNREACHABLE!!!"
+        throw std::exception();
     }
 
     if (!_queue.empty()) {

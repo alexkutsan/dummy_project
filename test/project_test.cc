@@ -11,15 +11,36 @@ class ProjectTest : public ::testing::Test {
   dev::Project project_;
 };
 
-TEST_F(ProjectTest, Run) {
+TEST_F(ProjectTest, Run_Basic) {
   ASSERT_EQ(0, project_.run());
+  ASSERT_EQ(10, project_.run("10"));
+  ASSERT_EQ(10, project_.run("10 4"));
 }
 
 TEST_F(ProjectTest, Simple_Operations) {
-    EXPECT_EQ(15, project_.run("10 5 +"));
-    EXPECT_EQ(5, project_.run("10 5 -"));
-    EXPECT_EQ(50, project_.run("10 5 *"));
-    EXPECT_EQ(2, project_.run("10 5 /"));
+    ASSERT_EQ(15, project_.run("10 5 +"));
+    ASSERT_EQ(5, project_.run("10 5 -"));
+    ASSERT_EQ(50, project_.run("10 5 *"));
+    ASSERT_EQ(2, project_.run("10 5 /"));
+}
+
+TEST_F(ProjectTest, Simple_Operations_Float) {
+    ASSERT_EQ(15.2, project_.run("10.1 5.1 +"));
+    ASSERT_EQ(5, project_.run("10.1 5.1 -"));
+    ASSERT_EQ(51.51, project_.run("10.1 5.1 *"));
+    ASSERT_EQ(2.02, project_.run("10.1 5 /"));
+}
+
+TEST_F(ProjectTest, Simple_Operations_Exceptions) {
+    ASSERT_THROW(project_.run("a"), std::exception);
+    ASSERT_THROW(project_.run("a a"), std::exception);
+    ASSERT_THROW(project_.run("+"), std::exception);
+    ASSERT_THROW(project_.run("10 +"), std::exception);
+}
+
+TEST_F(ProjectTest, Simple_Operations_Complex) {
+    EXPECT_EQ(17, project_.run("10 5 + 2 +"));
+    EXPECT_EQ(7, project_.run("10 5 2 +"));
 }
 
 }  // namespace testing
