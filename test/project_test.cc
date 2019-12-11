@@ -8,6 +8,8 @@ namespace {
   const auto kError = std::numeric_limits<int>::min();
 }
 
+//TODO: Add appropriate tests for each new component (Calculator / Parser)
+
 class ProjectTest : public ::testing::Test {
  public:
   void SetUp() override {}

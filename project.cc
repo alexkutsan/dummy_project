@@ -6,6 +6,7 @@ namespace {
   const auto kError = std::numeric_limits<int>::min();
 }
 
+// TODO: Project must use separate objects for calculate() and parse_string() options
 Project::Project() {
 
 }
@@ -17,6 +18,7 @@ int Project::run(const std::string& user_input) {
     kError;
 }
 
+// TODO: Move this method to separate object.
 bool Project::parse_string(const std::string& data) {
   if (data.empty()) {
     return false;
@@ -38,6 +40,9 @@ bool Project::parse_string(const std::string& data) {
       numbers_.push_back(number);
     } catch (const std::exception& exception) {
       // KEK
+
+      // TODO: Figure out how to handle this exception
+      // (if it should be)
     }
   } 
 
@@ -48,11 +53,15 @@ bool Project::parse_string(const std::string& data) {
   return true;
 }
 
+// TODO: Move this method to separate object.
 int Project::calculate() {
   if (operators_.size() != numbers_.size() - 1) {
     return kError; 
   }
 
+  // TODO: Redefine numbers_ as custom stack
+  // with overrided 'pop' method.
+  // This will prevent double using of numbers_.pop_back()
   for(const auto& math_operator : operators_) {
     if (math_operator == "+") {
       auto left_op = numbers_[numbers_.size() - 1];
@@ -97,6 +106,7 @@ const std::vector<std::string>& Project::get_operators() {
   return operators_;
 }
 
+// TODO: Make next functions private.
 std::string Project::string_matches_operator(const std::string& possible_operator) {
   if (possible_operator != "*" && possible_operator != "+" && possible_operator != "-" && possible_operator != "/") {
     return "";
