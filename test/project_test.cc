@@ -25,10 +25,10 @@ TEST_F(ProjectTest, Simple_Operations) {
 }
 
 TEST_F(ProjectTest, Simple_Operations_Float) {
-    ASSERT_EQ(15.2, project_.run("10.1 5.1 +"));
-    ASSERT_EQ(5, project_.run("10.1 5.1 -"));
-    ASSERT_EQ(51.51, project_.run("10.1 5.1 *"));
-    ASSERT_EQ(2.02, project_.run("10.1 5 /"));
+    ASSERT_NEAR(15.2, project_.run("10.1 5.1 +"), 0.01);
+    ASSERT_NEAR(5, project_.run("10.1 5.1 -"), 0.01);
+    ASSERT_NEAR(51.51, project_.run("10.1 5.1 *"), 0.01);
+    ASSERT_NEAR(2.02, project_.run("10.1 5 /"), 0.01);
 }
 
 TEST_F(ProjectTest, Simple_Operations_Exceptions) {
@@ -42,6 +42,9 @@ TEST_F(ProjectTest, Simple_Operations_Complex) {
     EXPECT_EQ(17, project_.run("10 5 + 2 +"));
     EXPECT_EQ(7, project_.run("10 5 2 +"));
 }
+
+//TODO:
+//  Increase coverage
 
 }  // namespace testing
 }  // namespace dev

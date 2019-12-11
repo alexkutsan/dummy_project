@@ -13,6 +13,8 @@ public:
     static bool isOperation(std::string item);
     static bool isOperand(std::string item);
 
+    //TODO:
+    //
     static const char cPlus = '+';
     static const char cMinus = '-';
     static const char cMult = '*';

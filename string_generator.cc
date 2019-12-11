@@ -4,6 +4,10 @@ namespace dev {
     StringGenerator::StringGenerator(std::string basic)
         : _basic(basic) {}
 
+    //TODO:
+    // Use enum instead (will simplify usage outside):
+    //  1) public method for convertion of char to enum value
+    //  2) Move these constants to private
     const std::vector<char> StringGenerator::_operations = std::vector<char>{
             StringGenerator::cPlus,
             StringGenerator::cMinus,
@@ -38,6 +42,9 @@ namespace dev {
         }
 
         const auto& front = item.front();
+
+        // TODO:
+        // _operations is redundant since there are const chars with operations within the same class
         for (const auto& op: _operations) {
             if (op == front) {
                 return true;
@@ -51,6 +58,8 @@ namespace dev {
             return false;
         }
 
+        // TODO:
+        // I bet this part could be simplified...
         std::istringstream iss(item);
         float f;
         iss >> std::noskipws >> f; // noskipws considers leading whitespace invalid
