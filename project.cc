@@ -2,6 +2,9 @@
 #include "string"
 #include "set"
 #include "calc_exceptions.h"
+#include <string>
+#include <sstream>
+#include <iterator>
 
 namespace dev {
 
@@ -10,7 +13,20 @@ static const std::string minus = "-";
 static const std::string multiply = "*";
 static const std::string divide = "/";
 
-std::vector<double> Project::process(const std::vector<std::string> &args)
+std::vector<double> Project::process(const std::string &input)
+{
+    const std::vector<std::string> & args = processInput(input);
+    return processArguments(args);
+}
+
+std::vector<std::string> Project::processInput(const std::string &input) {
+    std::istringstream iss(input);
+    std::vector<std::string> all_args(std::istream_iterator<std::string>{iss},
+                                      std::istream_iterator<std::string>());
+    return all_args;
+}
+
+std::vector<double> Project::processArguments(const std::vector<std::string> &args)
 {
     std::vector<double> operands;
     for (const auto & arg : args) {

@@ -24,7 +24,6 @@ TEST_F(ProjectTest, isOperatorValidCases) {
     }
 }
 
-
 TEST_F(ProjectTest, isOperatorInvalidCases) {
     const std::set<std::string> operators{"2", " ", "", "----"};
     for(const auto & op : operators) {
@@ -56,8 +55,21 @@ TEST_F(ProjectTest, applyOperationMinus) {
     EXPECT_FLOAT_EQ(2.0, operands.front());
 }
 
+TEST_F(ProjectTest, baseProcessArgumentsTest) {
+    std::vector<std::string> args{"4", "2", "*", "7", "+"};
+    const auto & result = project_.processArguments(args);
+    ASSERT_EQ(1, result.size());
+    EXPECT_FLOAT_EQ(15, result.back());
+}
+
+TEST_F(ProjectTest, baseProcessInputTest) {
+    std::string input{"4 2 * 7 +"};
+    const auto & result = project_.processInput(input);
+    EXPECT_EQ(5, result.size());
+}
+
 TEST_F(ProjectTest, baseProcessTest) {
-    std::vector<std::string> input{"4", "2", "*", "7", "+"};
+    std::string input{"4 2 * 7 +"};
     const auto & result = project_.process(input);
     ASSERT_EQ(1, result.size());
     EXPECT_FLOAT_EQ(15, result.back());

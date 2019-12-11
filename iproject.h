@@ -5,7 +5,7 @@
 namespace dev{
 
 class IProject {
-  virtual std::vector<double> process(const std::vector<std::string> & args) = 0;
+  virtual std::vector<double> process(const std::string & args) = 0;
 };
 
 }
