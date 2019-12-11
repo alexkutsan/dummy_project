@@ -3,19 +3,18 @@
 namespace dev {
 
 namespace {
-  const int kUserInputLimit = 1000;
+  const auto kError = std::numeric_limits<int>::min();
 }
 
 Project::Project() {
 
 }
 
-int Project::run() {
-  char user_input[kUserInputLimit];
-  std::cout << "Input expression -> ";
-  std::cin.getline(user_input, sizeof(user_input));
-  parse_string(user_input);
-  return calculate();
+int Project::run(const std::string& user_input) {
+  return parse_string(user_input) ? 
+    calculate() 
+    : 
+    kError;
 }
 
 bool Project::parse_string(const std::string& data) {
@@ -41,12 +40,17 @@ bool Project::parse_string(const std::string& data) {
       // KEK
     }
   } 
+
+  if (numbers_.empty() || operators_.empty()) {
+    return false;
+  }
+
   return true;
 }
 
 int Project::calculate() {
   if (operators_.size() != numbers_.size() - 1) {
-    return std::numeric_limits<int>::min(); 
+    return kError; 
   }
 
   for(const auto& math_operator : operators_) {
@@ -105,7 +109,7 @@ int Project::add(int first, int second) {
 }
 
 int Project::div(int first, int second) {
-  return first / second;
+  return second ? first / second : kError;
 }
 
 int Project::dec(int first, int second) {

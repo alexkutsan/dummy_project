@@ -13,7 +13,7 @@ class Project : public IProject {
   // IProject interface
  public:
   Project();
-  int run();
+  int run(const std::string& user_input);
   bool parse_string(const std::string& data);
   int calculate();
   const std::vector<int>& get_numbers();

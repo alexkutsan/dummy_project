@@ -4,6 +4,10 @@
 namespace dev {
 namespace testing {
 
+namespace {
+  const auto kError = std::numeric_limits<int>::min();
+}
+
 class ProjectTest : public ::testing::Test {
  public:
   void SetUp() override {}
@@ -13,6 +17,9 @@ class ProjectTest : public ::testing::Test {
 
 TEST_F(ProjectTest, ParseString) {
   ASSERT_FALSE(project_.parse_string(""));
+  ASSERT_FALSE(project_.parse_string(" 5 4 3 2 "));
+  ASSERT_FALSE(project_.parse_string(" + - = * "));
+  
   EXPECT_TRUE(project_.parse_string("5 5 +"));
   std::vector<int> expected_numbers = {5,5};
   std::vector<std::string> expected_operators = {"+"};
@@ -21,17 +28,17 @@ TEST_F(ProjectTest, ParseString) {
 }
 
 TEST_F(ProjectTest, CalculateNothing) {
-  ASSERT_EQ(std::numeric_limits<int>::min(), project_.calculate());
+  ASSERT_EQ(kError, project_.calculate());
 }
 
 TEST_F(ProjectTest, CalculateNoOperators) {
-  ASSERT_TRUE(project_.parse_string("5 5"));
-  EXPECT_EQ(std::numeric_limits<int>::min(), project_.calculate());
+  ASSERT_FALSE(project_.parse_string("5 5"));
+  EXPECT_EQ(kError, project_.calculate());
 }
 
 TEST_F(ProjectTest, CalculateNoNumbers) {
-  ASSERT_TRUE(project_.parse_string("+ - / *"));
-  EXPECT_EQ(std::numeric_limits<int>::min(), project_.calculate());
+  ASSERT_FALSE(project_.parse_string("+ - / *"));
+  EXPECT_EQ(kError, project_.calculate());
 }
 
 TEST_F(ProjectTest, CalculateAdd) {
@@ -57,6 +64,21 @@ TEST_F(ProjectTest, CalculateDivide) {
 TEST_F(ProjectTest, CalculateAddMultiple) {
   ASSERT_TRUE(project_.parse_string("14 7 3 4 + + +"));
   EXPECT_EQ(28, project_.calculate());
+}
+
+TEST_F(ProjectTest, CalculateSeveralOperations) {
+  ASSERT_TRUE(project_.parse_string("4 4 4 4 + * -"));
+  EXPECT_EQ(28, project_.calculate());
+}
+
+TEST_F(ProjectTest, CalculateSeveralOperationsDifferentPlacementOrder) {
+  ASSERT_TRUE(project_.parse_string("1 2 + 4 * 3 +"));
+  EXPECT_EQ(15, project_.calculate());
+}
+
+TEST_F(ProjectTest, CalculateDividingZero) {
+  ASSERT_TRUE(project_.parse_string("0 1 /"));
+  EXPECT_EQ(kError, project_.calculate());
 }
 
 }  // namespace testing
