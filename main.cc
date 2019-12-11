@@ -13,7 +13,7 @@ int main() {
       getline(std::cin, input);
       std::istringstream iss(input);
       std::vector<std::string> all_args(std::istream_iterator<std::string>{iss},
-                                       std::istream_iterator<std::string>());
+                                        std::istream_iterator<std::string>());
       if (all_args.size() > 2) {
           dev::Project proj;
           try {

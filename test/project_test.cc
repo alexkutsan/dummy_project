@@ -20,7 +20,7 @@ class ProjectTest : public ::testing::Test {
 TEST_F(ProjectTest, isOperatorValidCases) {
     const std::set<std::string> operators{plus, minus, multiply, divide};
     for(const auto & op : operators) {
-        ASSERT_TRUE(project_.isOperator(op));
+        EXPECT_TRUE(project_.isOperator(op));
     }
 }
 
@@ -28,32 +28,39 @@ TEST_F(ProjectTest, isOperatorValidCases) {
 TEST_F(ProjectTest, isOperatorInvalidCases) {
     const std::set<std::string> operators{"2", " ", "", "----"};
     for(const auto & op : operators) {
-        ASSERT_FALSE(project_.isOperator(op));
+        EXPECT_FALSE(project_.isOperator(op));
     }
 }
 
 TEST_F(ProjectTest, applyOperationDivision) {
     std::vector<double> operands{4, 2};
     project_.applyOperation(divide, operands);
-    ASSERT_FLOAT_EQ(2.0, operands.front());
+    EXPECT_FLOAT_EQ(2.0, operands.front());
 }
 
 TEST_F(ProjectTest, applyOperationMultiply) {
     std::vector<double> operands{4, 2};
     project_.applyOperation(multiply, operands);
-    ASSERT_FLOAT_EQ(8.0, operands.front());
+    EXPECT_FLOAT_EQ(8.0, operands.front());
 }
 
 TEST_F(ProjectTest, applyOperationPlus) {
     std::vector<double> operands{4, 2};
     project_.applyOperation(plus, operands);
-    ASSERT_FLOAT_EQ(6.0, operands.front());
+    EXPECT_FLOAT_EQ(6.0, operands.front());
 }
 
 TEST_F(ProjectTest, applyOperationMinus) {
     std::vector<double> operands{4, 2};
     project_.applyOperation(minus, operands);
-    ASSERT_FLOAT_EQ(2.0, operands.front());
+    EXPECT_FLOAT_EQ(2.0, operands.front());
+}
+
+TEST_F(ProjectTest, baseProcessTest) {
+    std::vector<std::string> input{"4", "2", "*", "7", "+"};
+    const auto & result = project_.process(input);
+    ASSERT_EQ(1, result.size());
+    EXPECT_FLOAT_EQ(15, result.back());
 }
 
 }  // namespace testing
