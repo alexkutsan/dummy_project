@@ -3,15 +3,13 @@
 #include <vector>
 #include <string>
 #include <iostream>
-#include <sstream>
-#include <iterator>
 
 int main() {
     std::cout << "Enter input for calculator or 'q' for quit:" << std::endl;
     std::string input;
+    dev::Project proj;
     do {
       getline(std::cin, input);
-      dev::Project proj;
       try {
           const auto & result = proj.process(input);
           if (result.size() == 1) {

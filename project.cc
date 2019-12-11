@@ -15,11 +15,11 @@ static const std::string divide = "/";
 
 std::vector<double> Project::process(const std::string &input)
 {
-    const std::vector<std::string> & args = processInput(input);
+    const std::vector<std::string> & args = parceInput(input);
     return processArguments(args);
 }
 
-std::vector<std::string> Project::processInput(const std::string &input) {
+std::vector<std::string> Project::parceInput(const std::string &input) {
     std::istringstream iss(input);
     std::vector<std::string> all_args(std::istream_iterator<std::string>{iss},
                                       std::istream_iterator<std::string>());

@@ -17,6 +17,7 @@ class ProjectTest : public ::testing::Test {
   dev::Project project_;
 };
 
+// TODO: consider whether we need to split isOperatorValidCases to separate cases
 TEST_F(ProjectTest, isOperatorValidCases) {
     const std::set<std::string> operators{plus, minus, multiply, divide};
     for(const auto & op : operators) {
@@ -64,16 +65,18 @@ TEST_F(ProjectTest, baseProcessArgumentsTest) {
 
 TEST_F(ProjectTest, baseProcessInputTest) {
     std::string input{"4 2 * 7 +"};
-    const auto & result = project_.processInput(input);
+    const auto & result = project_.parceInput(input);
     EXPECT_EQ(5, result.size());
 }
 
 TEST_F(ProjectTest, baseProcessTest) {
-    std::string input{"4 2 * 7 +"};
+    std::string input{"4.0 2.0 * 7.0 +"};
     const auto & result = project_.process(input);
     ASSERT_EQ(1, result.size());
     EXPECT_FLOAT_EQ(15, result.back());
 }
+
+// TODO: cover more cases
 
 }  // namespace testing
 }  // namespace dev
