@@ -8,11 +8,12 @@ namespace dev {
         std::queue<float>::push(item);
     }
 
-    bool FixedSizeQueue::getFirst(float& item) {
+    bool FixedSizeQueue::getFirst(float& result) {
+        result = 0;
         if (this->empty()){
             return false;
         }
-        item = this->front();
+        result = this->front();
         this->pop();
         return true;
     }

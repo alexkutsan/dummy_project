@@ -6,8 +6,6 @@ namespace dev {
 //  Think of alternative to exceptions
 
 float Project::run(const std::string& expression) {
-    auto sGenerator = StringGenerator(expression);
-
     auto stuff = [this](std::string operation, float& result) {
         float operand1;
         float operand2;
@@ -39,16 +37,13 @@ float Project::run(const std::string& expression) {
         return true;
     };
 
+    auto sGenerator = StringGenerator(expression);
+    float result = 0;
     std::string item;
-    while(true) {
-        if (!sGenerator.next(item)) {
-            break;
-        }
-
-        float operation_result = 0;
-        if (StringGenerator::getOperand(item, operation_result) ||
-                (StringGenerator::isOperation(item) && stuff(item, operation_result))) {
-            _queue.push(operation_result);
+    while(sGenerator.next(item)) {
+        if (StringGenerator::getOperand(item, result) ||
+                (StringGenerator::isOperation(item) && stuff(item, result))) {
+            _queue.push(result);
             continue;
         }
 
@@ -56,9 +51,8 @@ float Project::run(const std::string& expression) {
         throw std::exception();
     }
 
-    float result = 0;
-    _queue.getFirst(result);
 
+    _queue.getFirst(result);
     return result;
 }
 }  // namespace dev
