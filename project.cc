@@ -7,7 +7,7 @@ namespace {
 }
 
 // TODO: Project must use separate objects for calculate() and parse_string() options
-Project::Project() {
+Project::Project() : parser_(new Parser()){
 
 }
 
@@ -20,114 +20,25 @@ int Project::run(const std::string& user_input) {
 
 // TODO: Move this method to separate object.
 bool Project::parse_string(const std::string& data) {
-  if (data.empty()) {
+  if (!parser_) {
     return false;
   }
- 
-  numbers_.clear();
-  operators_.clear();
-
-  std::istringstream data_stream(data);
-  std::string buffer;
-  while (std::getline(data_stream, buffer, ' ')) {
-    std::string math_operator = string_matches_operator(buffer); 
-    if (!math_operator.empty()) {
-      operators_.push_back(math_operator);
-    }
-
-    try {
-      int number = std::stoi(buffer);
-      numbers_.push_back(number);
-    } catch (const std::exception& exception) {
-      // KEK
-
-      // TODO: Figure out how to handle this exception
-      // (if it should be)
-    }
-  } 
-
-  if (numbers_.empty() || operators_.empty()) {
-    return false;
-  }
-
-  return true;
+  return parser_->parse(data);
 }
 
 // TODO: Move this method to separate object.
 int Project::calculate() {
-  if (operators_.size() != numbers_.size() - 1) {
-    return kError; 
-  }
-
-  // TODO: Redefine numbers_ as custom stack
-  // with overrided 'pop' method.
-  // This will prevent double using of numbers_.pop_back()
-  for(const auto& math_operator : operators_) {
-    if (math_operator == "+") {
-      auto left_op = numbers_[numbers_.size() - 1];
-      auto right_op = numbers_[numbers_.size() - 2];
-      numbers_.pop_back();
-      numbers_.pop_back();
-      numbers_.push_back(add(left_op,right_op));
-    }
-
-    if (math_operator == "-") {
-      auto left_op = numbers_[numbers_.size() - 1];
-      auto right_op = numbers_[numbers_.size() - 2];
-      numbers_.pop_back();
-      numbers_.pop_back();
-      numbers_.push_back(dec(left_op,right_op));
-    }
-
-    if (math_operator == "*") {
-      auto left_op = numbers_[numbers_.size() - 1];
-      auto right_op = numbers_[numbers_.size() - 2];
-      numbers_.pop_back();
-      numbers_.pop_back();
-      numbers_.push_back(mul(left_op,right_op));
-    }
-
-    if (math_operator == "/") {
-      auto left_op = numbers_[numbers_.size() - 1];
-      auto right_op = numbers_[numbers_.size() - 2];
-      numbers_.pop_back();
-      numbers_.pop_back();
-      numbers_.push_back(div(left_op,right_op));
-    }
-  }
-  return *numbers_.begin();
+  calculator_.reset(new Calculator(parser_->get_numbers(),
+                                   parser_->get_operators()));
+  return calculator_->calculate();
 }
 
-const std::vector<int>& Project::get_numbers() {
-  return numbers_;
+std::vector<int> Project::get_numbers() {
+  return *parser_->get_numbers();
 }
 
-const std::vector<std::string>& Project::get_operators() {
-  return operators_;
-}
-
-// TODO: Make next functions private.
-std::string Project::string_matches_operator(const std::string& possible_operator) {
-  if (possible_operator != "*" && possible_operator != "+" && possible_operator != "-" && possible_operator != "/") {
-    return "";
-  }
-  return possible_operator;
-}
-
-int Project::add(int first, int second) {
-  return first + second;
-}
-
-int Project::div(int first, int second) {
-  return second ? first / second : kError;
-}
-
-int Project::dec(int first, int second) {
-  return first - second;
-}
-
-int Project::mul(int first, int second) {
-  return first * second;
-}
+std::vector<std::string> Project::get_operators() {
+  return *parser_->get_operators();
+} 
 
 }  // namespace dev

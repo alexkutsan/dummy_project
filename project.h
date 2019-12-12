@@ -1,11 +1,14 @@
 #pragma once
 #include "iproject.h"
+#include "Calculator/Calculator.h"
+#include "Parser/Parser.h"
 #include <iostream>
 #include <sstream>
 #include <vector>
 #include <exception>
 #include <limits>
 #include <stack>
+#include <memory>
 
 namespace dev {
 
@@ -16,16 +19,13 @@ class Project : public IProject {
   int run(const std::string& user_input);
   bool parse_string(const std::string& data);
   int calculate();
-  const std::vector<int>& get_numbers();
-  const std::vector<std::string>& get_operators();
-  std::string string_matches_operator(const std::string& possible_operator); 
 
-  int add(int first, int second);
-  int div(int first, int second);
-  int dec(int first, int second);
-  int mul(int first, int second);
+
+  std::vector<int> get_numbers();
+  std::vector<std::string> get_operators();
+
  private:
-  std::vector<int> numbers_;
-  std::vector<std::string> operators_;
+  std::unique_ptr<Calculator> calculator_;
+  std::unique_ptr<Parser> parser_;
 };
 }  // namespace dev

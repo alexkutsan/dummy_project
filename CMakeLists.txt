@@ -4,7 +4,9 @@ project(dummy_cmake_project)
 set(CMAKE_CXX_STANDARD 14)
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
-set(SOURCES project.cc)
+include_directories("Calculator")
+include_directories("Parser")
+set(SOURCES project.cc Calculator/Calculator.cc Parser/Parser.cc)
 add_library(ProjectLib ${SOURCES})
 
 add_executable(project main.cc)
