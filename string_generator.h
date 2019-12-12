@@ -3,24 +3,21 @@
 #include <sstream>
 
 namespace dev {
-
 class StringGenerator {
 public:
-    StringGenerator(std::string basic);
-    std::string next();
+    StringGenerator(const std::string& basic);
+    bool next(std::string& result);
     bool empty();
 
-    static bool isOperation(std::string item);
-    static bool isOperand(std::string item);
+    static bool isOperation(const std::string& item);
+    static bool isOperand(const std::string& item);
+    static bool getOperand(const std::string& item, float& result);
 
-    //TODO:
-    //
-    static const char cPlus = '+';
-    static const char cMinus = '-';
-    static const char cMult = '*';
-    static const char cDiv = '/';
+    static constexpr char cPlus = '+';
+    static constexpr char cMinus = '-';
+    static constexpr char cMult = '*';
+    static constexpr char cDiv = '/';
 private:
     std::string _basic;
-    static const std::vector<char> _operations;
 };
 }

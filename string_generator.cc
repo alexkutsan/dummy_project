@@ -1,27 +1,15 @@
 #include "string_generator.h"
 
 namespace dev {
-    StringGenerator::StringGenerator(std::string basic)
+    StringGenerator::StringGenerator(const std::string& basic)
         : _basic(basic) {}
 
-    //TODO:
-    // Use enum instead (will simplify usage outside):
-    //  1) public method for convertion of char to enum value
-    //  2) Move these constants to private
-    const std::vector<char> StringGenerator::_operations = std::vector<char>{
-            StringGenerator::cPlus,
-            StringGenerator::cMinus,
-            StringGenerator::cMult,
-            StringGenerator::cDiv
-        };
-
     bool StringGenerator::empty() {
-        return 0 == _basic.length();
+        return _basic.empty();
     }
 
-    std::string StringGenerator::next() {
-        std::string result = "";
-
+    bool StringGenerator::next(std::string& result) {
+        result = "";
         while(true) {
             if (_basic.empty()) {
                 break;
@@ -31,38 +19,43 @@ namespace dev {
             if (' ' == item) {
                 break;
             }
-            result+=item;
+            result += item;
         }
-        return result;
+        return !result.empty();
     }
 
-    bool StringGenerator::isOperation(std::string item) {
+    bool StringGenerator::isOperation(const std::string& item) {
         if (item.length() > 1) {
             return false;
         }
 
         const auto& front = item.front();
 
-        // TODO:
-        // _operations is redundant since there are const chars with operations within the same class
-        for (const auto& op: _operations) {
-            if (op == front) {
-                return true;
-            }
+        switch (front) {
+        case StringGenerator::cPlus:
+        case StringGenerator::cMinus:
+        case StringGenerator::cDiv:
+        case StringGenerator::cMult:
+            return true;
+        default:
+            return false;
         }
-        return false;
     }
 
-    bool StringGenerator::isOperand(std::string item) {
-        if (1 > item.length()) {
+    bool StringGenerator::isOperand(const std::string& item) {
+        float result;
+        return getOperand(item, result);
+    }
+
+    bool StringGenerator::getOperand(const std::string& item, float& result) {
+        if (item.empty()) {
             return false;
         }
 
         // TODO:
         // I bet this part could be simplified...
         std::istringstream iss(item);
-        float f;
-        iss >> std::noskipws >> f; // noskipws considers leading whitespace invalid
+        iss >> std::noskipws >> result; // noskipws considers leading whitespace invalid
         // Check the entire string was consumed and if either failbit or badbit is set
         return iss.eof() && !iss.fail();
     }

@@ -12,7 +12,7 @@ namespace dev {
 class Project : public IProject {
   // IProject interface
  public:
-  float run(std::string expression = "");
+  float run(const std::string& expression = "");
 
  private:
     FixedSizeQueue _queue;
