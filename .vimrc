@@ -22,3 +22,11 @@ function! Run()
   redraw!
 endfunction
 command! Run :call Run()
+
+function! Test()
+  silent :!clear
+  silent :!cd build/test && ./ProjectTest
+  :!echo "Done"
+  redraw!
+endfunction
+command! Test :call Test()
