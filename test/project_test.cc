@@ -17,11 +17,13 @@ class ProjectTest : public ::testing::Test {
   dev::Project project_;
 };
 
-TEST_F(ProjectTest, ParseString) {
-  ASSERT_FALSE(project_.parse_string(""));
-  ASSERT_FALSE(project_.parse_string(" 5 4 3 2 "));
-  ASSERT_FALSE(project_.parse_string(" + - = * "));
-  
+TEST_F(ProjectTest, ParseString_FAILURE) {
+  EXPECT_FALSE(project_.parse_string(""));
+  EXPECT_FALSE(project_.parse_string(" 5 4 3 2 "));
+  EXPECT_FALSE(project_.parse_string(" + - = * "));
+}
+
+TEST_F(ProjectTest, ParseString_SUCCESS) {
   EXPECT_TRUE(project_.parse_string("5 5 +"));
   std::vector<int> expected_numbers = {5,5};
   std::vector<std::string> expected_operators = {"+"};
