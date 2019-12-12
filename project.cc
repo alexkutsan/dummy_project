@@ -48,11 +48,13 @@ bool Project::isOperator(const std::string &arg) const
 void Project::applyOperation(const std::string &operation,
                              std::vector<double> &operands) const
 {
-    if (operands.size() > 1) {
+    constexpr unsigned min_operands_size = 2;
+    if (operands.size() >= min_operands_size) {
         double result = 0;
-        const double first_operand = operands[operands.size()-2];
-        const double second_operand = operands[operands.size()-1];
-        operands.erase(operands.end()-2, operands.end());
+        const double second_operand = operands.back();
+        operands.pop_back();
+        const double first_operand = operands.back();
+        operands.pop_back();
         if (operation == plus) {
             result = first_operand + second_operand;
         } else if (operation == minus ) {
