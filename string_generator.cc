@@ -10,10 +10,7 @@ namespace dev {
 
     bool StringGenerator::next(std::string& result) {
         result = "";
-        while(true) {
-            if (_basic.empty()) {
-                break;
-            }
+        while(!empty()) {
             auto item = _basic.front();
             _basic.erase(0,1);
             if (' ' == item) {

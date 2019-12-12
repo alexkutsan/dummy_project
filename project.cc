@@ -6,7 +6,7 @@ namespace dev {
 //  Think of alternative to exceptions
 
 float Project::run(const std::string& expression) {
-    auto stuff = [this](std::string operation, float& result) {
+    auto stuff = [this](const std::string& operation, float& result) {
         float operand1;
         float operand2;
 
