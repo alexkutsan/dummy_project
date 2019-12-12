@@ -1,6 +1,8 @@
 #include "project.h"
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
+#include "test_calculator_proxy.h"
+#include <memory>
 
 namespace dev {
 namespace testing {
@@ -12,9 +14,12 @@ static const std::string divide = "/";
 
 class ProjectTest : public ::testing::Test {
  public:
-  void SetUp() override {}
+  void SetUp() override {
+      proxy_ = std::make_unique<dev::TestCalculatorProxy>(project_);
+  }
   void TearDown() override {}
   dev::Project project_;
+  std::unique_ptr<dev::TestCalculatorProxy> proxy_;
 };
 
 // TODO: consider whether we need to split isOperatorValidCases to separate cases

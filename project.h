@@ -6,7 +6,7 @@ namespace dev {
 
 // TODO: Rename Project
 class Project : public IProject {
-//friend class ProjectTest;
+friend class TestCalculatorProxy;
 public:
   std::vector<double> process(const std::string &input) override;
 // TODO: make private and create object for testing private methods
