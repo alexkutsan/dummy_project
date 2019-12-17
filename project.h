@@ -14,7 +14,6 @@
 namespace dev {
 
 class Project : public IProject {
-  // IProject interface
  public:
   Project();
   int run(const std::string& user_input);
