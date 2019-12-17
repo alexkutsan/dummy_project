@@ -2,7 +2,12 @@
 
 namespace dev {
 
-int Project::run() {
-  return 0;
+PolishCalcComponent::value_t Project::run(const std::string &str) {
+    PolishCalcComponent::value_t res;
+
+    m_calc.process(str, res);
+
+    return res;
 }
+
 }  // namespace dev
