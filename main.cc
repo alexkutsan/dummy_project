@@ -5,6 +5,8 @@
 #include <iostream>
 #include <memory>
 
+constexpr int valid_result_number = 1;
+
 int main() {
     std::cout << "Enter input for calculator or 'q' for quit:" << std::endl;
     std::string input;
@@ -13,9 +15,9 @@ int main() {
       getline(std::cin, input);
       try {
           const auto & result = proj->process(input);
-          if (result.size() == 1) {
+          if (result.size() == valid_result_number) {
             std::cout << result.back() << std::endl;
-          } else if (result.size() > 1) {
+          } else if (result.size() > valid_result_number) {
             std::cerr << "Invalid operations number!" << std::endl;
           } else {
             std::cerr << "Internal logic error, result is empty!" << std::endl;

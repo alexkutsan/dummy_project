@@ -1,17 +1,13 @@
 #include "project.h"
-#include "string"
-#include "set"
-#include "calc_exceptions.h"
+#include <string>
+#include <set>
 #include <string>
 #include <sstream>
 #include <iterator>
+#include "calc_exceptions.h"
+#include "operations.h"
 
 namespace dev {
-
-static const std::string plus = "+";
-static const std::string minus = "-";
-static const std::string multiply = "*";
-static const std::string divide = "/";
 
 std::vector<double> Project::process(const std::string &input)
 {

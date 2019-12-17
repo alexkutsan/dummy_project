@@ -3,14 +3,10 @@
 #include <gtest/gtest.h>
 #include "test_calculator_proxy.h"
 #include <memory>
+#include "operations.h"
 
 namespace dev {
 namespace testing {
-
-static const std::string plus = "+";
-static const std::string minus = "-";
-static const std::string multiply = "*";
-static const std::string divide = "/";
 
 class ProjectTest : public ::testing::Test {
  public:

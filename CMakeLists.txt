@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 14)
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
 set(SOURCES project.cc )
-set(HEADERS calc_exceptions.h iproject.h project.h )
+set(HEADERS calc_exceptions.h iproject.h project.h operations.h)
 add_library(ProjectLib ${SOURCES} ${HEADERS})
 
 add_executable(project main.cc)
