@@ -18,8 +18,6 @@ class Project : public IProject {
  public:
   Project();
   int run(const std::string& user_input);
-  bool parse_string(const std::string& data);
-  int calculate();
 
  private:
   std::unique_ptr<Calculator> calculator_;

@@ -18,67 +18,57 @@ class ProjectTest : public ::testing::Test {
 };
 
 TEST_F(ProjectTest, ParseString_FAILURE) {
-  EXPECT_FALSE(project_.parse_string(""));
-  EXPECT_FALSE(project_.parse_string(" 5 4 3 2 "));
-  EXPECT_FALSE(project_.parse_string(" + - = * "));
+  EXPECT_EQ(kError, project_.run(""));
+  EXPECT_EQ(kError, project_.run(" 5 4 3 2 "));
+  EXPECT_EQ(kError, project_.run(" + - = * "));
 }
 
 TEST_F(ProjectTest, ParseString_SUCCESS) {
-  EXPECT_TRUE(project_.parse_string("5 5 +"));
+  EXPECT_TRUE(project_.run("5 5 +"));
 }
 
 TEST_F(ProjectTest, CalculateNothing) {
-  ASSERT_EQ(kError, project_.calculate());
+  EXPECT_EQ(kError, project_.run(""));
 }
 
 TEST_F(ProjectTest, CalculateNoOperators) {
-  ASSERT_FALSE(project_.parse_string("5 5"));
-  EXPECT_EQ(kError, project_.calculate());
+  EXPECT_EQ(kError, project_.run("5 5"));
 }
 
 TEST_F(ProjectTest, CalculateNoNumbers) {
-  ASSERT_FALSE(project_.parse_string("+ - / *"));
-  EXPECT_EQ(kError, project_.calculate());
+  EXPECT_EQ(kError, project_.run("+ - / *"));
 }
 
 TEST_F(ProjectTest, CalculateAdd) {
-  ASSERT_TRUE(project_.parse_string("5 5 +"));
-  EXPECT_EQ(10, project_.calculate());
+  EXPECT_EQ(10, project_.run("5 5 +"));
 }
 
 TEST_F(ProjectTest, CalculateDecrease) {
-  ASSERT_TRUE(project_.parse_string("7 5 -"));
-  EXPECT_EQ(-2, project_.calculate());
+  EXPECT_EQ(-2, project_.run("7 5 -"));
 }
 
 TEST_F(ProjectTest, CalculateMultiply) {
-  ASSERT_TRUE(project_.parse_string("5 7 *"));
-  EXPECT_EQ(35, project_.calculate());
+  EXPECT_EQ(35, project_.run("5 7 *"));
 }
 
 TEST_F(ProjectTest, CalculateDivide) {
-  ASSERT_TRUE(project_.parse_string("7 14 /"));
-  EXPECT_EQ(2, project_.calculate());
+  EXPECT_EQ(2, project_.run("7 14 /"));
 }
 
 TEST_F(ProjectTest, CalculateAddMultiple) {
-  ASSERT_TRUE(project_.parse_string("14 7 3 4 + + +"));
-  EXPECT_EQ(28, project_.calculate());
+  EXPECT_EQ(28, project_.run("14 7 3 4 + + +"));
 }
 
 TEST_F(ProjectTest, CalculateSeveralOperations) {
-  ASSERT_TRUE(project_.parse_string("4 4 4 4 + * -"));
-  EXPECT_EQ(28, project_.calculate());
+  EXPECT_EQ(28, project_.run("4 4 4 4 + * -"));
 }
 
 TEST_F(ProjectTest, CalculateSeveralOperationsDifferentPlacementOrder) {
-  ASSERT_TRUE(project_.parse_string("1 2 + 4 * 3 +"));
-  EXPECT_EQ(15, project_.calculate());
+  EXPECT_EQ(15, project_.run("1 2 + 4 * 3 +"));
 }
 
 TEST_F(ProjectTest, CalculateDividingZero) {
-  ASSERT_TRUE(project_.parse_string("0 1 /"));
-  EXPECT_EQ(kError, project_.calculate());
+  EXPECT_EQ(kError, project_.run("0 1 /"));
 }
 
 }  // namespace testing

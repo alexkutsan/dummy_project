@@ -7,27 +7,16 @@ namespace {
 }
 
 // TODO: Project must use separate objects for calculate() and parse_string() options
-Project::Project() : parser_(new Parser()){
-
+Project::Project() {
 }
 
 int Project::run(const std::string& user_input) {
-  return parse_string(user_input) ? 
-    calculate() 
-    : 
-    kError;
-}
-
-// TODO: Move this method to separate object.
-bool Project::parse_string(const std::string& data) {
-  if (!parser_) {
-    return false;
+  parser_.reset(new Parser());
+  const bool parsing_successful = parser_->parse(user_input);
+  if (!parsing_successful) {
+    return kError;
   }
-  return parser_->parse(data);
-}
 
-// TODO: Move this method to separate object.
-int Project::calculate() {
   calculator_.reset(new Calculator(parser_->get_numbers(),
                                    parser_->get_operators()));
   return calculator_->calculate();
