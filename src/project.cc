@@ -1,4 +1,5 @@
 #include "project.h"
+#include "string_generator.h"
 
 namespace dev {
 

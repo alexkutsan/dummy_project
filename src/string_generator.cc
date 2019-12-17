@@ -1,3 +1,5 @@
+#include <vector>
+#include <sstream>
 #include "string_generator.h"
 
 namespace dev {
