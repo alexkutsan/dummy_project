@@ -6,7 +6,6 @@ namespace {
   const auto kError = std::numeric_limits<int>::min();
 }
 
-// TODO: Project must use separate objects for calculate() and parse_string() options
 Project::Project() {
 }
 
