@@ -6,6 +6,7 @@ list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
 include_directories("Calculator")
 include_directories("Parser")
+include_directories("types")
 set(SOURCES project.cc Calculator/Calculator.cc Parser/Parser.cc)
 add_library(ProjectLib ${SOURCES})
 

@@ -2,6 +2,7 @@
 #define CALCULATOR_CALCULATOR_H
 
 #include "ICalculator.h"
+#include "CustomStack.h"
 
 #include <vector>
 #include <string>
@@ -10,10 +11,11 @@
 
 namespace dev {
 
+  using namespace types;
+
   class Calculator : public ICalculator {
     public:
-      Calculator(std::unique_ptr<std::vector<int>> numbers, 
-                 std::unique_ptr<std::vector<std::string>> operators);
+      Calculator(NumbersStackPtr numbers, OperatorsListPtr operators);
       int calculate() override;
 
     private:
@@ -22,8 +24,8 @@ namespace dev {
       int dec(int first, int second);
       int mul(int first, int second);
       
-      std::unique_ptr<std::vector<int>> numbers_;
-      std::unique_ptr<std::vector<std::string>> operators_;
+      NumbersStackPtr numbers_;
+      OperatorsListPtr operators_;
   };
 }
 

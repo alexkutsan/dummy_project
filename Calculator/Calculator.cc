@@ -1,12 +1,13 @@
 #include "Calculator.h"
+#include <iostream>
 
 namespace {
   const auto kError = std::numeric_limits<int>::min();
 }
 
 namespace dev {
-  Calculator::Calculator(std::unique_ptr<std::vector<int>> numbers, 
-                 std::unique_ptr<std::vector<std::string>> operators) 
+  Calculator::Calculator(NumbersStackPtr numbers, 
+                 OperatorsListPtr operators) 
     : numbers_(std::move(numbers))
     , operators_(std::move(operators)) { }
 
@@ -21,38 +22,30 @@ int Calculator::calculate() {
   // This will prevent double using of numbers_->pop_back()
   for(const auto& math_operator : *operators_) {
     if (math_operator == "+") {
-      auto left_op = (*numbers_)[numbers_->size() - 1];
-      auto right_op = (*numbers_)[numbers_->size() - 2];
-      numbers_->pop_back();
-      numbers_->pop_back();
-      numbers_->push_back(add(left_op,right_op));
+      auto left = numbers_->pop();
+      auto right = numbers_->pop();
+      numbers_->push(add(left,right));
     }
 
     if (math_operator == "-") {
-      auto left_op = (*numbers_)[numbers_->size() - 1];
-      auto right_op = (*numbers_)[numbers_->size() - 2];
-      numbers_->pop_back();
-      numbers_->pop_back();
-      numbers_->push_back(dec(left_op,right_op));
+      auto left = numbers_->pop();
+      auto right = numbers_->pop();
+      numbers_->push(dec(left,right));
     }
 
     if (math_operator == "*") {
-      auto left_op = (*numbers_)[numbers_->size() - 1];
-      auto right_op = (*numbers_)[numbers_->size() - 2];
-      numbers_->pop_back();
-      numbers_->pop_back();
-      numbers_->push_back(mul(left_op,right_op));
+      auto left = numbers_->pop();
+      auto right = numbers_->pop();
+      numbers_->push(mul(left,right));
     }
 
     if (math_operator == "/") {
-      auto left_op = (*numbers_)[numbers_->size() - 1];
-      auto right_op = (*numbers_)[numbers_->size() - 2];
-      numbers_->pop_back();
-      numbers_->pop_back();
-      numbers_->push_back(div(left_op,right_op));
+      auto left = numbers_->pop();
+      auto right = numbers_->pop();
+      numbers_->push(div(left,right));
     }
   }
-  return *numbers_->begin();
+  return numbers_->top();
 }
 
 int Calculator::add(int first, int second) {

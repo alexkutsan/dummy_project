@@ -9,6 +9,7 @@
 #include <limits>
 #include <stack>
 #include <memory>
+#include "CustomStack.h"
 
 namespace dev {
 
@@ -20,9 +21,8 @@ class Project : public IProject {
   bool parse_string(const std::string& data);
   int calculate();
 
-
-  std::vector<int> get_numbers();
-  std::vector<std::string> get_operators();
+  std::stack<int> get_numbers();
+  OperatorsList get_operators();
 
  private:
   std::unique_ptr<Calculator> calculator_;

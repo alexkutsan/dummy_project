@@ -33,11 +33,11 @@ int Project::calculate() {
   return calculator_->calculate();
 }
 
-std::vector<int> Project::get_numbers() {
-  return *parser_->get_numbers();
+std::stack<int> Project::get_numbers() {
+  return parser_->get_numbers()->get_stack();
 }
 
-std::vector<std::string> Project::get_operators() {
+OperatorsList Project::get_operators() {
   return *parser_->get_operators();
 } 
 

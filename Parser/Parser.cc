@@ -6,8 +6,8 @@ namespace {
 
 namespace dev {
 Parser::Parser() 
-  : numbers_(new std::vector<int>()), 
-    operators_(new std::vector<std::string>()) {
+  : numbers_(new NumbersStack()), 
+    operators_(new OperatorsList()) {
 }
 
 bool Parser::parse(const std::string& data) {
@@ -28,7 +28,7 @@ bool Parser::parse(const std::string& data) {
 
     try {
       int number = std::stoi(buffer);
-      numbers_->push_back(number);
+      numbers_->push(number);
     } catch (const std::exception& exception) {
       // KEK
 
@@ -55,11 +55,11 @@ std::string Parser::string_matches_operator(const std::string& possible_operator
   return possible_operator;
 }
 
-std::unique_ptr<std::vector<int>> Parser::get_numbers() {
+NumbersStackPtr Parser::get_numbers() {
   return std::move(numbers_);
 }
 
-std::unique_ptr<std::vector<std::string>> Parser::get_operators() {
+OperatorsListPtr Parser::get_operators() {
   return std::move(operators_);
 } 
 

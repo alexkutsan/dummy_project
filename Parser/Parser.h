@@ -2,6 +2,7 @@
 #define PARSER_PARSER_H
 
 #include "IParser.h"
+#include "CustomStack.h"
 
 #include <vector>
 #include <memory>
@@ -13,18 +14,20 @@
 
 namespace dev {
 
+  using namespace types;
+
   class Parser : public IParser {
     public:
       Parser();
       bool parse(const std::string& data) override;
 
-      std::unique_ptr<std::vector<int>> get_numbers();
-      std::unique_ptr<std::vector<std::string>> get_operators();
+      NumbersStackPtr get_numbers();
+      OperatorsListPtr get_operators();
 
     private:
       std::string string_matches_operator(const std::string& possible_operator); 
-      std::unique_ptr<std::vector<int>> numbers_;
-      std::unique_ptr<std::vector<std::string>> operators_;
+      NumbersStackPtr numbers_;
+      OperatorsListPtr operators_;
   };
 }
 
