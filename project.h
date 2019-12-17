@@ -14,8 +14,7 @@ public:
 * @return calculation result
 */
   std::vector<double> process(const std::string &input) override;
-// TODO: make private and create object for testing private methods
-// private:
+private:
   /**
    * @brief isOperator check whether arg is operator
    * @param arg is being checked whether it is operator

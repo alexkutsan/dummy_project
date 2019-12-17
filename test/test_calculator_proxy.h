@@ -24,7 +24,7 @@ public:
     }
     std::vector<std::string> parceInput(const std::string &input)
     {
-      calc.parceInput(input);
+      return calc.parceInput(input);
     }
 
     std::vector<double> processArguments(const std::vector<std::string> &args)

@@ -22,51 +22,51 @@ class ProjectTest : public ::testing::Test {
 TEST_F(ProjectTest, isOperatorValidCases) {
     const std::set<std::string> operators{plus, minus, multiply, divide};
     for(const auto & op : operators) {
-        EXPECT_TRUE(project_.isOperator(op));
+        EXPECT_TRUE(proxy_->isOperator(op));
     }
 }
 
 TEST_F(ProjectTest, isOperatorInvalidCases) {
     const std::set<std::string> operators{"2", " ", "", "----"};
     for(const auto & op : operators) {
-        EXPECT_FALSE(project_.isOperator(op));
+        EXPECT_FALSE(proxy_->isOperator(op));
     }
 }
 
 TEST_F(ProjectTest, applyOperationDivision) {
     std::vector<double> operands{4, 2};
-    project_.applyOperation(divide, operands);
+    proxy_->applyOperation(divide, operands);
     EXPECT_FLOAT_EQ(2.0, operands.front());
 }
 
 TEST_F(ProjectTest, applyOperationMultiply) {
     std::vector<double> operands{4, 2};
-    project_.applyOperation(multiply, operands);
+    proxy_->applyOperation(multiply, operands);
     EXPECT_FLOAT_EQ(8.0, operands.front());
 }
 
 TEST_F(ProjectTest, applyOperationPlus) {
     std::vector<double> operands{4, 2};
-    project_.applyOperation(plus, operands);
+    proxy_->applyOperation(plus, operands);
     EXPECT_FLOAT_EQ(6.0, operands.front());
 }
 
 TEST_F(ProjectTest, applyOperationMinus) {
     std::vector<double> operands{4, 2};
-    project_.applyOperation(minus, operands);
+    proxy_->applyOperation(minus, operands);
     EXPECT_FLOAT_EQ(2.0, operands.front());
 }
 
 TEST_F(ProjectTest, baseProcessArgumentsTest) {
     std::vector<std::string> args{"4", "2", "*", "7", "+"};
-    const auto & result = project_.processArguments(args);
+    const auto & result = proxy_->processArguments(args);
     ASSERT_EQ(1, result.size());
     EXPECT_FLOAT_EQ(15, result.back());
 }
 
 TEST_F(ProjectTest, baseProcessInputTest) {
     std::string input{"4 2 * 7 +"};
-    const auto & result = project_.parceInput(input);
+    const auto & result = proxy_->parceInput(input);
     EXPECT_EQ(5, result.size());
 }
 
@@ -77,7 +77,7 @@ TEST_F(ProjectTest, baseProcessTest) {
     EXPECT_FLOAT_EQ(15, result.back());
 }
 
-// TODO: cover more cases
+// TODO: cover more cases, e.g. error cases
 
 }  // namespace testing
 }  // namespace dev
