@@ -24,16 +24,14 @@ bool Parser::parse(const std::string& data) {
     std::string math_operator = string_matches_operator(buffer); 
     if (!math_operator.empty()) {
       operators_->push_back(math_operator);
+      continue;
     }
 
     try {
       int number = std::stoi(buffer);
       numbers_->push(number);
     } catch (const std::exception& exception) {
-      // KEK
-
-      // TODO: Figure out how to handle this exception
-      // (if it should be)
+      std::cerr << "cannot convert "<< buffer << " to number!" << std::endl;
     }
   } 
 
