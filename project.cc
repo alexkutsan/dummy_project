@@ -33,7 +33,7 @@ std::vector<double> Project::processArguments(const std::vector<std::string> &ar
         if (isOperator(arg)) {
             applyOperation(arg, operands);
         } else {
-            operands.push_back(std::stod(arg));
+            operands.emplace_back(std::stod(arg));
         }
     }
     return operands;
@@ -66,7 +66,7 @@ void Project::applyOperation(const std::string &operation,
         } else {
             throw InvalidOpertionException();
         }
-        operands.push_back(result);
+        operands.emplace_back(result);
     } else {
         throw InvalidOperandsException();
     }
