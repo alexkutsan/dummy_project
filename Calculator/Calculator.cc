@@ -17,32 +17,27 @@ int Calculator::calculate() {
     return kError; 
   }
 
-  // TODO: Redefine numbers_ as custom stack
-  // with overrided 'pop' method.
-  // This will prevent double using of numbers_->pop_back()
   for(const auto& math_operator : *operators_) {
+    auto left = numbers_->pop();
+    auto right = numbers_->pop();
     if (math_operator == "+") {
-      auto left = numbers_->pop();
-      auto right = numbers_->pop();
       numbers_->push(add(left,right));
+      continue;
     }
 
     if (math_operator == "-") {
-      auto left = numbers_->pop();
-      auto right = numbers_->pop();
       numbers_->push(dec(left,right));
+      continue;
     }
 
     if (math_operator == "*") {
-      auto left = numbers_->pop();
-      auto right = numbers_->pop();
       numbers_->push(mul(left,right));
+      continue;
     }
 
     if (math_operator == "/") {
-      auto left = numbers_->pop();
-      auto right = numbers_->pop();
       numbers_->push(div(left,right));
+      continue;
     }
   }
   return numbers_->top();
