@@ -28,7 +28,7 @@ value_t Project::take_value_from_stack(stack_numbers_t& stack)
 
     if (stack.size() != 0) {
         value = stack.top();
-        stack.pop();
+        stack.pop(); 
     }
     else{
         error_code_val = error_code::STACK_EMPTY;

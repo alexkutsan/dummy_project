@@ -1,9 +1,10 @@
 #pragma once
+#include <string>
 
 namespace dev{
 
 class IProject {
-  virtual int run() = 0;
+    virtual double run(std::string) = 0;
 };
 
 }
