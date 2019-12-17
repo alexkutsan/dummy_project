@@ -33,12 +33,4 @@ int Project::calculate() {
   return calculator_->calculate();
 }
 
-std::stack<int> Project::get_numbers() {
-  return parser_->get_numbers()->get_stack();
-}
-
-OperatorsList Project::get_operators() {
-  return *parser_->get_operators();
-} 
-
 }  // namespace dev

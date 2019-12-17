@@ -25,13 +25,6 @@ TEST_F(ProjectTest, ParseString_FAILURE) {
 
 TEST_F(ProjectTest, ParseString_SUCCESS) {
   EXPECT_TRUE(project_.parse_string("5 5 +"));
-  std::stack<int> expected_numbers;
-  for(const auto& number : {5,5}) {
-    expected_numbers.push(number);
-  }
-  OperatorsList expected_operators = {"+"};
-  EXPECT_EQ(expected_numbers, project_.get_numbers());
-  EXPECT_EQ(expected_operators, project_.get_operators());
 }
 
 TEST_F(ProjectTest, CalculateNothing) {

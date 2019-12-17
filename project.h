@@ -21,9 +21,6 @@ class Project : public IProject {
   bool parse_string(const std::string& data);
   int calculate();
 
-  std::stack<int> get_numbers();
-  OperatorsList get_operators();
-
  private:
   std::unique_ptr<Calculator> calculator_;
   std::unique_ptr<Parser> parser_;
