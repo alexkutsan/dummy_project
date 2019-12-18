@@ -3,13 +3,13 @@
 namespace dev {
 
 namespace {
-  const auto kError = std::numeric_limits<int>::min();
+  const auto kError = std::numeric_limits<float>::min();
 }
 
 Project::Project() {
 }
 
-int Project::run(const std::string& user_input) {
+float Project::run(const std::string& user_input) {
   parser_.reset(new Parser());
   const bool parsing_successful = parser_->parse(user_input);
   if (!parsing_successful) {

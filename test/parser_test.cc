@@ -6,7 +6,7 @@ namespace dev {
 namespace testing {
 
 namespace {
-  const auto kError = std::numeric_limits<int>::min();
+  const auto kError = std::numeric_limits<float>::min();
 }
 
 class ParserTest : public ::testing::Test {

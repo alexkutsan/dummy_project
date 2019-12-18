@@ -14,17 +14,17 @@ std::string handle_input() {
   return std::string(user_input);
 }
 
-void handle_output(int result) {
-  if (result == std::numeric_limits<int>::min()) {
+void handle_output(float result) {
+  if (result == std::numeric_limits<float>::min()) {
     std::cout << "Error occured while calculating!" << std::endl;
   } else {
-    std::cout << (int)result << std::endl;
+    std::cout << (float)result << std::endl;
   }
 }
 
 int main() {
   std::unique_ptr<dev::Project> polish_calculator(new dev::Project);
-  int result = polish_calculator->run(handle_input());
+  float result = polish_calculator->run(handle_input());
   handle_output(result);
   return 0;
 }

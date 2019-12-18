@@ -5,7 +5,7 @@ namespace dev {
 namespace testing {
 
 namespace {
-  const auto kError = std::numeric_limits<int>::min();
+  const auto kError = std::numeric_limits<float>::min();
 }
 
 class CalculatorTest : public ::testing::Test {
@@ -17,7 +17,7 @@ class CalculatorTest : public ::testing::Test {
     operators_.reset();
   }
 
-  void PrepareTest(const std::initializer_list<int>& numbers,
+  void PrepareTest(const std::initializer_list<float>& numbers,
                    const std::initializer_list<std::string>& operators) {
     numbers_.reset(new NumbersStack(numbers));
     operators_.reset(new OperatorsList(operators));
@@ -30,24 +30,24 @@ class CalculatorTest : public ::testing::Test {
 };
 
 TEST_F(CalculatorTest, CalculateAdd) {
-  PrepareTest({10,20},{"+"});
-  EXPECT_EQ(30,calculator_->calculate());
+  PrepareTest({10.0,20.0},{"+"});
+  EXPECT_EQ(30.0,calculator_->calculate());
 }
 TEST_F(CalculatorTest, CalculateDecrease) {
-  PrepareTest({10,20},{"-"});
-  EXPECT_EQ(10,calculator_->calculate());
+  PrepareTest({10.0,20.0},{"-"});
+  EXPECT_EQ(10.0,calculator_->calculate());
 }
 TEST_F(CalculatorTest, CalculateMultiply) {
-  PrepareTest({10,20},{"*"});
-  EXPECT_EQ(200,calculator_->calculate());
+  PrepareTest({10.0,20.0},{"*"});
+  EXPECT_EQ(200.0,calculator_->calculate());
 }
 TEST_F(CalculatorTest, CalculateDiv) {
-  PrepareTest({10,20},{"/"});
-  EXPECT_EQ(2,calculator_->calculate());
+  PrepareTest({10.0,20.0},{"/"});
+  EXPECT_EQ(2.0,calculator_->calculate());
 }
 TEST_F(CalculatorTest, CalculateComplex) {
-  PrepareTest({10,20,30,40,80},{"+","*","-","/"});
-  EXPECT_EQ(358,calculator_->calculate());
+  PrepareTest({10.0,20.0,30.0,40.0,80.0},{"+","*","-","/"});
+  EXPECT_EQ(358.0,calculator_->calculate());
 }
 
 TEST_F(CalculatorTest, CalculateNoNumbers) {
@@ -55,7 +55,7 @@ TEST_F(CalculatorTest, CalculateNoNumbers) {
   EXPECT_EQ(kError,calculator_->calculate());
 }
 TEST_F(CalculatorTest, CalculateNoOperators) {
-  PrepareTest({10,20},{});
+  PrepareTest({10.0,20.0},{});
   EXPECT_EQ(kError,calculator_->calculate());
 }
 TEST_F(CalculatorTest, CalculateNothing) {
@@ -63,7 +63,7 @@ TEST_F(CalculatorTest, CalculateNothing) {
   EXPECT_EQ(kError,calculator_->calculate());
 }
 TEST_F(CalculatorTest, CalculateDivideZero) {
-  PrepareTest({0,1},{"/"});
+  PrepareTest({0.0,1.0},{"/"});
   EXPECT_EQ(kError,calculator_->calculate());
 }
 

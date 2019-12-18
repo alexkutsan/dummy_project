@@ -5,10 +5,8 @@ namespace dev {
 namespace testing {
 
 namespace {
-  const auto kError = std::numeric_limits<int>::min();
+  const auto kError = std::numeric_limits<float>::min();
 }
-
-//TODO: Add appropriate tests for each new component (Calculator / Parser)
 
 class ProjectTest : public ::testing::Test {
  public:

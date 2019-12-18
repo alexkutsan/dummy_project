@@ -16,13 +16,13 @@ namespace dev {
   class Calculator : public ICalculator {
     public:
       Calculator(NumbersStackPtr numbers, OperatorsListPtr operators);
-      int calculate() override;
+      float calculate() override;
 
     private:
-      int add(int first, int second);
-      int div(int first, int second);
-      int dec(int first, int second);
-      int mul(int first, int second);
+      float add(float first, float second);
+      float div(float first, float second);
+      float dec(float first, float second);
+      float mul(float first, float second);
       
       NumbersStackPtr numbers_;
       OperatorsListPtr operators_;

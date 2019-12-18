@@ -4,7 +4,7 @@
 namespace dev{
 
 class IProject {
-  virtual int run(const std::string& user_input) = 0;
+  virtual float run(const std::string& user_input) = 0;
 };
 
 }

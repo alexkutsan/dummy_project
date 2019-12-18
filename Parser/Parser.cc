@@ -1,7 +1,7 @@
 #include "Parser.h"
 
 namespace {
-  const auto kError = std::numeric_limits<int>::min();
+  const auto kError = std::numeric_limits<float>::min();
 }
 
 namespace dev {
@@ -27,7 +27,7 @@ bool Parser::parse(const std::string& data) {
 
     // Append numbers list
     try {
-      int number = std::stoi(user_data);
+      float number = std::stof(user_data);
       numbers_->push(number);
     } catch (const std::exception& exception) {
       std::cerr << "cannot convert "<< user_data << " to number!" << std::endl;

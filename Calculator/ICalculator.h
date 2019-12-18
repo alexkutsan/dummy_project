@@ -5,7 +5,7 @@ namespace dev {
 
 class ICalculator {
   public:
-    virtual int calculate() = 0;
+    virtual float calculate() = 0;
 };
 
 }

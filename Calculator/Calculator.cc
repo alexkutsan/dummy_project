@@ -2,7 +2,7 @@
 #include <iostream>
 
 namespace {
-  const auto kError = std::numeric_limits<int>::min();
+  const auto kError = std::numeric_limits<float>::min();
 }
 
 namespace dev {
@@ -11,7 +11,7 @@ namespace dev {
     : numbers_(std::move(numbers))
     , operators_(std::move(operators)) { }
 
-int Calculator::calculate() {
+float Calculator::calculate() {
 
   if (operators_->size() != numbers_->size() - 1) {
     return kError; 
@@ -43,19 +43,19 @@ int Calculator::calculate() {
   return numbers_->top();
 }
 
-int Calculator::add(int first, int second) {
+float Calculator::add(float first, float second) {
   return first + second;
 }
 
-int Calculator::div(int first, int second) {
+float Calculator::div(float first, float second) {
   return second ? (first / second) : kError;
 }
 
-int Calculator::dec(int first, int second) {
+float Calculator::dec(float first, float second) {
   return first - second;
 }
 
-int Calculator::mul(int first, int second) {
+float Calculator::mul(float first, float second) {
   return first * second;
 }
 

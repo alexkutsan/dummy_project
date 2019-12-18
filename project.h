@@ -16,7 +16,7 @@ namespace dev {
 class Project : public IProject {
  public:
   Project();
-  int run(const std::string& user_input);
+  float run(const std::string& user_input);
 
  private:
   std::unique_ptr<Calculator> calculator_;
