@@ -12,6 +12,13 @@ namespace types {
   typedef std::vector<std::string> OperatorsList;
 
   const auto kError = std::numeric_limits<float>::min();
+
+  enum Operators : char {
+    ADD = '+',
+    DEC = '-',
+    DIV = '/',
+    MUL = '*'
+  };
 }
 
 #endif 

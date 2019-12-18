@@ -16,24 +16,12 @@ float Calculator::calculate() {
   for(const auto& math_operator : *operators_) {
     auto left = numbers_->pop();
     auto right = numbers_->pop();
-    if (math_operator == "+") {
-      numbers_->push(add(left,right));
-      continue;
-    }
-
-    if (math_operator == "-") {
-      numbers_->push(dec(left,right));
-      continue;
-    }
-
-    if (math_operator == "*") {
-      numbers_->push(mul(left,right));
-      continue;
-    }
-
-    if (math_operator == "/") {
-      numbers_->push(div(left,right));
-      continue;
+    switch(*math_operator.begin()) {
+      case types::Operators::ADD: numbers_->push(add(left,right)); break;
+      case types::Operators::DEC: numbers_->push(dec(left,right)); break;
+      case types::Operators::DIV: numbers_->push(div(left,right)); break;
+      case types::Operators::MUL: numbers_->push(mul(left,right)); break;
+      default:break;
     }
   }
   return numbers_->top();
