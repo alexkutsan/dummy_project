@@ -32,10 +32,10 @@ TEST_F(ProjectTest, Simple_Operations_Float) {
 }
 
 TEST_F(ProjectTest, Simple_Operations_Exceptions) {
-    ASSERT_THROW(project_.run("a"), std::exception);
-    ASSERT_THROW(project_.run("a a"), std::exception);
-    ASSERT_THROW(project_.run("+"), std::exception);
-    ASSERT_THROW(project_.run("10 +"), std::exception);
+    ASSERT_THROW(project_.run("a"), std::runtime_error);
+    ASSERT_THROW(project_.run("a a"), std::runtime_error);
+    ASSERT_THROW(project_.run("+"), std::runtime_error);
+    ASSERT_THROW(project_.run("10 +"), std::runtime_error);
 }
 
 TEST_F(ProjectTest, Simple_Operations_Complex) {

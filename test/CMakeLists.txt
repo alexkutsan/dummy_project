@@ -9,3 +9,4 @@ add_gtest(ProjectTest)
 add_gtest(FixedQueueTest)
 
 target_link_libraries(ProjectTest PUBLIC ProjectLib)
+target_link_libraries(FixedQueueTest PUBLIC ProjectLib)

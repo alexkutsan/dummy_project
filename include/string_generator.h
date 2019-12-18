@@ -1,11 +1,9 @@
-#include "istring_generator.h"
-
 namespace dev {
-class StringGenerator : public IStringGenerator{
+class StringGenerator{
 public:
     StringGenerator(const std::string& basic);
-    bool next(std::string& result) override;
-    bool empty() override;
+    bool next(std::string& result);
+    bool empty();
 
     static bool isOperation(const std::string& item);
     static bool isOperand(const std::string& item);
