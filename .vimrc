@@ -25,7 +25,8 @@ command! Run :call Run()
 
 function! Test()
   silent :!clear
-  silent :!cd build/test && ./ProjectTest
+  silent :!cd build/test && ./ProjectTest; 
+  silent :!cd build/test && ./CalculatorTest; 
   :!echo "Done"
   redraw!
 endfunction
