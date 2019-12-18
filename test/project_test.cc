@@ -94,7 +94,7 @@ TEST_F(ProjectTest, Run_error_code_test_STACK_EMPTY) {
 }
 
 TEST_F(ProjectTest, Run_error_code_test_STACK_NOT_CORRECT_EXPRESSION) {
-    ASSERT_EQ(polish_notation_constant::ERROR_VALUE, project_.run("2 * 3"));
+    ASSERT_EQ(polish_notation_constant::ERROR_VALUE, project_.run("2 3 &"));
     ASSERT_EQ(static_cast<uint8_t>(polish_notation_constant::error_code::NOT_CORRECT_EXPRESSION),
               project_.get_error_code());
 }

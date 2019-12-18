@@ -37,30 +37,7 @@ value_t Project::take_value_from_stack(stack_numbers_t& stack)
     return value;
 }
 
-value_t Project::make_operation(char type_operation,
-                               double left_operand,
-                               double right_operand)
-{
-    switch(type_operation) {
-        case '+':
-            left_operand = sum(left_operand, right_operand);
-            break;
-        case '-':
-            left_operand = subtract(left_operand, right_operand);
-            break;
-        case '*':
-            left_operand = multiplication(left_operand, right_operand);
-            break;
-        case '/':
-            left_operand = division(left_operand, right_operand);
-            break;
-        default:
-            error_code_val = error_code::NOT_CORRECT_EXPRESSION;
-            break;
-    }
 
-    return left_operand;
-}
 
 bool Project::is_number(const std::string& s)
 {
@@ -82,6 +59,28 @@ int Project::get_error_code()
     return static_cast<uint32_t>(error_code_val);
 }
 
+value_t Project::calculateStackValue(std::string temp_str, stack_numbers_t& stack_numbers)
+{
+    double left_operand, right_operand;
+
+    right_operand = take_value_from_stack(stack_numbers);
+    left_operand  = take_value_from_stack(stack_numbers);
+
+    left_operand = project_operation_.make_operation(temp_str[0], left_operand, right_operand);
+
+    if(left_operand == ERROR_VALUE)
+    {
+        error_code_val = error_code::NOT_CORRECT_EXPRESSION;
+        return ERROR_VALUE;
+    }
+
+    if(left_operand != polish_notation_constant::ERROR_VALUE && temp_str[0] == '/') {
+        error_code_val = error_code::ZERO_DEVISION;
+    }
+
+    return left_operand;
+}
+
 value_t Project::processData(std::string& input_str)
 {
     stack_numbers_t stack_numbers;
@@ -100,20 +99,30 @@ value_t Project::processData(std::string& input_str)
         }
         else {
             if (true == is_valid_count_value(stack_numbers)) {
-                double left_operand, right_operand;
+                value_t value = calculateStackValue(temp_str, stack_numbers);
 
-                right_operand = take_value_from_stack(stack_numbers);
-                left_operand  = take_value_from_stack(stack_numbers);
+                if (value != ERROR_VALUE){
+                    stack_numbers.push(value);
+                }
+                else{
+                    break;
+                }
 
-                left_operand = make_operation(temp_str[0], left_operand, right_operand);
-                stack_numbers.push(left_operand);
+            } else {
+                error_code_val = error_code::NOT_CORRECT_COUNT_OF_OPERATION;
             }
         }
 
         if(error_code_val != error_code::NO_ERROR) {
-            clear_stack(stack_numbers);
-            break;
+                    clear_stack(stack_numbers);
+                    break;
         }
+    }
+
+
+    if (input_str.empty())
+    {
+        error_code_val = error_code::STACK_EMPTY;
     }
 
     if (stack_numbers.size() != 0) {
@@ -122,33 +131,4 @@ value_t Project::processData(std::string& input_str)
 
     return return_value;
 }
-
-double Project::division(double a, double b)
-{
-    if (b != 0) {
-        return a / b;
-    } else {
-        error_code_val = error_code::ZERO_DEVISION;
-
-        std::cout << "Devision on zero!\n";
-
-        return -1;
-    }
-}
-
-double Project::sum(double a, double b)
-{
-    return a + b;
-}
-
-double Project::subtract(double a, double b)
-{
-    return a - b;
-}
-
-double Project::multiplication(double a, double b)
-{
-    return a * b;
-}
-
 }  // namespace dev

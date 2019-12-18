@@ -6,7 +6,7 @@
 int main()
 {
     dev::Project project;
-    auto value = project.run("2 3 &");
+    auto value = project.run("2 2 +");
 
     if( value != polish_notation_constant::ERROR_VALUE)
     {

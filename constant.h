@@ -9,7 +9,7 @@ namespace polish_notation_constant
     typedef double value_t;
     typedef std::stack<value_t> stack_numbers_t;
 
-    constexpr double ERROR_VALUE = std::numeric_limits<value_t>::max();
+    constexpr value_t ERROR_VALUE = std::numeric_limits<value_t>::max();
 
     enum class error_code {
         STACK_EMPTY,

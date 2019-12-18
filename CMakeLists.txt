@@ -7,7 +7,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
-set(SOURCES project.cc constant.h)
+set(SOURCES project.cc constant.h project_operation.h project_operation.cpp)
 add_library(ProjectLib ${SOURCES})
 
 add_executable(project main.cc)
