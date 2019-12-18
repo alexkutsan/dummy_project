@@ -25,7 +25,10 @@ namespace dev {
       OperatorsListPtr get_operators();
 
     private:
-      std::string string_matches_operator(const std::string& possible_operator); 
+      std::string 
+        string_matches_operator(const std::string& possible_operator) const; 
+      std::vector<std::string> 
+        split(const std::string&) const;
       NumbersStackPtr numbers_;
       OperatorsListPtr operators_;
   };
