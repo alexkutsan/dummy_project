@@ -48,7 +48,7 @@ int Calculator::add(int first, int second) {
 }
 
 int Calculator::div(int first, int second) {
-  return second ? first / second : kError;
+  return second ? (first / second) : kError;
 }
 
 int Calculator::dec(int first, int second) {
