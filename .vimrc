@@ -27,6 +27,7 @@ function! Test()
   silent :!clear
   silent :!cd build/test && ./ProjectTest; 
   silent :!cd build/test && ./CalculatorTest; 
+  silent :!cd build/test && ./ParserTest; 
   :!echo "Done"
   redraw!
 endfunction
