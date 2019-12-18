@@ -3,6 +3,7 @@
 
 #include "ICalculator.h"
 #include "CustomStack.h"
+#include "utils.h"
 
 #include <vector>
 #include <string>
@@ -11,11 +12,9 @@
 
 namespace dev {
 
-  using namespace types;
-
   class Calculator : public ICalculator {
     public:
-      Calculator(NumbersStackPtr numbers, OperatorsListPtr operators);
+      Calculator(types::NumbersStackPtr numbers, types::OperatorsListPtr operators);
       float calculate() override;
 
     private:
@@ -24,8 +23,8 @@ namespace dev {
       float dec(float first, float second);
       float mul(float first, float second);
       
-      NumbersStackPtr numbers_;
-      OperatorsListPtr operators_;
+      types::NumbersStackPtr numbers_;
+      types::OperatorsListPtr operators_;
   };
 }
 

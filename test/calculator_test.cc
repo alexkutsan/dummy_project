@@ -4,10 +4,6 @@
 namespace dev {
 namespace testing {
 
-namespace {
-  const auto kError = std::numeric_limits<float>::min();
-}
-
 class CalculatorTest : public ::testing::Test {
  public:
   void SetUp() override { 
@@ -19,14 +15,14 @@ class CalculatorTest : public ::testing::Test {
 
   void PrepareTest(const std::initializer_list<float>& numbers,
                    const std::initializer_list<std::string>& operators) {
-    numbers_.reset(new NumbersStack(numbers));
-    operators_.reset(new OperatorsList(operators));
+    numbers_.reset(new types::NumbersStack(numbers));
+    operators_.reset(new types::OperatorsList(operators));
     calculator_.reset(new Calculator(std::move(numbers_),
                                      std::move(operators_)));
   }
   std::unique_ptr<dev::Calculator> calculator_;
-  NumbersStackPtr numbers_; 
-  OperatorsListPtr operators_;
+  types::NumbersStackPtr numbers_; 
+  types::OperatorsListPtr operators_;
 };
 
 TEST_F(CalculatorTest, CalculateAdd) {
@@ -52,19 +48,19 @@ TEST_F(CalculatorTest, CalculateComplex) {
 
 TEST_F(CalculatorTest, CalculateNoNumbers) {
   PrepareTest({},{"+","*","-","/"});
-  EXPECT_EQ(kError,calculator_->calculate());
+  EXPECT_EQ(types::kError,calculator_->calculate());
 }
 TEST_F(CalculatorTest, CalculateNoOperators) {
   PrepareTest({10.0,20.0},{});
-  EXPECT_EQ(kError,calculator_->calculate());
+  EXPECT_EQ(types::kError,calculator_->calculate());
 }
 TEST_F(CalculatorTest, CalculateNothing) {
   PrepareTest({},{});
-  EXPECT_EQ(kError,calculator_->calculate());
+  EXPECT_EQ(types::kError,calculator_->calculate());
 }
 TEST_F(CalculatorTest, CalculateDivideZero) {
   PrepareTest({0.0,1.0},{"/"});
-  EXPECT_EQ(kError,calculator_->calculate());
+  EXPECT_EQ(types::kError,calculator_->calculate());
 }
 
 }  // namespace testing

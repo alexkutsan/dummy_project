@@ -55,10 +55,5 @@ namespace types {
     private:
       std::stack<T> stack_;
   };
-
-  typedef std::unique_ptr<CustomStack<float>> NumbersStackPtr;
-  typedef CustomStack<float> NumbersStack;
-  typedef std::unique_ptr<std::vector<std::string>> OperatorsListPtr;
-  typedef std::vector<std::string> OperatorsList;
 }
 #endif

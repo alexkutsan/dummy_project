@@ -5,10 +5,6 @@
 namespace dev {
 namespace testing {
 
-namespace {
-  const auto kError = std::numeric_limits<float>::min();
-}
-
 class ParserTest : public ::testing::Test {
  protected:
   dev::Parser parser_;

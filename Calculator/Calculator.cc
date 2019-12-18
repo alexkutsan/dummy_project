@@ -1,20 +1,16 @@
 #include "Calculator.h"
 #include <iostream>
 
-namespace {
-  const auto kError = std::numeric_limits<float>::min();
-}
-
 namespace dev {
-  Calculator::Calculator(NumbersStackPtr numbers, 
-                 OperatorsListPtr operators) 
+  Calculator::Calculator(types::NumbersStackPtr numbers, 
+                 types::OperatorsListPtr operators) 
     : numbers_(std::move(numbers))
     , operators_(std::move(operators)) { }
 
 float Calculator::calculate() {
 
   if (operators_->size() != numbers_->size() - 1) {
-    return kError; 
+    return types::kError; 
   }
 
   for(const auto& math_operator : *operators_) {
@@ -48,7 +44,7 @@ float Calculator::add(float first, float second) {
 }
 
 float Calculator::div(float first, float second) {
-  return second ? (first / second) : kError;
+  return second ? (first / second) : types::kError;
 }
 
 float Calculator::dec(float first, float second) {

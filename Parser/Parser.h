@@ -3,6 +3,7 @@
 
 #include "IParser.h"
 #include "CustomStack.h"
+#include "utils.h"
 
 #include <vector>
 #include <memory>
@@ -21,16 +22,16 @@ namespace dev {
       Parser();
       bool parse(const std::string& data) override;
 
-      NumbersStackPtr get_numbers();
-      OperatorsListPtr get_operators();
+      types::NumbersStackPtr get_numbers();
+      types::OperatorsListPtr get_operators();
 
     private:
       std::string 
         string_matches_operator(const std::string& possible_operator) const; 
       std::vector<std::string> 
         split(const std::string&) const;
-      NumbersStackPtr numbers_;
-      OperatorsListPtr operators_;
+      types::NumbersStackPtr numbers_;
+      types::OperatorsListPtr operators_;
   };
 }
 

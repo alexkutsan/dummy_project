@@ -1,13 +1,9 @@
 #include "Parser.h"
 
-namespace {
-  const auto kError = std::numeric_limits<float>::min();
-}
-
 namespace dev {
 Parser::Parser() 
-  : numbers_(new NumbersStack()), 
-    operators_(new OperatorsList()) {
+  : numbers_(new types::NumbersStack()), 
+    operators_(new types::OperatorsList()) {
 }
 
 bool Parser::parse(const std::string& data) {
@@ -63,11 +59,11 @@ std::vector<std::string> Parser::split(const std::string& data) const {
   return result;
 }
 
-NumbersStackPtr Parser::get_numbers() {
+types::NumbersStackPtr Parser::get_numbers() {
   return std::move(numbers_);
 }
 
-OperatorsListPtr Parser::get_operators() {
+types::OperatorsListPtr Parser::get_operators() {
   return std::move(operators_);
 } 
 
