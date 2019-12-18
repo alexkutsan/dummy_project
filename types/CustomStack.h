@@ -4,6 +4,7 @@
 #include <stack>
 #include <vector>
 #include <memory>
+#include <initializer_list>
 
 namespace types {
 
@@ -13,6 +14,11 @@ namespace types {
       explicit CustomStack<T>() = default;
       explicit CustomStack<T>(const CustomStack<T>& ) = default;
       explicit CustomStack<T>(CustomStack<T>&&) = default;
+      explicit CustomStack<T>(const std::initializer_list<T>& list) {
+        for (const auto& element : list) {
+          stack_.push(element);
+        }
+      }
 
       void push(T value) {
         stack_.push(value);
