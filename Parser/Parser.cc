@@ -15,9 +15,6 @@ bool Parser::parse(const std::string& data) {
     return false;
   }
 
-  numbers_->clear();
-  operators_->clear();
-
   std::istringstream data_stream(data);
   std::string buffer;
   while (std::getline(data_stream, buffer, ' ')) {
@@ -35,8 +32,8 @@ bool Parser::parse(const std::string& data) {
     }
   } 
 
-  if (numbers_->empty() || operators_->empty()) {
-    return false;
+  if (operators_->size() != numbers_->size() - 1) {
+    return false; 
   }
 
   return true;
