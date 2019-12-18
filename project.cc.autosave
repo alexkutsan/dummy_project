@@ -98,7 +98,7 @@ value_t Project::processData(std::string& input_str)
             stack_numbers.push(std::stod(temp_str.c_str()));
         }
         else {
-            if (true == is_valid_count_value(stack_numbers)) {
+            if (is_valid_count_value(stack_numbers) == true) {
                 value_t value = calculateStackValue(temp_str, stack_numbers);
 
                 if (value != ERROR_VALUE){

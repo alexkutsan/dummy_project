@@ -24,7 +24,7 @@ TEST_F(ProjectTest, Run_long_expression_below_zero) {
     ASSERT_EQ(-1, project_.run("1 2 - 1 + 1 -"));
 }
 
-TEST_F(ProjectTest, Run_long_expression_below_complex_test) {
+TEST_F(ProjectTest, Run_long_expression_complex_test) {
     ASSERT_EQ(21, project_.run("1 2 + 3 4 + *"));
 }
 
