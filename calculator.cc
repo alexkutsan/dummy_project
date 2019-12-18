@@ -9,27 +9,20 @@
 namespace dev {
 
 void Calculator::save_user_input(const std::string& input) {
-  user_input_ = input;
-}
-
-bool Calculator::is_user_input_correct(const std::string& input) {
-  // TODO: function looks like const, but changes class state
   const std::regex input_pattern(
       R"(^(-?\d*\.?\d*)\s(-?\d*\.?\d*)\s(-?\d*\.?\d*)\s*([\+\-\*\/])$)");
-  // TODO: split regexp to several steps
   const bool res = std::regex_search(input, sm_, input_pattern);
-  return res;
+  if (res) {
+    user_input_ = input;
+  }
 }
-
 
 void Calculator::process_operands(const std::string& operand,
                                   std::vector<float>& operands) const {
   // TODO: probably rename to extract operands
   // TODO: use return value instead of output parameter
   float current_val = 0; // TODO: Do you need early initialization?
-  std::string::size_type sz;  // Alias of size_t
-  current_val = std::stof(operand, &sz);
-  // TODO:  Do you use sz value? it is not mandatory for stof
+  current_val = std::stof(operand);
   operands.push_back(current_val);
 }
 

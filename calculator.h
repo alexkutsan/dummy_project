@@ -8,7 +8,6 @@ namespace dev {
 
 class Calculator : public ICalculator {
  public:
-  bool is_user_input_correct(const std::string& input) override;
   float calculate_result() const override;
   void save_user_input(const std::string& input) override;
   void process_operands(const std::string& operand,

@@ -10,7 +10,7 @@ int main() {
       << std::endl;
   const std::string user_input = get_user_input();
 
-  if (!calc_obj.is_user_input_correct(user_input)) {
+  if (!is_user_input_correct(user_input)) {
     std::cout << "Wrong Input!!! Exiting..." << std::endl;
     return 0;
   }

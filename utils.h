@@ -14,10 +14,22 @@ struct compare {
   float key;
   compare(const float& i) : key(i) {}
 
-  bool operator()(const float& i) {
-    return (i == key);
-  }
+  bool operator()(const float& i) { return (i == key); }
 };
+
+/**
+ * @brief is_user_input_correct check that input correspponds
+ * pattern "NUM-SPACE-NUM-SPACE-NUM-SPACE-OPERATOR"
+ * @note operator can be any of "+, -, *, /"
+ * @param input input to check
+ * @return true if input correct, otherwise - false
+ */
+bool is_user_input_correct(const std::string& input) {
+  const std::regex input_pattern(
+      R"(^(-?\d*\.?\d*)\s(-?\d*\.?\d*)\s(-?\d*\.?\d*)\s*([\+\-\*\/])$)");
+  const bool res = std::regex_search(input, input_pattern);
+  return res;
+}
 
 std::string get_user_input() {
   std::string user_input;
