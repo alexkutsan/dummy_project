@@ -4,7 +4,7 @@
 
 namespace PolishCalcComponent {
 
-value_t PolishCalc::process(const std::string &inputStr)
+value_t PolishCalc::calculate(const std::string &inputStr)
 {
     std::vector<std::string> tokens;
     PolishCalcComponent::split2Tokens(inputStr, tokens);

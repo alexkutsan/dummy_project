@@ -1,19 +1,17 @@
 #include "polishcalclogic.h"
+#include <assert.h>
+#include <iostream>
 
 namespace PolishCalcComponent {
 
-LogicError PolishCalcLogic::addValue(const value_t &val)
+void PolishCalcLogic::addValue(const value_t &val)
 {
     m_values.push(val);
-
-    return LogicError::NO_ERROR;
 }
 
-LogicError PolishCalcLogic::process(operation_t operation)
+void PolishCalcLogic::process(operation_t operation)
 {
-    if (m_values.size() < 2){
-        return LogicError::NOT_ENOUTH_VALUES;
-    }
+    assert(m_values.size() >= 2);
 
     auto b = m_values.top();
     m_values.pop();
@@ -22,19 +20,13 @@ LogicError PolishCalcLogic::process(operation_t operation)
     m_values.pop();
 
     m_values.push(operation(a, b));
-
-    return LogicError::NO_ERROR;
 }
 
-LogicError PolishCalcLogic::getResult(value_t &res)
+value_t PolishCalcLogic::getResult() const
 {
-    if (m_values.size() == 1){
-        res = m_values.top();
-        return LogicError::NO_ERROR;
-    }
-    else {
-        return LogicError::RESULT_UNDEFINED;
-    }
+    assert(m_values.size() == 1);
+
+    return m_values.top();
 }
 
 void PolishCalcLogic::reset()

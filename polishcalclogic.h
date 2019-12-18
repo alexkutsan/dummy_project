@@ -6,24 +6,16 @@
 
 namespace PolishCalcComponent {
 
-enum class LogicError
-{
-    NO_ERROR,
-    NOT_ENOUTH_VALUES,
-    RESULT_UNDEFINED
-};
-
 class PolishCalcLogic
 {
 public:
-
-    LogicError addValue(const value_t& val);
-    LogicError process(operation_t operation);
-    LogicError getResult(value_t& res);
     void reset();
+    void addValue(const value_t& val);
+    void process(operation_t operation);
+
+    value_t getResult() const;
 
 private:
-
     std::stack<value_t> m_values;
 };
 

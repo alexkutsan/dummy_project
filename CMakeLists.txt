@@ -14,7 +14,7 @@ set(SOURCES
     project.cc
     polishcalc.cc
     polishcalclogic.cc
-    polishcalcparser.cc
+    polishcalcutils.cc
 )
 add_library(ProjectLib ${SOURCES})
 

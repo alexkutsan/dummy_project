@@ -1,27 +1,24 @@
 #include "polishcalcparser.h"
+#include <assert.h>
 
-
-PolishCalcComponent::ParseError PolishCalcComponent::parseString(const std::string &str, std::vector<std::string>& strs)
+void PolishCalcComponent::parseString(const std::string& in, std::vector<std::string>& out)
 {
-    strs.clear();
+    assert(in.size() != 0);
 
-    if (str.size() == 0){
-        return ParseError::EMPTY_INPUT;
-    }
+    out.clear();
 
-    size_t pos = str.find_first_of( ' ' );
+    size_t pos = in.find_first_of( ' ' );
     size_t initialPos = 0;
 
     // Decompose statement
     while( pos != std::string::npos ) {
-        strs.push_back( str.substr( initialPos, pos - initialPos ) );
+        out.push_back( in.substr( initialPos, pos - initialPos ) );
         initialPos = pos + 1;
 
-        pos = str.find_first_of( ' ', initialPos );
+        pos = in.find_first_of( ' ', initialPos );
     }
 
     // Add the last one
-    strs.push_back( str.substr( initialPos, std::min( pos, str.size() ) - initialPos + 1 ) );
-
-    return ParseError::NO_ERROR;
+    out.push_back( in.substr( initialPos, std::min( pos, in.size() ) - initialPos + 1 ) );
 }
+

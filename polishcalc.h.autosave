@@ -12,7 +12,7 @@ class PolishCalc
 {
 
 public:
-    value_t process(const std::string& inputStr);
+    value_t calculate(const std::string& inputStr);
 
 private:    
     void processTokens(const std::vector<std::string>& tokens);
