@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <string>
-#include "polishcalclogic.h"
+#include "ioperandsmemory.h"
 
 namespace PolishCalcComponent {
 
@@ -14,11 +14,10 @@ class PolishCalc
 public:
     value_t calculate(const std::string& inputStr);
 
-private:    
-    void processTokens(const std::vector<std::string>& tokens);
-    void processToken(const std::string& token);
 
-    PolishCalcLogic m_logic;
+private:
+    void processTokens(const std::vector<std::string>& tokens, IOperandsMemory* memory);
+
 };
 
 } //PolishCalc

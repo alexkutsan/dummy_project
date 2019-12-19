@@ -1,6 +1,8 @@
 #include <assert.h>
+#include <memory>
 #include "polishcalc.h"
 #include "polishcalcutils.h"
+#include "operations.h"
 
 namespace PolishCalcComponent {
 
@@ -9,34 +11,21 @@ value_t PolishCalc::calculate(const std::string &inputStr)
     std::vector<std::string> tokens;
     PolishCalcComponent::split2Tokens(inputStr, tokens);
 
-    processTokens(tokens);
+    std::unique_ptr<IOperandsMemory> memory(makeMemory());
 
-    return m_logic.getResult();
+    processTokens(tokens, memory.get());
+
+    assert(1 == memory->size());
+
+    return memory->getOperand();
 }
 
-void PolishCalc::processTokens(const std::vector<std::string>& tokens)
+void PolishCalc::processTokens(const std::vector<std::string>& tokens, IOperandsMemory* memory)
 {
-    m_logic.reset();
-
     for (const auto& token: tokens) {
-        processToken(token);
+        operation_t operation = PolishCalcComponent::getOperation(token);
+        memory->applyOperation(operation);
     }
 }
-
-void PolishCalc::processToken(const std::string &token)
-{
-    operation_t* operationPtr;
-
-    operationPtr = PolishCalcComponent::getOperation(token);
-
-    if (operationPtr){
-        m_logic.process(*operationPtr);
-    }
-    else {
-        value_t value = PolishCalcComponent::getValue(token);
-        m_logic.addValue(value);
-    }
-}
-
 
 }

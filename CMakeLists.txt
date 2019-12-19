@@ -9,12 +9,15 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
+include_directories(${PROJECT_SOURCE_DIR})
 
 set(SOURCES
+    ioperandsmemory.h
     project.cc
     polishcalc.cc
-    polishcalclogic.cc
     polishcalcutils.cc
+    operandsmemory.cc
+    operations.cc
 )
 add_library(ProjectLib ${SOURCES})
 

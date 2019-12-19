@@ -31,6 +31,10 @@ TEST_F(ProjectTest, SimpleDiv) {
    ASSERT_EQ(2, project_.run("4 2 /"));
 }
 
+TEST_F(ProjectTest, SimpleNeg) {
+   ASSERT_EQ(-4, project_.run("4 !"));
+}
+
 TEST_F(ProjectTest, DubleAdd) {
    ASSERT_EQ(6, project_.run("1 2 + 3 +"));
    ASSERT_EQ(6, project_.run("1 2 3 + +"));

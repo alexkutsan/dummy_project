@@ -1,14 +1,14 @@
 #ifndef POLISHCALCTYPES
 #define POLISHCALCTYPES
 
-#include <limits>
-#include <queue>
+#include <functional>
 
 namespace PolishCalcComponent {
 
 using value_t = double;
 
-using operation_t = value_t(const value_t&, const value_t&);
+class IOperandsMemory;
+using operation_t = std::function<void(PolishCalcComponent::IOperandsMemory*)>;
 
 }
 
