@@ -12,9 +12,14 @@ namespace dev {
 
     bool StringGenerator::next(std::string& result) {
         result = "";
+        //not obvious loop!
         while(!empty()) {
+
+            // get front and pop!!!
             auto item = _basic.front();
             _basic.erase(0,1);
+
+            // how about const?
             if (' ' == item) {
                 break;
             }

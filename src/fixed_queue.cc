@@ -8,8 +8,9 @@ namespace dev {
         std::queue<float>::push(item);
     }
 
+    // Not obvious naming
     bool FixedSizeQueue::getFirst(float& result) {
-        result = 0;
+        result = 0;                     // result will be changed it bad case (if stack is empty)
         if (this->empty()){
             return false;
         }
