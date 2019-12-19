@@ -7,5 +7,6 @@ class Project : public IProject {
   // IProject interface
  public:
   int run();
+  void stackTest();
 };
 }  // namespace dev
