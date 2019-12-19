@@ -6,17 +6,29 @@
 #include <vector>
 #include "utils.h"
 
+
 namespace dev {
 
-void Calculator::save_user_input(const std::string& input) {
-  const std::regex input_pattern(
-      R"(^(-?\d*\.?\d*)\s(-?\d*\.?\d*)\s(-?\d*\.?\d*)\s*([\+\-\*\/])$)");
-  const bool res = std::regex_search(input, sm_, input_pattern);
-  if (res) {
-    user_input_ = input;
-  }
+//void Calculator::save_user_input(const std::string& input) {
+//    // ** Method checks if input is correct and saves string inserted.
+//    // ** Shoud be devided into two separate methods
+//  const std::regex input_pattern(
+//      R"(^(-?\d*\.?\d*)\s(-?\d*\.?\d*)\s(-?\d*\.?\d*)\s*([\+\-\*\/])$)");
+//  const bool res = std::regex_search(input, sm_, input_pattern);
+//  if (res) {
+//    user_input_ = input;
+//  }
+//}
+//
+void Calculator::save_user_input(const std::string& input){
+    if(is_input_correct(input)){
+        user_input_ = input;
+    }
+    else {
+        user_input_ = "";
+       // exception here
+    }
 }
-
 void Calculator::process_operands(const std::string& operand,
                                   std::vector<float>& operands) const {
   // TODO: probably rename to extract operands
@@ -35,6 +47,8 @@ float Calculator::process_operator(const std::string& operation,
   // I would say that it is overengineering for this task
 
   // Can we extract plus, minus , ... to separate functions?
+
+  // ** Probably strategy pattern would better to be used instead of switch with inner calculations
 //  float sum(std::vector<float>& operands){
 
 //  }
@@ -63,6 +77,8 @@ float Calculator::process_operator(const std::string& operation,
 
   if ("/" == operation) {
     if (std::any_of(operands.begin() + 1, operands.end(), compare(0))) {
+      // ** This 'if' doesn't handle math operations itself. Probably should be moved to separate method
+      // ** inside UI class to make input be checked before calculation
       // Looks like check devision by zero.
       // Result is 0 ? Any error handling ?
       return 0;
@@ -75,6 +91,23 @@ float Calculator::process_operator(const std::string& operation,
   // This function is not error safe.
   // Please either make it error safe, or create assers in the begining
   return 0;
+}
+
+// **
+bool Calculator::is_input_correct(const std::string &input)
+{
+    const std::regex input_pattern(
+        R"(^(-?\d*\.?\d*)\s(-?\d*\.?\d*)\s(-?\d*\.?\d*)\s*([\+\-\*\/])$)");
+    const bool res = std::regex_search(input, sm_, input_pattern);
+    return res;
+}
+
+bool Calculator::is_divident_equals_zero(std::string &operation)
+{
+    if("/" == operation){
+        return true;
+    }
+    return false;
 }
 
 float Calculator::calculate_result() const {

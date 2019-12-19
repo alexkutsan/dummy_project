@@ -5,6 +5,8 @@
 
 int main() {
   dev::Calculator calc_obj;
+
+  // TODO: Make UI (input/output as a separate class or state machine)
   std::cout
       << "Input string in format: \"number\" \"space\" \"number\" \"operation\""
       << std::endl;
@@ -12,6 +14,7 @@ int main() {
 
   if (!is_user_input_correct(user_input)) {
     std::cout << "Wrong Input!!! Exiting..." << std::endl;
+
     return 0;
   }
 

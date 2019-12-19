@@ -27,6 +27,7 @@ struct compare {
 bool is_user_input_correct(const std::string& input) {
   const std::regex input_pattern(
       R"(^(-?\d*\.?\d*)\s(-?\d*\.?\d*)\s(-?\d*\.?\d*)\s*([\+\-\*\/])$)");
+   // TODO: split regexp to several steps
   const bool res = std::regex_search(input, input_pattern);
   return res;
 }
