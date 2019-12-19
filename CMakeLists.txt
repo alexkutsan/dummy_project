@@ -1,10 +1,24 @@
 cmake_minimum_required(VERSION 3.5.1)
 project(dummy_cmake_project)
 
-set(CMAKE_CXX_STANDARD 14)
-list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+set(CMAKE_AUTOMOC ON)
 
-set(SOURCES project.cc)
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
+include_directories(${PROJECT_SOURCE_DIR})
+
+set(SOURCES
+    ioperandsmemory.h
+    project.cc
+    polishcalc.cc
+    polishcalcutils.cc
+    operandsmemory.cc
+    operations.cc
+)
 add_library(ProjectLib ${SOURCES})
 
 add_executable(project main.cc)
