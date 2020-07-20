@@ -24,11 +24,11 @@ namespace dev
         }
         TEST_F(CalculatorTest, MissingOperand)
         {
-            EXPECT_EQ(-1, project_.calc("5 +"));
+            EXPECT_ANY_THROW(project_.calc("5 +"));
         }
         TEST_F(CalculatorTest, MissingOperator)
         {
-            EXPECT_EQ(-1, project_.calc("5 2"));
+            EXPECT_ANY_THROW(project_.calc("5 2"));
         }
         TEST_F(CalculatorTest, EmptyString)
         {
@@ -52,7 +52,8 @@ namespace dev
 
         TEST_F(CalculatorTest, MixingDoubleAndInt)
         {
-            EXPECT_EQ(4.16, project_.calc("12.5 3 / "));
+            auto res = (int)project_.calc("12.5 3 / ");
+            EXPECT_EQ(4, res);
         }
     }
 }
