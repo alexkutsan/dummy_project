@@ -19,7 +19,7 @@ TEST_F(CalculatorTest, CalcAdd) {
 }
 
 TEST_F(CalculatorTest, CalcSub) {
-  ASSERT_DOUBLE_EQ(-1.0, calculator_.calc("1 2 +"));
+  ASSERT_DOUBLE_EQ(-1.0, calculator_.calc("1 2 -"));
 }
 
 TEST_F(CalculatorTest, CalcMul) {
