@@ -11,16 +11,19 @@
 
 namespace dev {
 
+bool Calculator::isOperator(const std::string& token) {
+    std::array<std::string, 4> operators = {"+", "-", "*", "/"};
+    return (std::find(operators.begin(), operators.end(), token) != operators.end());
+}
+
 double Calculator::calc(std::string expression) {
     std::istringstream iss(expression);
     std::vector<std::string> tokens((std::istream_iterator<std::string>(iss)),
                                      std::istream_iterator<std::string>());
 
     std::stack<std::string> stkTokens;
-
-    std::array<std::string, 4> operators = {"+", "-", "*", "/"};
     for (auto token : tokens) {
-        if (std::find(operators.begin(), operators.end(), token) != operators.end()) {
+        if (isOperator(token)) {
             double operand1 = std::stod(stkTokens.top());
             stkTokens.pop();
             double operand2 = std::stod(stkTokens.top());
