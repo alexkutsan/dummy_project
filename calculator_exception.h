@@ -8,6 +8,12 @@ class InvalidOperandException : public std::exception {
     }
 };
 
+class OperandOutOfRangeException : public std::exception {
+	const char * what () const throw () {
+    	return "Invalid Operand Exception";
+    }
+};
+
 class InvalidOperatorException : public std::exception {
 	const char * what () const throw () {
     	return "Invalid Operator Exception";

@@ -15,6 +15,16 @@ bool Calculator::isOperator(const std::string& token) {
     return (std::find(operators.begin(), operators.end(), token) != operators.end());
 }
 
+double Calculator::toOperand(const std::string& token) {
+    try {
+        return std::stod(token);
+    } catch (const std::invalid_argument&) {
+        throw InvalidOperandException();
+    } catch (const std::out_of_range&) {
+        throw OperandOutOfRangeException();
+    }
+}
+
 double Calculator::calc(const std::string& expression) {
     std::istringstream iss(expression);
     std::vector<std::string> tokens((std::istream_iterator<std::string>(iss)),
@@ -23,9 +33,9 @@ double Calculator::calc(const std::string& expression) {
     std::stack<std::string> stkTokens;
     for (auto token : tokens) {
         if (isOperator(token)) {
-            double operand1 = std::stod(stkTokens.top());
+            double operand1 = toOperand(stkTokens.top());
             stkTokens.pop();
-            double operand2 = std::stod(stkTokens.top());
+            double operand2 = toOperand(stkTokens.top());
             stkTokens.pop();
 
             stkTokens.push(std::to_string(evalOperation(operand1, operand2, token)));

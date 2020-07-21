@@ -13,6 +13,7 @@ public:
 
 private:
     bool isOperator(const std::string& token);
+    double toOperand(const std::string& token);
     double evalOperation(const double& operand1, const double& operand2, const std::string& operatr);
 };
 
