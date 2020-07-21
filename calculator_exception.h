@@ -2,6 +2,8 @@
 
 #include <exception>
 
+namespace dev {
+
 class InvalidOperandException : public std::exception {
 	const char * what () const throw () {
     	return "Invalid Operand Exception";
@@ -10,7 +12,7 @@ class InvalidOperandException : public std::exception {
 
 class OperandOutOfRangeException : public std::exception {
 	const char * what () const throw () {
-    	return "Invalid Operand Exception";
+    	return "Operand Out Of Range Exception";
     }
 };
 
@@ -25,3 +27,5 @@ class DivideByZeroException : public std::exception {
     	return "Divide By Zero Exception";
     }
 };
+
+}  // namespace dev
