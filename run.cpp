@@ -43,6 +43,18 @@ class Rental {
 
   Movie movie() const;
 
+  static Rental createFromLine(const std::string& line,
+                               const std::map<int, Movie>& movies) {
+    std::vector<std::string> rental;
+    for (size_t first = 0, last = 0; last < line.length(); first = last + 1) {
+      last = line.find(' ', first);
+      rental.push_back(line.substr(first, last - first));
+    }
+    int daysRented = std::stoi(rental[1]);
+    Movie movie = movies.at(std::stoi(rental[0]));
+    return Rental(daysRented, movie);
+  }
+
  private:
   int days_rented_;
   Movie movie_;
@@ -88,31 +100,27 @@ void run(std::istream& in, std::ostream& out) {
     if (input.empty()) {
       break;
     }
-    std::vector<std::string> rental;
-    for (size_t first = 0, last = 0; last < input.length(); first = last + 1) {
-      last = input.find(' ', first);
-      rental.push_back(input.substr(first, last - first));
-    }
-    Movie movie = movies.at(std::stoi(rental[0]));
+    auto rental = Rental::createFromLine(input, movies);
+
+    Movie movie = rental.movie();
     double thisAmount = 0;
-    int daysRented = std::stoi(rental[1]);
     // determine amounts for rental
     if (movie.release_type() == "REGULAR") {
       thisAmount += 2;
-      if (daysRented > 2)
-        thisAmount += (daysRented - 2) * 1.5;
+      if (rental.days_rented() > 2)
+        thisAmount += (rental.days_rented() - 2) * 1.5;
     } else if (movie.release_type() == "NEW_RELEASE") {
-      thisAmount += daysRented * 3;
+      thisAmount += rental.days_rented() * 3;
     } else if (movie.release_type() == "CHILDRENS") {
       thisAmount += 1.5;
-      if (daysRented > 3)
-        thisAmount += (daysRented - 3) * 1.5;
+      if (rental.days_rented() > 3)
+        thisAmount += (rental.days_rented() - 3) * 1.5;
     }
 
     // add frequent renter points
     frequentRenterPoints++;
     // add bonus for a two day new release rental
-    if (movie.release_type() == "NEW_RELEASE" && daysRented > 1) {
+    if (movie.release_type() == "NEW_RELEASE" && rental.days_rented() > 1) {
       frequentRenterPoints++;
     }
     // show figures for this rental
