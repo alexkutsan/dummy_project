@@ -20,11 +20,11 @@ namespace dev
 
         case '/':
             if (secOperand == 0)
-                throw std::runtime_error("divide by zero");
+                throw Exception{"divide by zero"};
             res = firstOperand / secOperand;
             break;
         default:
-            throw std::runtime_error("not a valid operation to perform");
+            throw Exception{"not a valid operation to perform"};
             break;
         }
         return res;
@@ -80,10 +80,10 @@ namespace dev
                 }
                 else
                 {
-                    throw std::runtime_error("No operand to work on");
+                    throw Exception{"No operand to work on"};
                 }
-                
-                double res=0;
+
+                double res = 0;
                 //try
                 {
                     res = performOperation(str[i], firstOperand, secOperand);
@@ -97,7 +97,7 @@ namespace dev
         }
 
         if (mStack.size() > 1)
-            throw std::runtime_error("Not a valid string");
+            throw Exception{"Not a valid string"};
 
         return mStack.top();
     }
