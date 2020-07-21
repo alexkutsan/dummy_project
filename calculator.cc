@@ -1,9 +1,8 @@
 #include "calculator.h"
-
+#include "calculator_exception.h"
 
 #include <array>
 #include <algorithm>
-#include <exception>
 #include <iterator>
 #include <sstream>
 #include <stack>
@@ -50,13 +49,11 @@ double Calculator::evalOperation(const double& operand1, const double& operand2,
         return (operand2 * operand1);
     case '/':
         if (operand1 == 0) {
-            // Divide by zero exception
-            throw std::exception();
+            throw DivideByZeroException();
         }
         return (operand2 / operand1);
     default:
-        // Invalid operator exception
-        throw std::exception();
+        throw InvalidOperatorException();
     }
 }
 
