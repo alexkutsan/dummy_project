@@ -16,7 +16,7 @@ bool Calculator::isOperator(const std::string& token) {
     return (std::find(operators.begin(), operators.end(), token) != operators.end());
 }
 
-double Calculator::calc(std::string expression) {
+double Calculator::calc(const std::string& expression) {
     std::istringstream iss(expression);
     std::vector<std::string> tokens((std::istream_iterator<std::string>(iss)),
                                      std::istream_iterator<std::string>());
@@ -38,7 +38,7 @@ double Calculator::calc(std::string expression) {
     return std::stod(stkTokens.top());
 }
 
-double Calculator::evalOperation(double operand1, double operand2, std::string operatr) {
+double Calculator::evalOperation(const double& operand1, const double& operand2, const std::string& operatr) {
     char op = operatr[0];
     switch (op)
     {

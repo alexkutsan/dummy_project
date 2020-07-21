@@ -7,7 +7,7 @@ namespace dev{
 // ICaculator interface
 class ICalculator {
 public:
-  virtual double calc(std::string expression) = 0;
+  virtual double calc(const std::string& expression) = 0;
 };
 
 }

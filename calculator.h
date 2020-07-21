@@ -7,11 +7,11 @@ public:
     Calculator() = default;
     ~Calculator() = default;
 
-    double calc(std::string expression);
+    double calc(const std::string& expression);
 
 private:
     bool isOperator(const std::string& token);
-    double evalOperation(double operand1, double operand2, std::string operatr);
+    double evalOperation(const double& operand1, const double& operand2, const std::string& operatr);
 };
 
 }  // namespace dev
