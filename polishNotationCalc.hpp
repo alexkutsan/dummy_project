@@ -28,12 +28,12 @@ namespace dev
     class PolishCalc
     {
     public:
-        double calc(std::string);
+        double calc(const std::string&);
 
     private:
-        bool isNumeric(char num);
-        bool isOperator(char num);
-        double performOperation(char operation, double firstOperand, double secOperand);
+        bool isNumeric(const char num);
+        bool isOperator(const char num);
+        double performOperation(const char operation, const double firstOperand, const double secOperand);
         std::stack<double> mStack;
     };
 

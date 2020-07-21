@@ -29,7 +29,7 @@ namespace dev
         }
         return res;
     }
-    bool PolishCalc::isNumeric(char num)
+    bool PolishCalc::isNumeric(const char num)
     {
         double temp = num - '0';
         if (temp >= 0 && temp <= 9)
@@ -37,13 +37,13 @@ namespace dev
 
         return false;
     }
-    bool PolishCalc::isOperator(char num)
+    bool PolishCalc::isOperator(const char num)
     {
         if (num == '+' || num == '-' || num == '*' || num == '/')
             return true;
         return false;
     }
-    double PolishCalc::calc(std::string str)
+    double PolishCalc::calc(const std::string &str)
     {
         if (str.size() == 0)
             return 0;
