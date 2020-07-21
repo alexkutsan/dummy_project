@@ -68,6 +68,42 @@ class Customer {
 
   void AddRental(const Rental& rental);
 
+  void statement(std::ostringstream& result) {
+    double totalAmount = 0;
+    int frequentRenterPoints = 0;
+    for (auto rental : rentals_) {
+      Movie movie = rental.movie();
+      double thisAmount = 0;
+      // determine amounts for rental
+      if (movie.release_type() == "REGULAR") {
+        thisAmount += 2;
+        if (rental.days_rented() > 2)
+          thisAmount += (rental.days_rented() - 2) * 1.5;
+      } else if (movie.release_type() == "NEW_RELEASE") {
+        thisAmount += rental.days_rented() * 3;
+      } else if (movie.release_type() == "CHILDRENS") {
+        thisAmount += 1.5;
+        if (rental.days_rented() > 3)
+          thisAmount += (rental.days_rented() - 3) * 1.5;
+      }
+
+      // add frequent renter points
+      frequentRenterPoints++;
+      // add bonus for a two day new release rental
+      if (movie.release_type() == "NEW_RELEASE" && rental.days_rented() > 1) {
+        frequentRenterPoints++;
+      }
+      // show figures for this rental
+      result << "\t" << movie.name() + "\t" << thisAmount << "\n";
+      totalAmount += thisAmount;
+    }
+
+    // add footer lines
+    result << "You owed " << totalAmount << "\n";
+    result << "You earned " << frequentRenterPoints
+           << " frequent renter points\n";
+  }
+
  private:
   std::string name_;
   std::vector<Rental> rentals_;
@@ -87,13 +123,52 @@ void run(std::istream& in, std::ostream& out) {
   std::string customerName;
   getline(in, customerName);
 
+  Customer customer(customerName);
+
+  out << "Choose movie by number followed by rental days, just ENTER for "
+         "bill:\n";
+  std::ostringstream result;
+  result << std::fixed << std::setprecision(1);
+  result << "Rental Record for " + customer.name() + "\n";
+
+  while (true) {
+    std::string input;
+    std::getline(in, input);
+    if (input.empty()) {
+      break;
+    }
+    auto rental = Rental::createFromLine(input, movies);
+    customer.AddRental(rental);
+  }
+
+  customer.statement(result);
+
+  out << result.str();
+}
+
+void run_original(std::istream& in, std::ostream& out) {
+  using namespace std::literals;
+  // read movies from file
+  std::ifstream movieStream{"movies.csv"};
+  std::map<int, Movie> movies{};
+  for (std::string line; std::getline(movieStream, line);) {
+    Movie movie = Movie::createFromLine(line);
+    movies.insert(std::make_pair(std::stoi(movie.index()), movie));
+    out << movie.index() << ": " << movie.name() << "\n";
+  }
+  out << "Enter customer name: ";
+  std::string customerName;
+  getline(in, customerName);
+
+  Customer customer(customerName);
+
   out << "Choose movie by number followed by rental days, just ENTER for "
          "bill:\n";
   double totalAmount = 0;
   int frequentRenterPoints = 0;
   std::ostringstream result;
   result << std::fixed << std::setprecision(1);
-  result << "Rental Record for " + customerName + "\n";
+  result << "Rental Record for " + customer.name() + "\n";
   while (true) {
     std::string input;
     std::getline(in, input);
