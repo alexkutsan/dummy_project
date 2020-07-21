@@ -1,4 +1,5 @@
 #include "calculator.h"
+#include "calculator_exception.h"
 
 #include <gtest/gtest.h>
 
@@ -61,13 +62,23 @@ TEST_F(CalculatorTest, CalcComplex2) {
 // 4. Divide by zero operation
 
 TEST_F(CalculatorTest, CalcDivByZero) {
-  EXPECT_ANY_THROW(calculator_.calc("1.5 0 /"));
+  EXPECT_THROW(calculator_.calc("1.5 0 /"), DivideByZeroException);
 }
 
 // 5. Mixing double and int
 
 TEST_F(CalculatorTest, CalcMixDoubleInt) {
   ASSERT_DOUBLE_EQ(7.7, calculator_.calc("15.4 2 /"));
+}
+
+// 6. Test custom exceptions
+
+TEST_F(CalculatorTest, CalcInvalidOperand) {
+  EXPECT_THROW(calculator_.calc("a b +"), InvalidOperandException);
+}
+
+TEST_F(CalculatorTest, CalcOperandOutOfRange) {
+  EXPECT_THROW(calculator_.calc("7.63918e-313 1 +"), OperandOutOfRangeException);
 }
 
 }  // namespace testing
