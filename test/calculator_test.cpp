@@ -40,7 +40,7 @@ TEST_F(CalculatorTest, MultiplyWithZero) {
 }
 
 TEST_F(CalculatorTest, DevideWithZero) {
-    ASSERT_EQ(calculator.calculate("21 0 /"), -1);
+    ASSERT_EQ(calculator.calculate("21 0 /"), 0);
 }
 
 // Add complex (multiple operand) functions/tests

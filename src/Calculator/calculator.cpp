@@ -32,6 +32,10 @@ double Calculator::calculate(std::string input)
     }
 
     if (operators.at(0) == '/') {
+        if (operands.at(1) == 0) {
+            std::cerr << "division by zero is undefined" << std::endl;
+            return 0;
+        }
         return operands.at(0) / operands.at(1);
     }
 
