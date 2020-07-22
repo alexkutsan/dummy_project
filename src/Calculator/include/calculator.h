@@ -19,7 +19,7 @@ private:
     bool parseInput(std::string input);
     bool intermediateCalculation(u_int operator_idx);
     bool isOperator(char oper);
-    bool isNumber(double);
+    bool isNumber(std::string token);
     int maxOperatorsPriority();
     int operatorPriority(const char& oper);
 

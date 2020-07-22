@@ -45,14 +45,14 @@ bool Calculator::parseInput(std::string input)
                                      std::istream_iterator<std::string>());
 
     for (auto token : tokens) {
-        if (isOperator(token.at(0)) && token.size() == 1) {
+
+        if (token.size() == 1 && isOperator(token.at(0))) {
             m_operators.push_back(token.at(0));
             continue;
         }
 
-        auto operand = atof(token.c_str());
-        if (isNumber(operand)) {
-            m_operands.push_back(operand);
+        if (isNumber(token)) {
+            m_operands.push_back(atof(token.c_str()));
             continue;
         }
 
@@ -77,12 +77,24 @@ void Calculator::clear()
 
 
 bool Calculator::isOperator(char oper) {
-    return m_availableOperators.find(oper) != m_availableOperators.end();
+    bool Ok = m_availableOperators.find(oper) != m_availableOperators.end();
+    return Ok;
 }
 
-bool Calculator::isNumber(double)
+bool Calculator::isNumber(std::string token)
 {
-    return true;
+    // consider negative numbers
+    if (token.at(0) == '-') {
+        token.erase(0, 1);
+    }
+    bool isDigit = !token.empty() &&
+                    std::find_if(token.begin(),
+                                 token.end(),
+                                 [](unsigned char c) {
+                                    return !std::isdigit(c);
+                                    }
+                                 ) == token.end();
+    return isDigit;
 }
 
 bool Calculator::intermediateCalculation(u_int operator_idx) {

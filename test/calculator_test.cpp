@@ -63,9 +63,7 @@ TEST_F(CalculatorTest, ComplexPriorityOperationDevideByZero) {
     ASSERT_EQ(calculator.error(), "division by zero is undefined");
 }
 
-//TEST_F(CalculatorTest, SimbolNotSuported) {
-//    ASSERT_EQ(calculator.calculate("2 3 #"), 0);
-//    // isOperand() returns true for # ??
-//    std::cout << calculator.error();
-//    ASSERT_EQ(calculator.error(), "input simbol: # not supported!");
-//}
+TEST_F(CalculatorTest, SimbolNotSuported) {
+    ASSERT_EQ(calculator.calculate("2 3 #"), 0);
+    ASSERT_EQ(calculator.error(), "input simbol: # not supported!");
+}
