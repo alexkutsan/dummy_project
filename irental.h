@@ -6,7 +6,7 @@ class IRental {
 public:
   virtual int days_rented() const = 0;
 
-  virtual Movie movie() const = 0;
+  virtual const IMovie& movie() const = 0;
 };
 
 #endif // IRENTAL_H

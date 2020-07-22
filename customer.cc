@@ -2,7 +2,6 @@
 
 Customer::Customer(const std::string& name) : name_(name) {}
 
-
 std::string Customer::name() const {
   return name_;
 }
@@ -15,7 +14,7 @@ void Customer::statement(std::ostringstream& result) {
   double totalAmount = 0;
   int frequentRenterPoints = 0;
   for (auto rental : rentals_) {
-    Movie movie = rental.movie();
+    auto& movie = rental.movie();
     double thisAmount = 0;
     // determine amounts for rental
     if (movie.release_type() == "REGULAR") {

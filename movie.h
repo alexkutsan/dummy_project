@@ -14,7 +14,7 @@ public:
 
  const std::string& index() const override;
 
- static Movie createFromLine(const std::string& line);
+ static std::unique_ptr<Movie> createFromLine(const std::string& line);
 private:
  const std::string index_;
  const std::string name_;

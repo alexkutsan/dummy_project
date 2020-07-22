@@ -12,11 +12,11 @@ void run(std::istream& in, std::ostream& out) {
   using namespace std::literals;
   // read movies from file
   std::ifstream movieStream{"movies.csv"};
-  std::map<int, Movie> movies{};
+  MovieRepo movies{};
   for (std::string line; std::getline(movieStream, line);) {
-    Movie movie = Movie::createFromLine(line);
-    movies.insert(std::make_pair(std::stoi(movie.index()), movie));
-    out << movie.index() << ": " << movie.name() << "\n";
+    auto movie = Movie::createFromLine(line);
+    out << movie->index() << ": " << movie->name() << "\n";
+    movies.insert(std::make_pair(std::stoi(movie->index()), std::move(movie)));
   }
   out << "Enter customer name: ";
   std::string customerName;

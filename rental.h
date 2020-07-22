@@ -2,21 +2,22 @@
 #define RENTAL_H
 
 #include <map>
+#include <memory>
 #include "irental.h"
 
 class Rental : IRental {
  public:
-  Rental(int days_rented, Movie movie);
+  Rental(int days_rented, const IMovie& movie);
 
   int days_rented() const override;
 
-  Movie movie() const override;
+  const IMovie& movie() const override;
 
   static Rental createFromLine(const std::string& line,
-                               const std::map<int, Movie>& movies);
+                               const MovieRepo& movies);
  private:
   int days_rented_;
-  Movie movie_;
+  const IMovie& movie_;
 };
 
 #endif // RENTAL_H
