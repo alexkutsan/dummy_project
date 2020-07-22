@@ -21,6 +21,7 @@ private:
     bool isOperator(char oper);
     bool isNumber(double);
     int maxOperatorsPriority();
+    int operatorPriority(const char& oper);
 
     std::vector<double> m_operands;
     std::vector<char> m_operators;

@@ -18,12 +18,14 @@ double Calculator::calculate(std::string input)
     }
 
     for (int priority = maxOperatorsPriority(); priority >= 0; priority--) {
-        for (std::size_t i = 0; i < m_operators.size(); i++) {
-            if (m_availableOperators.at(m_operators.at(i)) == priority) {
-                if (!intermediateCalculation(i)) {
+        for (std::size_t currentOperatorIndex = 0;
+             currentOperatorIndex < m_operators.size();
+             currentOperatorIndex++) {
+            if (operatorPriority(m_operators.at(currentOperatorIndex)) == priority) {
+                if (!intermediateCalculation(currentOperatorIndex)) {
                     return 0.0;
                 }
-                i -= 1;
+                currentOperatorIndex -= 1;
             }
         }
     }
@@ -144,4 +146,9 @@ int Calculator::maxOperatorsPriority()
         }
     );
     return pr->first;
+}
+
+int Calculator::operatorPriority(const char &oper)
+{
+    return m_availableOperators.at(oper);
 }
