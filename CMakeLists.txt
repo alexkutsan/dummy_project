@@ -7,10 +7,10 @@ enable_testing()
 
 
 
-set(SOURCES run.h run.cpp movie.cc)
+set(SOURCES run.h run.cc movie.cc)
 add_library(StoreLib ${SOURCES})
 
-add_executable(commandline_videostore_cpp main.cpp)
+add_executable(commandline_videostore_cpp main.cc)
 target_link_libraries(commandline_videostore_cpp StoreLib)
 
 add_subdirectory(test)
