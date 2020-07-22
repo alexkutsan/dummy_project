@@ -6,17 +6,20 @@
 #include <vector>
 #include "customer.h"
 #include "movie.h"
+#include "movierepo.h"
 #include "rental.h"
 
 void run(std::istream& in, std::ostream& out) {
   using namespace std::literals;
   // read movies from file
   std::ifstream movieStream{"movies.csv"};
-  MovieRepo movies{};
+  MovieRepo movies;
   for (std::string line; std::getline(movieStream, line);) {
-    auto movie = Movie::createFromLine(line);
-    out << movie->index() << ": " << movie->name() << "\n";
-    movies.insert(std::make_pair(std::stoi(movie->index()), std::move(movie)));
+    auto& movie = movies.Add(line);
+    //    auto movie = Movie::createFromLine(line);
+    out << movie.index() << ": " << movie.name() << "\n";
+    //    movies.insert(std::make_pair(std::stoi(movie->index()),
+    //    std::move(movie)));
   }
   out << "Enter customer name: ";
   std::string customerName;

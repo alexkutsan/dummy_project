@@ -11,8 +11,7 @@ public:
 
   virtual const std::string& release_type() const = 0;
 
-  virtual const std::string& index() const = 0;
+  virtual const int index() const = 0;
 };
 
-typedef std::map<int, std::unique_ptr<IMovie>> MovieRepo;
 #endif // IMOVIE_H

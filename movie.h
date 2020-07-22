@@ -4,7 +4,7 @@
 
 class Movie : public IMovie {
 public:
- Movie(const std::string& movie_index,
+ Movie(const int movie_index,
        const std::string& movie_name,
        const std::string& movie_release_type);
 
@@ -12,11 +12,10 @@ public:
 
  const std::string& release_type() const override;
 
- const std::string& index() const override;
+ const int index() const override;
 
- static std::unique_ptr<Movie> createFromLine(const std::string& line);
 private:
- const std::string index_;
+ const int index_;
  const std::string name_;
  const std::string release_type_;
 };
