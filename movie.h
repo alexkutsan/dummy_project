@@ -3,22 +3,21 @@
 #include "imovie.h"
 
 class Movie : public IMovie {
-    public:
-     Movie(const std::string& movie_index,
-           const std::string& movie_name,
-           const std::string& movie_release_type);
+public:
+ Movie(const std::string& movie_index,
+       const std::string& movie_name,
+       const std::string& movie_release_type);
 
-     const std::string& name() const;
+ const std::string& name() const override;
 
-     const std::string& release_type() const;
+ const std::string& release_type() const override;
 
-     static Movie createFromLine(const std::string& line);
+ const std::string& index() const override;
 
-     const std::string& index() const;
-
-    private:
-     const std::string index_;
-     const std::string name_;
-     const std::string release_type_;
-   };
+ static Movie createFromLine(const std::string& line);
+private:
+ const std::string index_;
+ const std::string name_;
+ const std::string release_type_;
+};
 #endif // MOVIE_H
