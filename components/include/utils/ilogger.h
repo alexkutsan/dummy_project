@@ -37,4 +37,5 @@ public:
   virtual void PushLog(const LogMessageImpl& log_message) = 0;
   static Logger<LocationInfo, ThirdPartyLogger>& instance();
 };
+
 #endif // ILOGGER_H

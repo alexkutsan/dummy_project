@@ -1,7 +1,7 @@
 #pragma once
 #include "utils/ilogger.h"
 
-class STDLogger  {
+class STDLogger {
 public:
   STDLogger();
 

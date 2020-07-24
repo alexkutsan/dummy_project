@@ -4,7 +4,7 @@
 // static LoggerVariable logger_("proj");
 namespace dev {
 
-CREATE_LOGGERPTR("main");
+CREATE_LOGGERPTR("Main");
 
 int Project::run() {
   //   logger_.Log("run");
