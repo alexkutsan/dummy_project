@@ -9,6 +9,7 @@ include_directories(components/include)
 
 add_subdirectory(components/proj)
 add_subdirectory(components/utils)
+add_subdirectory(components/shared_lib)
 
 add_executable(Proj main.cc)
 target_link_libraries(Proj ProjectLib)

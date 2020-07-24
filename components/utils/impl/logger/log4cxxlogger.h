@@ -9,6 +9,9 @@ public:
   void Init();
   void DeInit() {}
   void Enable() {}
+  bool Enabled() {
+    return true;
+  }
   void Disable() {}
   void Flush() {}
   void Log(LogMessage<std::string> log_message);

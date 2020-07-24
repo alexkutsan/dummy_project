@@ -9,5 +9,14 @@ void Log4CXXLogger::Init() {
 
 void Log4CXXLogger::Log(LogMessage<std::string> log_message) {
   log4cxx::LoggerPtr logger = log4cxx::Logger::getLogger(log_message.logger_);
-  logger->debug("Hello log4cxx");
+  switch (log_message.log_level_) {
+    case LogLevel::DEBUG:
+      logger->debug(log_message.log_event_);
+      break;
+    case LogLevel::ERROR:
+      logger->error(log_message.log_event_);
+      break;
+    default:
+      break;
+  }
 }

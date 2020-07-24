@@ -10,17 +10,19 @@ template<typename T>
 class LogMessageLoopThread {
 public:
   LogMessageLoopThread(std::function<void(T)> handler):
-    handler_(handler) {}
+    blocking_call_(handler) {}
 
   void Push(T val) {
-    handler_(val);
+    // Should post message in queue to call blocking_call_ in separate thread
+    blocking_call_(val);
   }
-  void setHandler(const std::function<void (T)>& handler){
-    handler_ = handler;
+
+  void setHandler(const std::function<void (T)>& force_log){
+    blocking_call_ = force_log;
   }
 
 private:
-  std::function<void(T)> handler_;
+  std::function<void(T)> blocking_call_;
 };
 
 template<typename LocationInfo, class ThirdPartyLogger>
@@ -47,9 +49,11 @@ public:
   void Enable() {
      impl_->Enable();
   }
+
   bool Enabled() override {
-    return false;
+    return impl_->Enabled();;
   }
+
   void Disable() override {
      impl_->Disable();
   }
@@ -59,6 +63,8 @@ public:
 
   void PushLog(const LogMessageImpl& log_message) override {
     loop_thread_.Push(log_message);
+    // Optional to use blocking call :
+    //    impl_->Log(log_message);
   }
 
   ThirdPartyLogger* impl_;

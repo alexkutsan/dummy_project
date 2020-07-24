@@ -5,7 +5,9 @@
 
 int main() {
   Log4CXXLogger logger_("log4cxx.properties");
-  Logger<std::string, Log4CXXLogger>::instance().Init(&logger_);
+
+  Logger<std::string, Log4CXXLogger>::instance().Init(
+      &logger_);  // move logger_ to Logger instance
 
   dev::Project p;
   return p.run();

@@ -2,12 +2,14 @@
 #include <string>
 #include "utils/ilogger.h"
 
+// START Redefince for each paticular logger implementation
 class Log4CXXLogger;
-
-typedef std::string MyLocationInfo;
 typedef Log4CXXLogger ExternalLogger;
-typedef LogMessage<MyLocationInfo> LogMessageImpl;
+typedef std::string MyLocationInfo;
 #define LOCATTION_INFO "__LINE__"
+// END Redefince for each paticular logger implementation
+
+typedef LogMessage<MyLocationInfo> LogMessageImpl;
 
 #define CREATE_LOGGERPTR(logger_name)      \
   namespace {                              \
