@@ -3,8 +3,8 @@
 #include "utils/ilogger.h"
 
 // START Redefince for each paticular logger implementation
-class Log4CXXLogger;
-typedef Log4CXXLogger ExternalLogger;
+class STDLogger;
+typedef STDLogger ExternalLogger;
 typedef std::string MyLocationInfo;
 #define LOCATTION_INFO "__LINE__"
 // END Redefince for each paticular logger implementation
