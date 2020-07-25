@@ -3,7 +3,9 @@ project(dummy_cmake_project)
 
 set(CMAKE_CXX_STANDARD 14)
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
-add_subdirectory(boost-cmake)
+#set(BOOST_URL https://dl.bintray.com/boostorg/release/1.73.0/source/boost_1_73_0.tar.bz2)
+#SET(Boost_USE_STATIC_LIBS ON)
+#add_subdirectory(boost-cmake)
 
 include_directories(components/include)
 

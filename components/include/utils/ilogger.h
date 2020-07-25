@@ -3,18 +3,19 @@
 #pragma once
 #include <chrono>
 #include <string>
+#include <thread>
+enum class LogLevel { TRACE, DEBUG, INFO, WARNIGN, ERROR, FATAL };
 
-enum class LogLevel { TRACE, DEBUG, ERROR };
-
+typedef std::chrono::high_resolution_clock::time_point TimePoint;
 template <typename LocationInfo>
 struct LogMessage {
   std::string logger_;  // <- component_name
   LogLevel log_level_;
   std::string log_event_;
-  //  std::chrono::milliseconds timestamp_;
-  int timestamp_;
+  TimePoint timestamp_;
+  //  std::string timestamp_;
   LocationInfo location_;
-  std::string thread_id_;
+  std::thread::id thread_id_;
 };
 
 template <typename LocationInfo, class ThirdPartyLogger>
