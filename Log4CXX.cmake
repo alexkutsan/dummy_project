@@ -11,15 +11,16 @@ ExternalProject_Add(logging-log4cxx
   GIT_TAG           master
   BUILD_IN_SOURCE 1
   CONFIGURE_COMMAND cmake . -D CMAKE_INSTALL_PREFIX=${log4cxx_INSTALL}
-  BUILD_COMMAND     make
+  BUILD_ALWAYS false
+  BUILD_BYPRODUCTS ${log4cxx_INSTALL}/src/main/cpp/liblog4cxx.so
+  BUILD_COMMAND     make -j
   INSTALL_COMMAND   make install
   INSTALL_DIR ${log4cxx_INSTALL}
 )
 file(MAKE_DIRECTORY ${log4cxx_INCLUDE_DIR})
 
-add_library(log4cxx::log4cxx STATIC IMPORTED )
+add_library(log4cxx::log4cxx SHARED IMPORTED )
 set_property( TARGET log4cxx::log4cxx PROPERTY GENERATED TRUE )
 set_property( TARGET log4cxx::log4cxx PROPERTY IMPORTED_LOCATION ${log4cxx_LIB_DIR}/liblog4cxx.so)
-set_property( TARGET log4cxx::log4cxx PROPERTY INTERFACE_INCLUDE_DIRECTORIES ${log4cxx_INSTALL} )
+set_property( TARGET log4cxx::log4cxx PROPERTY INTERFACE_INCLUDE_DIRECTORIES ${log4cxx_INCLUDE_DIR} )
 add_dependencies( log4cxx::log4cxx logging-log4cxx )
-

@@ -2,7 +2,7 @@ project(ProjectLib)
 SET(Boost_USE_STATIC_LIBS ON)
 set(SOURCES proj_logger.cc
             std_logger.cc
-#            log4cxxlogger.cc
+            log4cxxlogger.cc
             boostlogger.cc)
 add_library(UtilsLib ${SOURCES})
 
