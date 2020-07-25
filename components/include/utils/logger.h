@@ -4,8 +4,8 @@
 #include "utils/ilogger.h"
 
 // START Redefince for each paticular logger implementation
-class BoostLogger;
-typedef BoostLogger ExternalLogger;
+class STDLogger;
+typedef STDLogger ExternalLogger;
 typedef std::string LocationInfo;
 
 #define STRINGIFY(x) #x
