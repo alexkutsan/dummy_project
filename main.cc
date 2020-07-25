@@ -11,8 +11,8 @@ int main() {
   STDLogger std_logger;
   BoostLogger boost_logger;
 
-  Logger<BoostLogger::LocationInfo, BoostLogger>::instance().Init(
-      &boost_logger);  // move logger_ to Logger instance
+  Logger<Log4CXXLogger::LocationInfo, Log4CXXLogger>::instance().Init(
+      &log4cxx_logger_);  // move logger_ to Logger instance
 
   dev::Project p;
   return p.run();
