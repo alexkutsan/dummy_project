@@ -1,19 +1,13 @@
 #pragma once
+#include <log4cxx/logger.h>
 #include <string>
-
 #include "utils/ilogger.h"
 
 // START Redefince for each paticular logger implementation
-class STDLogger;
-typedef STDLogger ExternalLogger;
-typedef std::string LocationInfo;
-
-#define STRINGIFY(x) #x
-#define TOSTRING(x) STRINGIFY(x)
-
-#define LOCATTION_INFO \
-  std::string(__FILE__) + ":" + TOSTRING(__LINE__) + " " + std::string(__func__)
-// END Redefince for each paticular logger implementation
+class Log4CXXLogger;
+typedef Log4CXXLogger ExternalLogger;
+typedef log4cxx::spi::LocationInfo LocationInfo;
+#define LOCATTION_INFO LOG4CXX_LOCATION
 
 typedef LogMessage<LocationInfo> LogMessageImpl;
 

@@ -46,6 +46,7 @@ std::string suverity(LogLevel l) {
   convert_map[LogLevel::FATAL] = "FATAL";
   return convert_map.at(l);
 }
+
 void STDLogger::PushLog(const STDLogger::LogMessageImpl& log_message) {
   if (enable_) {
     std::cout << "[" << suverity(log_message.log_level_) << "]"
