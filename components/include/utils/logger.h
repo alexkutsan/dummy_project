@@ -1,13 +1,28 @@
 #pragma once
-#include <log4cxx/logger.h>
 #include <string>
 #include "utils/ilogger.h"
 
-// START Redefince for each paticular logger implementation
+#ifdef USE_LOG4CXX_LOGGER
+#include <log4cxx/logger.h>
 class Log4CXXLogger;
 typedef Log4CXXLogger ExternalLogger;
 typedef log4cxx::spi::LocationInfo LocationInfo;
 #define LOCATTION_INFO LOG4CXX_LOCATION
+#endif
+
+#ifdef USE_BOOST_LOGGER
+class BoostLogger;
+typedef BoostLogger ExternalLogger;
+typedef std::string LocationInfo;
+#define LOCATTION_INFO "blabla"
+#endif
+
+#ifdef USE_STD_LOGGER
+class STDLogger;
+typedef STDLogger ExternalLogger;
+typedef std::string LocationInfo;
+#define LOCATTION_INFO "blabla"
+#endif
 
 typedef LogMessage<LocationInfo> LogMessageImpl;
 

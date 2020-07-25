@@ -3,6 +3,7 @@
 
 class STDLogger : public Logger<std::string, void> {
  public:
+  typedef std::string LocationInfo;
   STDLogger();
 
   void Init(void* unused = 0) override;
