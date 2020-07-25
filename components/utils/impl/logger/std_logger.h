@@ -1,27 +1,20 @@
 #pragma once
 #include "utils/ilogger.h"
 
-class STDLogger {
-public:
+class STDLogger : public Logger<std::string, void> {
+ public:
   STDLogger();
 
-  void Init() ;
-  void DeInit() ;
-  void Enable() ;
-  bool Enabled() {
+  void Init(void* unused = 0) override;
+  void DeInit() override;
+  void Enable() override;
+  bool Enabled() override {
     return true;
   }
-  void Disable() ;
-  void Flush() ;
-  void Log(LogMessage<std::string> log_message);
-private:
+  void Disable() override;
+  void Flush() override;
+  void PushLog(const LogMessageImpl& log_message) override;
+
+ private:
   bool enable_;
 };
-
-typedef std::string MyLocationInfo;
-typedef STDLogger ExternalLogger;
-typedef LogMessage<MyLocationInfo> LogMessageImpl;
-#define LOCATTION_INFO "line"
-
-
-

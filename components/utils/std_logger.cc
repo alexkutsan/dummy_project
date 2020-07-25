@@ -3,7 +3,7 @@
 
 STDLogger::STDLogger() : enable_(true) {}
 
-void STDLogger::Init() {
+void STDLogger::Init(void* unused) {
   std::cout << "std:logger init" << std::endl;
 }
 
@@ -23,7 +23,7 @@ void STDLogger::Flush() {
   std::cout << "std:logger flusheed" << std::endl;
 }
 
-void STDLogger::Log(LogMessage<std::string> log_message) {
+void STDLogger::PushLog(const STDLogger::LogMessageImpl& log_message) {
   if (enable_) {
     std::cout << ">> " << log_message.log_event_ << std::endl;
   } else {

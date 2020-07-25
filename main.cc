@@ -1,3 +1,4 @@
+#include <boost/log/trivial.hpp>
 #include "logger/log4cxxlogger.h"
 #include "logger/proj_logger.h"
 #include "logger/std_logger.h"
@@ -12,4 +13,6 @@ int main() {
 
   dev::Project p;
   return p.run();
+  //  BOOST_LOG_TRIVIAL(info) << "Hello World";
+  return 0;
 }

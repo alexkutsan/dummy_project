@@ -3,7 +3,7 @@ project(dummy_cmake_project)
 
 set(CMAKE_CXX_STANDARD 14)
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
-#add_subdirectory(boost-cmake)
+add_subdirectory(boost-cmake)
 
 include_directories(components/include)
 
