@@ -22,9 +22,9 @@ private:
 class Operator : public IToken {
 public:
     Operator(const std::string& token);
-    char value() const;
+    double calculate(const Operand& operand1, const Operand& operand2);
 private:
-    char value_;
+    char sign_;
 };
 
 class Calculator : public ICalculator {
@@ -36,7 +36,6 @@ public:
 
 private:
     bool isOperator(const std::string& token);
-    double evalOperation(const Operand& operand1, const Operand& operand2, const Operator& operatr);
 };
 
 }  // namespace dev

@@ -28,11 +28,26 @@ double Operand::value() const {
 
 Operator::Operator(const std::string& token):IToken(token) {
     // ToDo validate operator and raise exception
-    value_ = token[0];
+    sign_ = token[0];
 }
 
-char Operator::value() const {
-    return value_;
+double Operator::calculate(const Operand& operand1, const Operand& operand2) {
+    switch (sign_)
+    {
+    case '+':
+        return (operand2.value() + operand1.value());
+    case '-':
+        return (operand2.value() - operand1.value());
+    case '*':
+        return (operand2.value() * operand1.value());
+    case '/':
+        if (operand1.value() == 0) {
+            throw DivideByZeroException();
+        }
+        return (operand2.value() / operand1.value());
+    default:
+        throw InvalidOperatorException();
+    }
 }
 
 bool Calculator::isOperator(const std::string& token) {
@@ -53,32 +68,14 @@ double Calculator::calc(const std::string& expression) {
             Operand operand2 = Operand(stkTokens.top());
             stkTokens.pop();
 
-            stkTokens.push(std::to_string(evalOperation(operand1, operand2, Operator(token))));
+            Operator operatr = Operator(token);
+            stkTokens.push(std::to_string(operatr.calculate(operand1, operand2)));
         } else {
             stkTokens.push(token);
         }
     }
 
     return std::stod(stkTokens.top());
-}
-
-double Calculator::evalOperation(const Operand& operand1, const Operand& operand2, const Operator& operatr) {
-    switch (operatr.value())
-    {
-    case '+':
-        return (operand2.value() + operand1.value());
-    case '-':
-        return (operand2.value() - operand1.value());
-    case '*':
-        return (operand2.value() * operand1.value());
-    case '/':
-        if (operand1.value() == 0) {
-            throw DivideByZeroException();
-        }
-        return (operand2.value() / operand1.value());
-    default:
-        throw InvalidOperatorException();
-    }
 }
 
 }  // namespace dev
