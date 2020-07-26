@@ -2,6 +2,8 @@
 
 #include "icalculator.h"
 
+#include <vector>
+
 namespace dev {
 
 class IToken {
@@ -22,6 +24,7 @@ private:
 class Operator : public IToken {
 public:
     Operator(const std::string& token);
+    bool isValid();
     double calculate(const Operand& operand1, const Operand& operand2);
 private:
     char sign_;
@@ -33,9 +36,8 @@ public:
     ~Calculator() = default;
 
     double calc(const std::string& expression);
-
 private:
-    bool isOperator(const std::string& token);
+    std::vector<std::string> parseTokens(const std::string& expression) const;
 };
 
 }  // namespace dev

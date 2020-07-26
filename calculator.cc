@@ -6,7 +6,6 @@
 #include <iterator>
 #include <sstream>
 #include <stack>
-#include <vector>
 
 namespace dev {
 
@@ -31,6 +30,11 @@ Operator::Operator(const std::string& token):IToken(token) {
     sign_ = token[0];
 }
 
+bool Operator::isValid() {
+    std::array<char, 4> operators = {'+', '-', '*', '/'};
+    return (std::find(operators.begin(), operators.end(), sign_) != operators.end());
+}
+
 double Operator::calculate(const Operand& operand1, const Operand& operand2) {
     switch (sign_)
     {
@@ -50,25 +54,24 @@ double Operator::calculate(const Operand& operand1, const Operand& operand2) {
     }
 }
 
-bool Calculator::isOperator(const std::string& token) {
-    std::array<std::string, 4> operators = {"+", "-", "*", "/"};
-    return (std::find(operators.begin(), operators.end(), token) != operators.end());
-}
-
-double Calculator::calc(const std::string& expression) {
+std::vector<std::string> Calculator::parseTokens(const std::string& expression) const {
     std::istringstream iss(expression);
     std::vector<std::string> tokens((std::istream_iterator<std::string>(iss)),
                                      std::istream_iterator<std::string>());
+    return tokens;  
+}
 
+double Calculator::calc(const std::string& expression) {
+    std::vector<std::string> tokens = parseTokens(expression);
     std::stack<std::string> stkTokens;
     for (auto token : tokens) {
-        if (isOperator(token)) {
+        Operator operatr = Operator(token);
+        if (operatr.isValid()) {
             Operand operand1 = Operand(stkTokens.top());
             stkTokens.pop();
             Operand operand2 = Operand(stkTokens.top());
             stkTokens.pop();
 
-            Operator operatr = Operator(token);
             stkTokens.push(std::to_string(operatr.calculate(operand1, operand2)));
         } else {
             stkTokens.push(token);
