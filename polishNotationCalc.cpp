@@ -1,34 +1,11 @@
 #include "polishNotationCalc.hpp"
 namespace dev
 {
-    double PolishCalc::performOperation(char operation, double firstOperand, double secOperand)
+    PolishCalc::PolishCalc()
     {
-        double res{};
-        switch (operation)
-        {
-        case '+':
-            res = firstOperand + secOperand;
-            break;
-
-        case '-':
-            res = firstOperand - secOperand;
-            break;
-
-        case '*':
-            res = firstOperand * secOperand;
-            break;
-
-        case '/':
-            if (secOperand == 0)
-                throw Exception{"divide by zero"};
-            res = firstOperand / secOperand;
-            break;
-        default:
-            throw Exception{"not a valid operation to perform"};
-            break;
-        }
-        return res;
+        insertFunctionInsideMap();
     }
+
     bool PolishCalc::isNumeric(const char num)
     {
         double temp = num - '0';
@@ -59,7 +36,7 @@ namespace dev
             {
                 auto operandVal = getOperandFromStack();
                 double res = 0;
-                res = performOperation(str[i], operandVal.first, operandVal.second);
+                res = mMap[str[i]](operandVal.first, operandVal.second);
                 mStack.push(res);
             }
         }
@@ -87,18 +64,26 @@ namespace dev
     {
         double secOperand = 0;
         double firstOperand = 0;
-        if (mStack.size() >= 2)
-        {
-            secOperand = mStack.top();
-            mStack.pop();
-            firstOperand = mStack.top();
-            mStack.pop();
-        }
-        else
+        if (mStack.size() < 2)
         {
             throw Exception{"No operand to work on"};
         }
-
+        secOperand = mStack.top();
+        mStack.pop();
+        firstOperand = mStack.top();
+        mStack.pop();
         return std::make_pair(firstOperand, secOperand);
+    }
+    void PolishCalc::insertFunctionInsideMap()
+    {
+        mMap.insert(std::make_pair('+', [](double a, double b) { return a + b; }));
+        mMap.insert(std::make_pair('-', [](double a, double b) { return a - b; }));
+        mMap.insert(std::make_pair('*', [](double a, double b) { return a * b; }));
+        mMap.insert(std::make_pair('/', [](double a, double b) { 
+            if(b==0)
+            {
+                throw Exception{"divide by zero"};
+            }
+            return a / b; }));
     }
 } // namespace dev

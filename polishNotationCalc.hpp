@@ -2,6 +2,8 @@
 #include <iostream>
 #include <stack>
 #include <utility>
+#include <functional>
+#include <map>
 
 namespace dev
 {
@@ -25,19 +27,21 @@ namespace dev
     private:
         const std::string mMsg;
     };
-
+    using functionCall = std::function<double(double, double)>;
     class PolishCalc
     {
     public:
-        double calc(const std::string&);
+        double calc(const std::string &);
+        PolishCalc();
 
     private:
         bool isNumeric(const char num);
         bool isOperator(const char num);
-        double performOperation(const char operation, const double firstOperand, const double secOperand);
-        void pushOperandInStack(const std::string &, int& curr_pos);
-        std::pair<double,double> getOperandFromStack();
+        void insertFunctionInsideMap();
+        void pushOperandInStack(const std::string &, int &curr_pos);
+        std::pair<double, double> getOperandFromStack();
         std::stack<double> mStack;
+        std::map<const char, functionCall> mMap;
     };
 
 } // namespace dev
