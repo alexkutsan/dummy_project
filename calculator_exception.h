@@ -28,4 +28,10 @@ class DivideByZeroException : public std::exception {
     }
 };
 
+class InvalidExpressionException : public std::exception {
+	const char * what () const throw () {
+    	return "Invalid Expression Exception";
+    }
+};
+
 }  // namespace dev
