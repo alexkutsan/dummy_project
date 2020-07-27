@@ -55,9 +55,9 @@ Calculator::operands Calculator::popOperands()
         return {};
     }
 
-    auto op1 = m_tmp_operands.top();
-    m_tmp_operands.pop();
     auto op2 = m_tmp_operands.top();
+    m_tmp_operands.pop();
+    auto op1 = m_tmp_operands.top();
     m_tmp_operands.pop();
 
     return std::make_pair(op1, op2);

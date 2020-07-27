@@ -7,6 +7,10 @@
 #include <utility>
 #include <vector>
 
+/**
+ * @brief Polish notation calculator
+ */
+
 class Calculator{
 
 public:
