@@ -1,10 +1,13 @@
 ﻿#pragma once
 
 #include <string>
-#include <unordered_map>
-#include <vector>
+#include <array>
+#include <stack>
+#include <optional>
 
 class Calculator{
+
+    using result = std::optional<double>;
 
 public:
     Calculator();
@@ -13,18 +16,15 @@ public:
     std::string error() const;
 
 private:
-
-    void initOperators();
     void clear();
-    bool parseInput(std::string input);
-    bool intermediateCalculation(u_int operator_idx);
-    bool isOperator(char oper);
-    bool isNumber(std::string token);
-    int maxOperatorsPriority();
-    int operatorPriority(const char& oper);
+    result calculateNext(char oper);
 
-    std::vector<double> m_operands;
-    std::vector<char> m_operators;
-    std::unordered_map<char, u_char> m_availableOperators;
+    bool isOperator(char oper) const;
+    bool isNumber(std::string token) const;
+
+    std::stack<double> m_tmp_operands;
     std::string m_error;
+
+    static constexpr std::array<char, 4> m_availableOperators{'*', '/', '+', '-'};
+    static constexpr int min_operands_number{2};
 };

@@ -3,56 +3,35 @@
 #include <algorithm>
 #include <sstream>
 #include <iterator>
+#include <vector>
 
 Calculator::Calculator()
 {
-    initOperators();
 }
 
 double Calculator::calculate(std::string input)
 {
     clear();
 
-    if (!parseInput(input)) {
-        return 0.0;
-    }
-
-    for (int priority = maxOperatorsPriority(); priority >= 0; priority--) {
-        for (std::size_t currentOperatorIndex = 0;
-             currentOperatorIndex < m_operators.size();
-             currentOperatorIndex++) {
-            if (operatorPriority(m_operators.at(currentOperatorIndex)) == priority) {
-                if (!intermediateCalculation(currentOperatorIndex)) {
-                    return 0.0;
-                }
-                currentOperatorIndex -= 1;
-            }
-        }
-    }
-
-    return m_operands.front();
-}
-
-std::string Calculator::error() const
-{
-    return m_error;
-}
-
-bool Calculator::parseInput(std::string input)
-{
     std::istringstream inputStream(input);
     std::vector<std::string> tokens(std::istream_iterator<std::string>{inputStream},
-                                     std::istream_iterator<std::string>());
+                                    std::istream_iterator<std::string>());
 
     for (auto token : tokens) {
 
         if (token.size() == 1 && isOperator(token.at(0))) {
-            m_operators.push_back(token.at(0));
+            auto res = calculateNext(token.at(0));
+
+            if (!res) {
+                return 0.0;
+            }
+
+            m_tmp_operands.push(res.value());
             continue;
         }
 
         if (isNumber(token)) {
-            m_operands.push_back(atof(token.c_str()));
+            m_tmp_operands.push(atof(token.c_str()));
             continue;
         }
 
@@ -60,28 +39,72 @@ bool Calculator::parseInput(std::string input)
         return false;
     }
 
-    if (m_operands.size() - 1 != m_operators.size()) {
-        m_error = "input format error! number of operands and number of operators mismach!";
-        return false;
-    }
+    return m_tmp_operands.top();
+}
 
-    return true;
+std::string Calculator::error() const
+{
+    return m_error;
 }
 
 void Calculator::clear()
 {
-    m_operands = {};
-    m_operators = {};
+    m_tmp_operands = {};
     m_error.clear();
 }
 
+Calculator::result Calculator::calculateNext(char oper)
+{
+    if (!isOperator(oper)) {
+        m_error = "operator: " + std::string{oper} + "not supported";
+        return {};
+    }
 
-bool Calculator::isOperator(char oper) {
-    bool Ok = m_availableOperators.find(oper) != m_availableOperators.end();
-    return Ok;
+    if (m_tmp_operands.size() < min_operands_number) {
+        m_error = "wrong input string!";
+        return {};
+    }
+
+    auto op1 = m_tmp_operands.top();
+    m_tmp_operands.pop();
+    auto op2 = m_tmp_operands.top();
+    m_tmp_operands.pop();
+
+    switch (oper) {
+    case '*' :
+        return op1 * op2;
+        break;
+
+    case '/' :
+        if (op1 == 0) {
+            m_error = "result is indefinite";
+            return {};
+        }
+        if (op2 == 0) {
+            m_error = "division by zero is undefined";
+            return {};
+        }
+        return op1 / op2;
+        break;
+
+    case '+' :
+        return op1 + op2;
+        break;
+
+    case '-' :
+        return op1 - op2;
+        break;
+    default:
+        return {};
+    }
 }
 
-bool Calculator::isNumber(std::string token)
+
+bool Calculator::isOperator(char oper) const {
+    return std::find(m_availableOperators.begin(), m_availableOperators.end(), oper) != m_availableOperators.end();
+}
+
+bool Calculator::isNumber(std::string token) const
 {
     // consider negative numbers
     if (token.at(0) == '-') {
@@ -95,72 +118,4 @@ bool Calculator::isNumber(std::string token)
                                     }
                                  ) == token.end();
     return isDigit;
-}
-
-bool Calculator::intermediateCalculation(u_int operator_idx) {
-
-    auto oper = m_operators.at(operator_idx);
-    auto op1 = m_operands.at(operator_idx);
-    auto op2 = m_operands.at(operator_idx + 1);
-
-    double tmp_res{0.0};
-
-    switch (oper) {
-
-        case '*' :
-            tmp_res = op1 * op2;
-            break;
-
-        case '/' :
-            if (op2 == 0) {
-                m_error = "division by zero is undefined";
-                return false;
-            }
-            tmp_res = op1 / op2;
-            break;
-
-        case '+' :
-            tmp_res = op1 + op2;
-            break;
-
-        case '-' :
-            tmp_res = op1 - op2;
-            break;
-
-        default:
-            m_error = "Operator not implemented!";
-            return false;
-    }
-
-    m_operators.erase(m_operators.begin() + operator_idx);
-    m_operands[operator_idx] = tmp_res;
-    m_operands.erase(m_operands.begin() + operator_idx + 1);
-
-    return true;
-}
-
-void Calculator::initOperators()
-{
-    m_availableOperators.insert({'*', 1});
-    m_availableOperators.insert({'/', 1});
-    m_availableOperators.insert({'+', 0});
-    m_availableOperators.insert({'-', 0});
-}
-
-int Calculator::maxOperatorsPriority()
-{
-    using u_map_type = decltype(m_availableOperators)::value_type;
-    auto pr = std::max_element
-    (
-        std::begin(m_availableOperators), std::end(m_availableOperators),
-        [] (const u_map_type & p1, const u_map_type & p2) {
-            return p1.second < p2.second;
-        }
-    );
-    return pr->first;
-}
-
-int Calculator::operatorPriority(const char &oper)
-{
-    return m_availableOperators.at(oper);
 }
