@@ -11,7 +11,6 @@ add_gtest(RunTest)
 
 add_executable (CalculatorTest calculator_test.cc
                                ${CMAKE_SOURCE_DIR}/calculator.cc
-                               ${CMAKE_SOURCE_DIR}/token.cc
                                ${CMAKE_SOURCE_DIR}/operand.cc
                                ${CMAKE_SOURCE_DIR}/operator.cc)
 add_gtest(CalculatorTest)

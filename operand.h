@@ -1,10 +1,10 @@
 #pragma once
 
-#include "token.h"
+#include <string>
 
 namespace dev {
 
-class Operand : public Token {
+class Operand {
 public:
     Operand(const std::string& token);
     double value() const;

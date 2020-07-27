@@ -5,7 +5,7 @@
 
 namespace dev {
 
-Operand::Operand(const std::string& token):Token() {
+Operand::Operand(const std::string& token) {
     try {
         value_ = std::stod(token);
     } catch (const std::invalid_argument&) {

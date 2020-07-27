@@ -1,4 +1,3 @@
-#include "token.h"
 #include "operand.h"
 #include "operator.h"
 #include "calculator.h"
@@ -21,7 +20,7 @@ double Calculator::calc(const std::string& expression) {
     std::vector<std::string> tokens = parseTokens(expression);
     std::stack<std::string> stkTokens;
     for (auto token : tokens) {
-        if (Token::isOperator(token)) {
+        if (Operator::isOperator(token)) {
             Operand operand1 = Operand(stkTokens.top());
             stkTokens.pop();
             Operand operand2 = Operand(stkTokens.top());

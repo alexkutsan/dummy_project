@@ -1,9 +1,17 @@
 #include "operator.h"
 #include "calculator_exception.h"
 
+#include <array>
+#include <algorithm>
+
 namespace dev {
 
-Operator::Operator():Token() {}
+Operator::Operator() {}
+
+bool Operator::isOperator(const std::string& token) {
+    std::array<std::string, 4> operators = {"+", "-", "*", "/"};
+    return (std::find(operators.begin(), operators.end(), token) != operators.end());
+}
 
 AddOperator::AddOperator():Operator() {}
 

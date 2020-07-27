@@ -7,7 +7,7 @@ list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 set(SOURCES project.cc)
 add_library(ProjectLib ${SOURCES})
 
-set(SOURCES calculator.cc token.cc operand.cc operator.cc)
+set(SOURCES calculator.cc operand.cc operator.cc)
 add_library(CalculatorLib ${SOURCES})
 
 add_executable(project main.cc run.cc)

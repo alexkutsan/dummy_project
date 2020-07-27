@@ -6,10 +6,11 @@
 
 namespace dev {
 
-class Operator : public Token {
+class Operator {
 public:
     Operator();
     virtual double calculate(const Operand& operand1, const Operand& operand2) const = 0;
+    static bool isOperator(const std::string& token);
 };
 
 class AddOperator : public Operator {
