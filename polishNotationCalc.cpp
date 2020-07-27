@@ -46,53 +46,21 @@ namespace dev
     double PolishCalc::calc(const std::string &str)
     {
         if (str.size() == 0)
-            return 0;
+            throw Exception{"Nothing to work on as Input is empty"};
         for (int i = 0; i < str.size(); i++)
         {
             if (str[i] == ' ')
                 continue;
             if (isNumeric(str[i]))
             {
-                double operand = 0;
-                std::string temp = "";
-                while (i < str.size() && !(str[i] == ' '))
-                {
-
-                    temp = temp + str[i];
-                    i++;
-                }
-                operand = atof(temp.c_str());
-
-                mStack.push(operand);
-                i--;
+                pushOperandInStack(str, i);
             }
             if (isOperator(str[i]))
             {
-                double secOperand = 0;
-                double firstOperand = 0;
-
-                if (mStack.size() >= 2)
-                {
-                    secOperand = mStack.top();
-                    mStack.pop();
-                    firstOperand = mStack.top();
-                    mStack.pop();
-                }
-                else
-                {
-                    throw Exception{"No operand to work on"};
-                }
-
+                auto operandVal = getOperandFromStack();
                 double res = 0;
-                //try
-                {
-                    res = performOperation(str[i], firstOperand, secOperand);
-                    mStack.push(res);
-                }
-                // catch (const std::exception &e)
-                // {
-                //     std::cout << "calc::Exception" << e.what();
-                // }
+                res = performOperation(str[i], operandVal.first, operandVal.second);
+                mStack.push(res);
             }
         }
 
@@ -100,5 +68,37 @@ namespace dev
             throw Exception{"Not a valid string"};
 
         return mStack.top();
+    }
+
+    void PolishCalc::pushOperandInStack(const std::string &str, int &curr_pos)
+    {
+        double operand = 0;
+        std::string temp = "";
+        while (curr_pos < str.size() && !(str[curr_pos] == ' '))
+        {
+            temp = temp + str[curr_pos];
+            curr_pos++;
+        }
+        operand = atof(temp.c_str());
+        mStack.push(operand);
+        curr_pos--;
+    }
+    std::pair<double, double> PolishCalc::getOperandFromStack()
+    {
+        double secOperand = 0;
+        double firstOperand = 0;
+        if (mStack.size() >= 2)
+        {
+            secOperand = mStack.top();
+            mStack.pop();
+            firstOperand = mStack.top();
+            mStack.pop();
+        }
+        else
+        {
+            throw Exception{"No operand to work on"};
+        }
+
+        return std::make_pair(firstOperand, secOperand);
     }
 } // namespace dev

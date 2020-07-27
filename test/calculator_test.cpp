@@ -32,18 +32,12 @@ namespace dev
         }
         TEST_F(CalculatorTest, EmptyString)
         {
-            EXPECT_EQ(0, project_.calc(""));
+            EXPECT_ANY_THROW(project_.calc(""));
         }
         TEST_F(CalculatorTest, DivideByZero)
         {
             EXPECT_ANY_THROW(project_.calc("7 0 /"));
-            // try{
-            //   project_.calc("7 0 /");
-            // }
-            // catch (const std::string& s)
-            // {
-
-            // }
+          
         }
         TEST_F(CalculatorTest, PerformComplexOpeartions)
         {

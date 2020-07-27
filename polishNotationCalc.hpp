@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <stack>
+#include <utility>
 
 namespace dev
 {
@@ -34,6 +35,8 @@ namespace dev
         bool isNumeric(const char num);
         bool isOperator(const char num);
         double performOperation(const char operation, const double firstOperand, const double secOperand);
+        void pushOperandInStack(const std::string &, int& curr_pos);
+        std::pair<double,double> getOperandFromStack();
         std::stack<double> mStack;
     };
 
