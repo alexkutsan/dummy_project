@@ -8,11 +8,6 @@ namespace dev {
 
 Operator::Operator() {}
 
-bool Operator::isOperator(const std::string& token) {
-    std::array<std::string, 4> operators = {"+", "-", "*", "/"};
-    return (std::find(operators.begin(), operators.end(), token) != operators.end());
-}
-
 AddOperator::AddOperator():Operator() {}
 
 double AddOperator::calculate(const Operand& operand1, const Operand& operand2) const {
@@ -52,6 +47,8 @@ std::unique_ptr<Operator> OperatorFactory::getOperator(const std::string& token)
         return std::make_unique<MultiplyOperator>();
     case '/':
         return std::make_unique<DivideOperator>();
+    default:
+        throw InvalidOperatorException();
     }
 }
 

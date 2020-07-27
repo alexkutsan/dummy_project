@@ -11,10 +11,13 @@ void Calculator::parseTokens(const std::string& expression) {
     std::vector<std::string> tokens((std::istream_iterator<std::string>(iss)),
                                      std::istream_iterator<std::string>());
     for (auto token : tokens) {
-        if (Operator::isOperator(token)) {
-            operatorsList_.push_back(OperatorFactory::getOperator(token));
-        } else {
+        if (Operand::isOperand(token)) {
             operandsList_.push_back(Operand(token));
+        } else {
+            if (operandsList_.size() < 2) {
+                throw InvalidOperandException();
+            }
+            operatorsList_.push_back(OperatorFactory::getOperator(token));
         }
     }
 }

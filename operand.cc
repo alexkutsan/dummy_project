@@ -2,8 +2,14 @@
 #include "calculator_exception.h"
 
 #include <sstream>
+#include <string>
 
 namespace dev {
+
+bool Operand::isOperand(const std::string& token) {
+    // Check if the first character of token is digit.
+    return ((token[0] >= 48) && (token[0] <= 57));
+}
 
 Operand::Operand(const std::string& token) {
     try {

@@ -81,5 +81,9 @@ TEST_F(CalculatorTest, CalcOperandOutOfRange) {
   EXPECT_THROW(calculator_.calc("7.63918e-313 1 +"), OperandOutOfRangeException);
 }
 
+TEST_F(CalculatorTest, CalcInvalidOperator) {
+  EXPECT_THROW(calculator_.calc("5 6 ^"), InvalidOperatorException);
+}
+
 }  // namespace testing
 }  // namespace dev
