@@ -6,7 +6,7 @@
 #include "irental.h"
 
 class IMovieRepo;
-class Rental : IRental {
+class Rental : public IRental {
  public:
   Rental(int days_rented, const IMovie& movie);
 
@@ -14,6 +14,8 @@ class Rental : IRental {
 
   const IMovie& movie() const override;
 
+  double GetTotalAmount() const override;
+  double GetFrequentRenterPoints() const override;
   static Rental createFromLine(const std::string& line,
                                const IMovieRepo& movies);
  private:

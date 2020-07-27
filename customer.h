@@ -12,8 +12,12 @@ class Customer :ICustomer {
 
   void statement(std::ostringstream& result);
 
- private:
+  void AddFooter(std::ostringstream& result);
+  
+private:
   std::string name_;
   std::vector<Rental> rentals_;
+  int GetTotatFrequentRenterPoints();
+  double GetTotalAmount();
 };
 #endif // CUSTOMER_H

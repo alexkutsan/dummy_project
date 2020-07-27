@@ -16,10 +16,7 @@ void run(std::istream& in, std::ostream& out) {
   MovieRepo movies;
   for (std::string line; std::getline(movieStream, line);) {
     auto& movie = movies.Add(line);
-    //    auto movie = Movie::createFromLine(line);
     out << movie.index() << ": " << movie.name() << "\n";
-    //    movies.insert(std::make_pair(std::stoi(movie->index()),
-    //    std::move(movie)));
   }
   out << "Enter customer name: ";
   std::string customerName;
