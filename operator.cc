@@ -6,39 +6,34 @@
 
 namespace dev {
 
-double AddOperator::calculate(const Operand& operand1, const Operand& operand2) const {
-    return operand1.value() + operand2.value();
-}
+Operator::Operator(Calculate calculate):calculate(calculate) {}
 
-double SubtractOperator::calculate(const Operand& operand1, const Operand& operand2) const {
-    return operand1.value() - operand2.value();
-}
-
-double MultiplyOperator::calculate(const Operand& operand1, const Operand& operand2) const {
-    return operand1.value() * operand2.value();
-}
-
-double DivideOperator::calculate(const Operand& operand1, const Operand& operand2) const {
-    if (operand2.value() == 0) {
-        throw DivideByZeroException();
+OperatorMap OperatorFactory::operators_ = {
+    {
+        '+', [] (const Operand& operand1, const Operand& operand2) -> double { return operand1.value() + operand2.value();}
+    },
+    {
+        '-', [] (const Operand& operand1, const Operand& operand2) -> double { return operand1.value() - operand2.value();}
+    },
+    {
+        '*', [] (const Operand& operand1, const Operand& operand2) -> double { return operand1.value() * operand2.value();}
+    },
+    {
+        '/', [] (const Operand& operand1, const Operand& operand2) -> double {
+                if (operand2.value() == 0) {
+                    throw DivideByZeroException();
+                }
+                return operand1.value() / operand2.value();
+             }
     }
-    return operand1.value() / operand2.value();
-}
+};
 
 std::unique_ptr<Operator> OperatorFactory::getOperator(const std::string& token) {
-    switch (token[0])
-    {
-    case '+':
-        return std::make_unique<AddOperator>();
-    case '-':
-        return std::make_unique<SubtractOperator>();
-    case '*':
-        return std::make_unique<MultiplyOperator>();
-    case '/':
-        return std::make_unique<DivideOperator>();
-    default:
+    auto fn = operators_[token[0]];
+    if (fn == nullptr) {
         throw InvalidOperatorException();
     }
+    return std::make_unique<Operator>(fn);
 }
 
 }  // namespace dev

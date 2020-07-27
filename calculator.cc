@@ -12,7 +12,6 @@ bool Calculator::isValidExpression(std::vector<std::string> tokens) {
         if ((noOfOperands < 2) && (!Operand::isOperand(token))) {
             throw InvalidOperandException();
         }
-
         if (Operand::isOperand(token)) {
             noOfOperands++;
         } else {

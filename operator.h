@@ -2,38 +2,26 @@
 
 #include "operand.h"
 
+#include <map>
 #include <memory>
+#include <functional>
 
 namespace dev {
 
+using Calculate = std::function<double(const Operand& operand1, const Operand& operand2)>;
+using OperatorMap = std::map<char, Calculate>;
+
 class Operator {
 public:
-    virtual double calculate(const Operand& operand1, const Operand& operand2) const = 0;
-};
-
-class AddOperator : public Operator {
-public:
-    double calculate(const Operand& operand1, const Operand& operand2) const override;
-};
-
-class SubtractOperator : public Operator {
-public:
-    double calculate(const Operand& operand1, const Operand& operand2) const override;
-};
-
-class MultiplyOperator : public Operator {
-public:
-    double calculate(const Operand& operand1, const Operand& operand2) const override;
-};
-
-class DivideOperator : public Operator {
-public:
-    double calculate(const Operand& operand1, const Operand& operand2) const override;
+    Operator(Calculate calculate);
+    Calculate calculate;
 };
 
 class OperatorFactory {
 public:
     static std::unique_ptr<Operator> getOperator(const std::string& token);
+private:
+    static OperatorMap operators_;
 };
 
 }  // namespace dev
