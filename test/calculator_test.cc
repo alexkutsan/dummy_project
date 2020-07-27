@@ -89,9 +89,5 @@ TEST_F(CalculatorTest, CalcInvalidExpression) {
   EXPECT_THROW(calculator_.calc("5 6 + 7"), InvalidExpressionException);
 }
 
-TEST_F(CalculatorTest, CalcInvalidExpression2) {
-  EXPECT_THROW(calculator_.calc("5 6 + *"), InvalidExpressionException);
-}
-
 }  // namespace testing
 }  // namespace dev

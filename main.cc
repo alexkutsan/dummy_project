@@ -7,7 +7,7 @@
 int main() {
 
   dev::Calculator c;
-  std::cout << c.calc("((2.5 + 2.5) * 9.0) / 3.0") << std::endl;
+  std::cout << c.calc("4 12 3 + * 2 / 5 5 + * 100 2 * - 2 /") << std::endl;
   // return c.calc("");
 
   dev::Project p;

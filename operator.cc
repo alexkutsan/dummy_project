@@ -6,27 +6,17 @@
 
 namespace dev {
 
-Operator::Operator() {}
-
-AddOperator::AddOperator():Operator() {}
-
 double AddOperator::calculate(const Operand& operand1, const Operand& operand2) const {
     return operand1.value() + operand2.value();
 }
-
-SubtractOperator::SubtractOperator():Operator() {}
 
 double SubtractOperator::calculate(const Operand& operand1, const Operand& operand2) const {
     return operand1.value() - operand2.value();
 }
 
-MultiplyOperator::MultiplyOperator():Operator() {}
-
 double MultiplyOperator::calculate(const Operand& operand1, const Operand& operand2) const {
     return operand1.value() * operand2.value();
 }
-
-DivideOperator::DivideOperator():Operator() {}
 
 double DivideOperator::calculate(const Operand& operand1, const Operand& operand2) const {
     if (operand2.value() == 0) {
@@ -34,7 +24,6 @@ double DivideOperator::calculate(const Operand& operand1, const Operand& operand
     }
     return operand1.value() / operand2.value();
 }
-
 
 std::unique_ptr<Operator> OperatorFactory::getOperator(const std::string& token) {
     switch (token[0])
