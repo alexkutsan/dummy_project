@@ -2,6 +2,11 @@
 
 #include "icalculator.h"
 
+#include "operand.h"
+#include "operator.h"
+
+#include <list>
+#include <stack>
 #include <vector>
 
 namespace dev {
@@ -13,7 +18,10 @@ public:
 
     double calc(const std::string& expression);
 private:
-    std::vector<std::string> parseTokens(const std::string& expression) const;
+    void parseTokens(const std::string& expression);
+
+    std::list<Operand> operandsList_;
+    std::list<std::unique_ptr<Operator>> operatorsList_;
 };
 
 }  // namespace dev

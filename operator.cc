@@ -16,28 +16,28 @@ bool Operator::isOperator(const std::string& token) {
 AddOperator::AddOperator():Operator() {}
 
 double AddOperator::calculate(const Operand& operand1, const Operand& operand2) const {
-    return operand2.value() + operand1.value();
+    return operand1.value() + operand2.value();
 }
 
 SubtractOperator::SubtractOperator():Operator() {}
 
 double SubtractOperator::calculate(const Operand& operand1, const Operand& operand2) const {
-    return operand2.value() - operand1.value();
+    return operand1.value() - operand2.value();
 }
 
 MultiplyOperator::MultiplyOperator():Operator() {}
 
 double MultiplyOperator::calculate(const Operand& operand1, const Operand& operand2) const {
-    return operand2.value() * operand1.value();
+    return operand1.value() * operand2.value();
 }
 
 DivideOperator::DivideOperator():Operator() {}
 
 double DivideOperator::calculate(const Operand& operand1, const Operand& operand2) const {
-    if (operand1.value() == 0) {
+    if (operand2.value() == 0) {
         throw DivideByZeroException();
     }
-    return operand2.value() / operand1.value();
+    return operand1.value() / operand2.value();
 }
 
 

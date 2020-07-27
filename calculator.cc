@@ -1,39 +1,36 @@
-#include "operand.h"
-#include "operator.h"
 #include "calculator.h"
 #include "calculator_exception.h"
 
 #include <iterator>
 #include <sstream>
-#include <stack>
 
 namespace dev {
 
-std::vector<std::string> Calculator::parseTokens(const std::string& expression) const {
+void Calculator::parseTokens(const std::string& expression) {
     std::istringstream iss(expression);
     std::vector<std::string> tokens((std::istream_iterator<std::string>(iss)),
                                      std::istream_iterator<std::string>());
-    return tokens;  
+    for (auto token : tokens) {
+        if (Operator::isOperator(token)) {
+            operatorsList_.push_back(OperatorFactory::getOperator(token));
+        } else {
+            operandsList_.push_back(Operand(token));
+        }
+    }
 }
 
 double Calculator::calc(const std::string& expression) {
-    std::vector<std::string> tokens = parseTokens(expression);
-    std::stack<std::string> stkTokens;
-    for (auto token : tokens) {
-        if (Operator::isOperator(token)) {
-            Operand operand1 = Operand(stkTokens.top());
-            stkTokens.pop();
-            Operand operand2 = Operand(stkTokens.top());
-            stkTokens.pop();
+    parseTokens(expression);
+    for (const auto& operatr : operatorsList_) {
+        Operand operand1 = operandsList_.front();
+        operandsList_.pop_front();
+        Operand operand2 = operandsList_.front();
+        operandsList_.pop_front();
 
-            std::unique_ptr<Operator> operatr = OperatorFactory::getOperator(token);
-            stkTokens.push(std::to_string(operatr->calculate(operand1, operand2)));
-        } else {
-            stkTokens.push(token);
-        }
+        operandsList_.push_front(Operand(std::to_string(operatr->calculate(operand1, operand2))));
     }
 
-    return std::stod(stkTokens.top());
+    return operandsList_.front().value();
 }
 
 }  // namespace dev
