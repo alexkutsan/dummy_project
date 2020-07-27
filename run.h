@@ -1,3 +1,3 @@
-#include "iproject.h"
+#include "irpncalculator.h"
 
-int run(dev::IProject& proj) ;
+double run(dev::IRPNCalculator& proj);
