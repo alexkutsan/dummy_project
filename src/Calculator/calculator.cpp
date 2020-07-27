@@ -3,7 +3,6 @@
 #include <algorithm>
 #include <sstream>
 #include <iterator>
-#include <vector>
 
 Calculator::Calculator()
 {
@@ -13,13 +12,14 @@ double Calculator::calculate(std::string input)
 {
     clear();
 
-    std::istringstream inputStream(input);
-    std::vector<std::string> tokens(std::istream_iterator<std::string>{inputStream},
-                                    std::istream_iterator<std::string>());
+    for (auto token : tokenize(input)) {
 
-    for (auto token : tokens) {
+        if (isNumber(token)) {
+            m_tmp_operands.push(atof(token.c_str()));
+            continue;
+        }
 
-        if (token.size() == 1 && isOperator(token.at(0))) {
+        if (isOperator(token.at(0))) {
             auto res = calculateNext(popOperands(), token.at(0));
 
             if (!res) {
@@ -27,11 +27,6 @@ double Calculator::calculate(std::string input)
             }
 
             m_tmp_operands.push(res.value());
-            continue;
-        }
-
-        if (isNumber(token)) {
-            m_tmp_operands.push(atof(token.c_str()));
             continue;
         }
 
@@ -74,6 +69,7 @@ Calculator::result Calculator::calculateNext(operands operands, char oper)
     auto op2 = operands.second;
 
     switch (oper) {
+
     case '*' :
         return op1 * op2;
         break;
@@ -97,9 +93,23 @@ Calculator::result Calculator::calculateNext(operands operands, char oper)
     case '-' :
         return op1 - op2;
         break;
+
     default:
         return {};
     }
+}
+
+Calculator::tokens Calculator::tokenize(std::string input) const
+{
+    std::istringstream inputStream(input);
+    std::vector<std::string> tokens(std::istream_iterator<std::string>{inputStream},
+                                    std::istream_iterator<std::string>());
+
+    if (tokens.empty()) {
+        return {};
+    }
+
+    return tokens;
 }
 
 

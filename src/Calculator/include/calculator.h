@@ -5,24 +5,27 @@
 #include <stack>
 #include <optional>
 #include <utility>
+#include <vector>
 
 class Calculator{
-
-    using result = std::optional<double>;
-    using operands = std::pair<double, double>;
 
 public:
     Calculator();
 
     double calculate(std::string input);
+    void clear();
     std::string error() const;
 
 private:
-    void clear();
+    using result = std::optional<double>;
+    using operands = std::pair<double, double>;
+    using tokens = std::vector<std::string>;
 
+private:
     operands popOperands();
     result calculateNext(operands operands, char oper);
 
+    tokens tokenize(std::string input) const;
     bool isOperator(char oper) const;
     bool isNumber(std::string token) const;
 
