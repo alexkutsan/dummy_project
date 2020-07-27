@@ -20,7 +20,7 @@ double Calculator::calculate(std::string input)
     for (auto token : tokens) {
 
         if (token.size() == 1 && isOperator(token.at(0))) {
-            auto res = calculateNext(token.at(0));
+            auto res = calculateNext(popOperands(), token.at(0));
 
             if (!res) {
                 return 0.0;
@@ -36,7 +36,7 @@ double Calculator::calculate(std::string input)
         }
 
         m_error = "input simbol: " + token + " not supported!";
-        return false;
+        return 0.0;
     }
 
     return m_tmp_operands.top();
@@ -53,14 +53,9 @@ void Calculator::clear()
     m_error.clear();
 }
 
-Calculator::result Calculator::calculateNext(char oper)
+Calculator::operands Calculator::popOperands()
 {
-    if (!isOperator(oper)) {
-        m_error = "operator: " + std::string{oper} + "not supported";
-        return {};
-    }
-
-    if (m_tmp_operands.size() < min_operands_number) {
+    if (m_tmp_operands.size() < min_operandsNumber) {
         m_error = "wrong input string!";
         return {};
     }
@@ -69,6 +64,14 @@ Calculator::result Calculator::calculateNext(char oper)
     m_tmp_operands.pop();
     auto op2 = m_tmp_operands.top();
     m_tmp_operands.pop();
+
+    return std::make_pair(op1, op2);
+}
+
+Calculator::result Calculator::calculateNext(operands operands, char oper)
+{
+    auto op1 = operands.first;
+    auto op2 = operands.second;
 
     switch (oper) {
     case '*' :

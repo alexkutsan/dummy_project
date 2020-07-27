@@ -4,10 +4,12 @@
 #include <array>
 #include <stack>
 #include <optional>
+#include <utility>
 
 class Calculator{
 
     using result = std::optional<double>;
+    using operands = std::pair<double, double>;
 
 public:
     Calculator();
@@ -17,7 +19,9 @@ public:
 
 private:
     void clear();
-    result calculateNext(char oper);
+
+    operands popOperands();
+    result calculateNext(operands operands, char oper);
 
     bool isOperator(char oper) const;
     bool isNumber(std::string token) const;
@@ -26,5 +30,5 @@ private:
     std::string m_error;
 
     static constexpr std::array<char, 4> m_availableOperators{'*', '/', '+', '-'};
-    static constexpr int min_operands_number{2};
+    static constexpr int min_operandsNumber{2};
 };
