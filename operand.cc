@@ -21,6 +21,8 @@ Operand::Operand(const std::string& token) {
     }
 }
 
+Operand::Operand(const double& value):value_(value) {}
+
 double Operand::value() const {
     return value_;
 }

@@ -19,7 +19,7 @@ public:
     double calc(const std::string& expression);
 private:
     void parseTokens(const std::string& expression);
-    bool isValidExpression(std::vector<std::string> tokens);
+    bool isValidExpression(const std::vector<std::string>& tokens);
 
     std::list<Operand> operandsList_;
     std::list<std::unique_ptr<Operator>> operatorsList_;

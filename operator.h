@@ -13,7 +13,7 @@ using OperatorMap = std::map<char, Calculate>;
 
 class Operator {
 public:
-    Operator(Calculate calculate);
+    Operator(const Calculate& calculate);
     Calculate calculate;
 };
 

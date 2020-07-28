@@ -7,6 +7,7 @@ namespace dev {
 class Operand {
 public:
     Operand(const std::string& token);
+    Operand(const double& value);
     double value() const;
     static bool isOperand(const std::string& token);
 private:

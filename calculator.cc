@@ -6,7 +6,7 @@
 
 namespace dev {
 
-bool Calculator::isValidExpression(std::vector<std::string> tokens) {
+bool Calculator::isValidExpression(const std::vector<std::string>& tokens) {
     int noOfOperands = 0;
     for (auto token : tokens) {
         if ((noOfOperands < 2) && (!Operand::isOperand(token))) {
@@ -40,12 +40,13 @@ void Calculator::parseTokens(const std::string& expression) {
 double Calculator::calc(const std::string& expression) {
     parseTokens(expression);
     for (const auto& operatr : operatorsList_) {
-        Operand operand1 = operandsList_.front();
+        const Operand operand1 = operandsList_.front();
         operandsList_.pop_front();
-        Operand operand2 = operandsList_.front();
+        const Operand operand2 = operandsList_.front();
         operandsList_.pop_front();
 
-        operandsList_.push_front(Operand(std::to_string(operatr->calculate(operand1, operand2))));
+        const double res = operatr->calculate(operand1, operand2);
+        operandsList_.push_front(Operand(res));
     }
 
     return operandsList_.front().value();

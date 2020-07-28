@@ -6,7 +6,7 @@
 
 namespace dev {
 
-Operator::Operator(Calculate calculate):calculate(calculate) {}
+Operator::Operator(const Calculate& calculate):calculate(calculate) {}
 
 OperatorMap OperatorFactory::operators_ = {
     {
