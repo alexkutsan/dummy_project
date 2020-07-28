@@ -72,7 +72,6 @@ Calculator::result Calculator::calculateNext(operands operands, char oper)
 
     case '*' :
         return op1 * op2;
-        break;
 
     case '/' :
         if (op2 == 0) {
@@ -80,15 +79,12 @@ Calculator::result Calculator::calculateNext(operands operands, char oper)
             return {};
         }
         return op1 / op2;
-        break;
 
     case '+' :
         return op1 + op2;
-        break;
 
     case '-' :
         return op1 - op2;
-        break;
 
     default:
         return {};
