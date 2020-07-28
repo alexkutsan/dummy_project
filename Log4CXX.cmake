@@ -10,7 +10,7 @@ ExternalProject_Add(logging-log4cxx
   GIT_REPOSITORY    https://github.com/apache/logging-log4cxx
   GIT_TAG           master
   BUILD_IN_SOURCE 1
-  CONFIGURE_COMMAND cmake . -D CMAKE_INSTALL_PREFIX=${log4cxx_INSTALL}
+  CONFIGURE_COMMAND cmake -DCMAKE_INSTALL_PREFIX=${log4cxx_INSTALL} .
   BUILD_ALWAYS false
   BUILD_BYPRODUCTS ${log4cxx_INSTALL}/src/main/cpp/liblog4cxx.so
   BUILD_COMMAND     make -j
