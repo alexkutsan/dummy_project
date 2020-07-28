@@ -75,10 +75,6 @@ Calculator::result Calculator::calculateNext(operands operands, char oper)
         break;
 
     case '/' :
-        if (op1 == 0) {
-            m_error = "result is indefinite";
-            return {};
-        }
         if (op2 == 0) {
             m_error = "division by zero is undefined";
             return {};

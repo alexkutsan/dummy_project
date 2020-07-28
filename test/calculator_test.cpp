@@ -53,7 +53,6 @@ TEST_F(CalculatorTest, ComplexPriorityOperationMultiplyByZero) {
 
 TEST_F(CalculatorTest, ComplexPriorityOperationIndefinite) {
     ASSERT_EQ(calculator.calculate("0 3 2 + /"), 0);
-    ASSERT_EQ(calculator.error(), "result is indefinite");
 }
 
 TEST_F(CalculatorTest, SimbolNotSuported) {
