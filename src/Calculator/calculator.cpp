@@ -14,19 +14,15 @@ double Calculator::calculate(std::string input)
 
     for (auto token : tokenize(input)) {
 
-        if (isNumber(token)) {
-            m_tmp_operands.push(atof(token.c_str()));
+        if (isOperand(token)) {
+            handleOperandToken(token);
             continue;
         }
 
-        if (isOperator(token.at(0))) {
-            auto res = calculateNext(popOperands(), token.at(0));
-
-            if (!res) {
-                return 0.0;
+        if (isOperator(token)) {
+            if (!handleOperatorToken(token)) {
+                return {};
             }
-
-            m_tmp_operands.push(res.value());
             continue;
         }
 
@@ -91,7 +87,24 @@ Calculator::result Calculator::calculateNext(operands operands, char oper)
     }
 }
 
-Calculator::tokens Calculator::tokenize(std::string input) const
+void Calculator::handleOperandToken(const std::string &token)
+{
+    m_tmp_operands.push(atof(token.c_str()));
+}
+
+Calculator::result Calculator::handleOperatorToken(const std::string &token)
+{
+    auto res = calculateNext(popOperands(), token.at(0));
+
+    if (!res) {
+        return {};
+    }
+
+    m_tmp_operands.push(res.value());
+    return res;
+}
+
+Calculator::tokens Calculator::tokenize(const std::string &input) const
 {
     std::istringstream inputStream(input);
     std::vector<std::string> tokens(std::istream_iterator<std::string>{inputStream},
@@ -105,11 +118,12 @@ Calculator::tokens Calculator::tokenize(std::string input) const
 }
 
 
-bool Calculator::isOperator(char oper) const {
-    return std::find(m_availableOperators.begin(), m_availableOperators.end(), oper) != m_availableOperators.end();
+bool Calculator::isOperator(const std::string &oper) const {
+    auto _oper = oper.at(0);
+    return std::find(m_availableOperators.begin(), m_availableOperators.end(), _oper) != m_availableOperators.end();
 }
 
-bool Calculator::isNumber(std::string token) const
+bool Calculator::isOperand(std::string token) const
 {
     // consider negative numbers
     if (token.at(0) == '-') {

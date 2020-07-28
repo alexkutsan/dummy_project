@@ -28,10 +28,12 @@ private:
 private:
     operands popOperands();
     result calculateNext(operands operands, char oper);
+    void handleOperandToken(const std::string& token);
+    result handleOperatorToken(const std::string& token);
 
-    tokens tokenize(std::string input) const;
-    bool isOperator(char oper) const;
-    bool isNumber(std::string token) const;
+    tokens tokenize(const std::string& input) const;
+    bool isOperator(const std::string& oper) const;
+    bool isOperand(std::string token) const;
 
     std::stack<double> m_tmp_operands;
     std::string m_error;
