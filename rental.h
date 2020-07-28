@@ -16,7 +16,7 @@ class Rental : public IRental {
 
   double GetTotalAmount() const override;
   double GetFrequentRenterPoints() const override;
-  static Rental createFromLine(const std::string& line,
+  static IRentalPtr createFromLine(const std::string& line,
                                const IMovieRepo& movies);
  private:
   int days_rented_;

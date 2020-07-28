@@ -2,9 +2,8 @@
 #define MOVIEREPO_H
 #include "imovierepo.h"
 
-class MovieRepo : public IMovieRepo
-{
-public:
+class MovieRepo : public IMovieRepo {
+ public:
   MovieRepo();
 
   /**
@@ -12,10 +11,10 @@ public:
    * @param line line to parse
    * @return reference to added movie
    */
-  IMovie& Add(std::string line);
+  void Add(std::string line);
   IMovie& Find(int index) const;
-
-  std::map<int, std::unique_ptr<IMovie>> movies_;
+  void PrintMovies(std::ostream& out) const;
+  std::map<int, std::unique_ptr<IMovie> > movies_;
 };
 
-#endif // MOVIEREPO_H
+#endif  // MOVIEREPO_H

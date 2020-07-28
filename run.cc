@@ -9,27 +9,25 @@
 #include "movierepo.h"
 #include "rental.h"
 
-void run(std::istream& in, std::ostream& out) {
-  using namespace std::literals;
-  // read movies from file
+IMovieRepoPtr FillMovieRepo() {
+  IMovieRepoPtr movies = std::make_unique<MovieRepo>();
   std::ifstream movieStream{"movies.csv"};
-  MovieRepo movies;
   for (std::string line; std::getline(movieStream, line);) {
-    auto& movie = movies.Add(line);
-    out << movie.index() << ": " << movie.name() << "\n";
+    movies->Add(line);
   }
+  return std::move(movies);
+}
+
+std::unique_ptr<ICustomer> CreateCustomer(std::istream& in, std::ostream& out) {
   out << "Enter customer name: ";
   std::string customerName;
   getline(in, customerName);
+  return std::make_unique<Customer>(customerName);
+}
 
-  Customer customer(customerName);
-
-  out << "Choose movie by number followed by rental days, just ENTER for "
-         "bill:\n";
-  std::ostringstream result;
-  result << std::fixed << std::setprecision(1);
-  result << "Rental Record for " + customer.name() + "\n";
-
+void ReadCustomerRentals(std::istream& in,
+                         const IMovieRepo& movies,
+                         ICustomer& customer_out) {
   while (true) {
     std::string input;
     std::getline(in, input);
@@ -37,10 +35,20 @@ void run(std::istream& in, std::ostream& out) {
       break;
     }
     auto rental = Rental::createFromLine(input, movies);
-    customer.AddRental(rental);
+    customer_out.AddRental(std::move(rental));
   }
+}
 
-  customer.statement(result);
-
+void run(std::istream& in, std::ostream& out) {
+  using namespace std::literals;
+  auto movies = FillMovieRepo();
+  movies->PrintMovies(out);
+  auto customer = CreateCustomer(in, out);
+  out << "Choose movie by number followed by rental days, just ENTER for "
+         "bill:\n";
+  std::ostringstream result;
+  customer->RentalRecordsHeader(result);
+  ReadCustomerRentals(in, *movies, *customer);
+  customer->statement(result);
   out << result.str();
 }
