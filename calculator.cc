@@ -7,15 +7,23 @@
 namespace dev {
 
 bool Calculator::isValidExpression(const std::vector<std::string>& tokens) {
-    int noOfOperands = 0;
-    for (auto token : tokens) {
-        if ((noOfOperands < 2) && (!Operand::isOperand(token))) {
+    auto  is_operator = [] (const std::string& token) {
+        return !Operand::isOperand(token);
+    };
+
+    auto check_operands_count_for_operator = [] (const int& noOfOperands) {
+        if (noOfOperands < 2) {
             throw InvalidOperandException();
         }
-        if (Operand::isOperand(token)) {
-            noOfOperands++;
-        } else {
+    };
+
+    int noOfOperands = 0;
+    for (auto token : tokens) {
+        if (is_operator(token)) {
+            check_operands_count_for_operator(noOfOperands);
             noOfOperands--;
+        } else {
+            noOfOperands++;
         }
     }
     return (noOfOperands == 1);
