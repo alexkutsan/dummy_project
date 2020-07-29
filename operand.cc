@@ -7,8 +7,17 @@
 namespace dev {
 
 bool Operand::isOperand(const std::string& token) {
-    // Check if the first character of token is digit.
-    return ((token[0] >= 48) && (token[0] <= 57));
+    auto is_sign = [&token] (const int& index) -> bool {
+        return ((token[index] == 43) || (token[index] == 45));
+    };
+    auto is_digit = [&token] (const int& index) -> bool {
+        return ((token[index] >= 48) && (token[index] <= 57));
+    };
+    int index = 0;
+    if (is_sign(index)) {
+        index = 1;
+    }
+    return is_digit(index);
 }
 
 Operand::Operand(const std::string& token) {
