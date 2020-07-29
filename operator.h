@@ -2,14 +2,14 @@
 
 #include "operand.h"
 
-#include <map>
+#include <unordered_map>
 #include <memory>
 #include <functional>
 
 namespace dev {
 
 using Calculate = std::function<double(const Operand& operand1, const Operand& operand2)>;
-using OperatorMap = std::map<char, Calculate>;
+using OperatorMap = std::unordered_map<char, Calculate>;
 
 class Operator {
 public:
