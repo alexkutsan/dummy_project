@@ -59,6 +59,10 @@ TEST_F(CalculatorTest, CalcComplex2) {
   ASSERT_DOUBLE_EQ(-4.8, calculator_.calc("1.5 2.5 - 4.8 *"));
 }
 
+TEST_F(CalculatorTest, CalcComplex3) {
+  ASSERT_DOUBLE_EQ(50.0, calculator_.calc("4 12 3 + * 2 / 5 5 + * 100 2 * - 2 /"));
+}
+
 // 4. Divide by zero operation
 
 TEST_F(CalculatorTest, CalcDivByZero) {

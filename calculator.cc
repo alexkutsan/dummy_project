@@ -3,6 +3,7 @@
 
 #include <iterator>
 #include <sstream>
+#include <stack>
 
 namespace dev {
 
@@ -29,35 +30,36 @@ bool Calculator::isValidExpression(const std::vector<std::string>& tokens) {
     return (noOfOperands == 1);
 }
 
-void Calculator::parseTokens(const std::string& expression) {
+std::vector<std::string> Calculator::parseTokens(const std::string& expression) {
     std::istringstream iss(expression);
     std::vector<std::string> tokens((std::istream_iterator<std::string>(iss)),
                                      std::istream_iterator<std::string>());
     if (!isValidExpression(tokens)) {
         throw InvalidExpressionException();
     }
-    for (auto token : tokens) {
-        if (Operand::isOperand(token)) {
-            operandsList_.push_back(Operand(token));
-        } else {
-            operatorsList_.push_back(OperatorFactory::getOperator(token));
-        }
-    }
+    return tokens;
 }
 
 double Calculator::calc(const std::string& expression) {
-    parseTokens(expression);
-    for (const auto& operatr : operatorsList_) {
-        const Operand operand1 = operandsList_.front();
-        operandsList_.pop_front();
-        const Operand operand2 = operandsList_.front();
-        operandsList_.pop_front();
+    const std::vector<std::string> tokens = parseTokens(expression);
+    
+    std::stack<Operand> tokensStack;
+    for (auto token : tokens) {
+        if (Operand::isOperand(token)) {
+            tokensStack.push(Operand(token));
+        } else {
+            const Operand operand2 = tokensStack.top();
+            tokensStack.pop();
+            const Operand operand1 = tokensStack.top();
+            tokensStack.pop();
 
-        const double res = operatr->calculate(operand1, operand2);
-        operandsList_.push_front(Operand(res));
+            auto operatr = OperatorFactory::getOperator(token);
+            const double res = operatr->calculate(operand1, operand2);
+            tokensStack.push(Operand(res));
+        }
     }
 
-    return operandsList_.front().value();
+    return tokensStack.top().value();
 }
 
 }  // namespace dev
