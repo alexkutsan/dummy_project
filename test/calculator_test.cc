@@ -93,5 +93,11 @@ TEST_F(CalculatorTest, CalcInvalidExpression) {
   EXPECT_THROW(calculator_.calc("5 6 + 7"), InvalidExpressionException);
 }
 
+// 7. Signed operand
+
+TEST_F(CalculatorTest, SignedOperand) {
+  ASSERT_DOUBLE_EQ(-4.0, calculator_.calc("4 -8 +"));
+}
+
 }  // namespace testing
 }  // namespace dev
