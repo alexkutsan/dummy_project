@@ -7,8 +7,12 @@ list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 set(SOURCES project.cc)
 add_library(ProjectLib ${SOURCES})
 
+set(SOURCES polishNotationCalc.cpp)
+add_library(polishCalcLib ${SOURCES})
+
 add_executable(project main.cc run.cc)
 target_link_libraries(project ProjectLib)
+target_link_libraries(project ProjectLib polishCalcLib)
 
 enable_testing()
 add_subdirectory(test)
