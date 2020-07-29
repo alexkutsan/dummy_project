@@ -1,4 +1,6 @@
 #include "movierepo.h"
+#include "movieprice.h"
+
 #include <sstream>
 #include <vector>
 #include "movie.h"
@@ -11,7 +13,12 @@ void MovieRepo::Add(std::string line) {
     movie_row.push_back(line.substr(first, last - first));
   }
   int movie_index = std::stoi(movie_row[0]);
-  auto movie = std::make_unique<Movie>(movie_index, movie_row[1], movie_row[2]);
+  auto release_type = ReleaseTypeFromString(movie_row[2]);
+  auto price_calculator = MoviePrice::PriceCalculatorFactory(release_type);
+  auto frequent_points_calculator =
+      MoviePrice::FrequentPointsCalculatorFactory(release_type);
+  auto movie = std::make_unique<Movie>(
+      movie_index, movie_row[1], price_calculator, frequent_points_calculator);
   movies_[movie_index] = std::move(movie);
 }
 

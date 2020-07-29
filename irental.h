@@ -4,14 +4,14 @@
 #include "movie.h"
 
 class IRental {
-public:
+ public:
   virtual int days_rented() const = 0;
 
   virtual double GetTotalAmount() const = 0;
-  virtual double GetFrequentRenterPoints() const = 0;
+  virtual int GetFrequentRenterPoints() const = 0;
   virtual const IMovie& movie() const = 0;
 };
 
 typedef std::unique_ptr<IRental> IRentalPtr;
 
-#endif // IRENTAL_H
+#endif  // IRENTAL_H

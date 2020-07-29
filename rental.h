@@ -15,12 +15,13 @@ class Rental : public IRental {
   const IMovie& movie() const override;
 
   double GetTotalAmount() const override;
-  double GetFrequentRenterPoints() const override;
+  int GetFrequentRenterPoints() const override;
   static IRentalPtr createFromLine(const std::string& line,
-                               const IMovieRepo& movies);
+                                   const IMovieRepo& movies);
+
  private:
   int days_rented_;
   const IMovie& movie_;
 };
 
-#endif // RENTAL_H
+#endif  // RENTAL_H

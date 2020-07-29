@@ -7,7 +7,7 @@ enable_testing()
 
 
 
-set(SOURCES run.h run.cc movie.cc rental.cc customer.cc movierepo.cc)
+set(SOURCES run.h run.cc movierepo.cc movie.cc rental.cc customer.cc movieprice.cc)
 add_library(StoreLib ${SOURCES})
 
 add_executable(commandline_videostore_cpp main.cc)

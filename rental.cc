@@ -6,7 +6,7 @@ Rental::Rental(int days_rented, const IMovie& movie)
     : days_rented_(days_rented), movie_(movie) {}
 
 IRentalPtr Rental::createFromLine(const std::string& line,
-                              const IMovieRepo& movies) {
+                                  const IMovieRepo& movies) {
   std::vector<std::string> rental;
   for (size_t first = 0, last = 0; last < line.length(); first = last + 1) {
     last = line.find(' ', first);
@@ -22,30 +22,13 @@ int Rental::days_rented() const {
 }
 
 const IMovie& Rental::movie() const {
-    return movie_;
+  return movie_;
 }
 
 double Rental::GetTotalAmount() const {
-    double thisAmount = 0;
-    // determine amounts for rental
-    if (movie_.release_type() == "REGULAR") {
-      thisAmount += 2;
-      if (days_rented() > 2)
-        thisAmount += (days_rented() - 2) * 1.5;
-    } else if (movie_.release_type() == "NEW_RELEASE") {
-      thisAmount += days_rented() * 3;
-    } else if (movie_.release_type() == "CHILDRENS") {
-      thisAmount += 1.5;
-      if (days_rented() > 3)
-        thisAmount += (days_rented() - 3) * 1.5;
-    }
-    return thisAmount;
+  return movie().GetTotalAmount(days_rented());
 }
 
-double Rental::GetFrequentRenterPoints() const {
-    // add bonus for a two day new release rental
-    if (movie_.release_type() == "NEW_RELEASE" && days_rented() > 1) {
-      return 2;
-    }
-    return 1;
+int Rental::GetFrequentRenterPoints() const {
+  return movie().GetFrequentRenterPoints(days_rented());
 }
