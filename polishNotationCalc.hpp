@@ -3,6 +3,8 @@
 #include <stack>
 #include <utility>
 #include <functional>
+#include <string>
+#include <iterator>
 #include <map>
 
 namespace dev
@@ -38,10 +40,10 @@ namespace dev
         bool isNumeric(const char num);
         bool isOperator(const char num);
         void insertFunctionInsideMap();
-        void pushOperandInStack(const std::string &, int &curr_pos);
+        void pushOperandInStack(const std::string &str, int& curr_pos);
         std::pair<double, double> getOperandFromStack();
-        std::stack<double> mStack;
-        std::map<const char, functionCall> mMap;
+        std::stack<double> mCalculatorStack;
+        std::map<const char, functionCall> mOperatorMap;
     };
 
 } // namespace dev

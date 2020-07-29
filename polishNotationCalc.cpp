@@ -20,7 +20,8 @@ namespace dev
             return true;
         return false;
     }
-    double PolishCalc::calc(const std::string &str)
+   
+    double PolishCalc::calc( const std::string &str)
     {
         if (str.size() == 0)
             throw Exception{"Nothing to work on as Input is empty"};
@@ -31,23 +32,24 @@ namespace dev
             if (isNumeric(str[i]))
             {
                 pushOperandInStack(str, i);
+                
             }
             if (isOperator(str[i]))
             {
                 auto operandVal = getOperandFromStack();
                 double res = 0;
-                res = mMap[str[i]](operandVal.first, operandVal.second);
-                mStack.push(res);
+                res = mOperatorMap[str[i]](operandVal.first, operandVal.second);
+                mCalculatorStack.push(res);
             }
         }
 
-        if (mStack.size() > 1)
+        if (mCalculatorStack.size() > 1)
             throw Exception{"Not a valid string"};
 
-        return mStack.top();
+        return mCalculatorStack.top();
     }
 
-    void PolishCalc::pushOperandInStack(const std::string &str, int &curr_pos)
+    void PolishCalc::pushOperandInStack(const std::string &str, int& curr_pos)
     {
         double operand = 0;
         std::string temp = "";
@@ -57,29 +59,30 @@ namespace dev
             curr_pos++;
         }
         operand = atof(temp.c_str());
-        mStack.push(operand);
+        mCalculatorStack.push(operand);
         curr_pos--;
+       
     }
     std::pair<double, double> PolishCalc::getOperandFromStack()
     {
         double secOperand = 0;
         double firstOperand = 0;
-        if (mStack.size() < 2)
+        if (mCalculatorStack.size() < 2)
         {
             throw Exception{"No operand to work on"};
         }
-        secOperand = mStack.top();
-        mStack.pop();
-        firstOperand = mStack.top();
-        mStack.pop();
+        secOperand = mCalculatorStack.top();
+        mCalculatorStack.pop();
+        firstOperand = mCalculatorStack.top();
+        mCalculatorStack.pop();
         return std::make_pair(firstOperand, secOperand);
     }
     void PolishCalc::insertFunctionInsideMap()
     {
-        mMap.insert(std::make_pair('+', [](double a, double b) { return a + b; }));
-        mMap.insert(std::make_pair('-', [](double a, double b) { return a - b; }));
-        mMap.insert(std::make_pair('*', [](double a, double b) { return a * b; }));
-        mMap.insert(std::make_pair('/', [](double a, double b) { 
+        mOperatorMap.insert(std::make_pair('+', [](const double a, const double b) { return a + b; }));
+        mOperatorMap.insert(std::make_pair('-', [](const double a, const double b) { return a - b; }));
+        mOperatorMap.insert(std::make_pair('*', [](const double a, const double b) { return a * b; }));
+        mOperatorMap.insert(std::make_pair('/', [](const double a, const double b) { 
             if(b==0)
             {
                 throw Exception{"divide by zero"};
