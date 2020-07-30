@@ -1,7 +1,7 @@
 #pragma once
 #include "utils/ilogger.h"
 
-class STDLogger : public Logger<void> {
+class STDLogger : public ThirdPartyLoggerInterface {
  public:
   STDLogger();
 

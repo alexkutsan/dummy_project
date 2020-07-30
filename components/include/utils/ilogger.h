@@ -24,16 +24,23 @@ struct LogMessage {
 };
 
 template <class ThirdPartyLogger>
-class Logger {
+class LoggerInitializer {
  public:
   virtual void Init(ThirdPartyLogger* impl) = 0;
   virtual void DeInit() = 0;
+};
+
+class Logger {
+ public:
   virtual void Enable() = 0;
   virtual bool Enabled() = 0;
   virtual void Disable() = 0;
   virtual void Flush() = 0;
   virtual void PushLog(const LogMessage& log_message) = 0;
-  static Logger<ThirdPartyLogger>& instance();
+  static Logger& instance(Logger* pre_init = nullptr);
+  //  static void init_singleton(Logger<ThirdPartyLogger>* instance);
 };
 
+class ThirdPartyLoggerInterface : public Logger,
+                                  public LoggerInitializer<void> {};
 #endif  // ILOGGER_H

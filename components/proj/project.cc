@@ -21,17 +21,17 @@ T GetFuncFromLib(void* dl_handle, const std::string& function_name) {
 
 int Project::run() {
   LOG_WITH_LEVEL(LogLevel::DEBUG, "Hello");
-  LOG_WITH_LEVEL(LogLevel::ERROR, "Hello");
+  LOG_WITH_LEVEL(LogLevel::TRACE, "Logger instance " << &Logger::instance());
   auto library = dlopen("libSharedLib.so", RTLD_LAZY);
   if (!library) {
     LOG_WITH_LEVEL(LogLevel::FATAL, "SharedLib.so not opened");
     exit(1);
   };
   LOG_WITH_LEVEL(LogLevel::INFO, "SharedLib.so opened");
-  typedef ISharedLib* (*Create)();
+  typedef ISharedLib* (*Create)(Logger*);
   Create create_plugin = GetFuncFromLib<Create>(library, "Create");
   LOG_WITH_LEVEL(LogLevel::INFO, "Create func found");
-  auto lib_class = create_plugin();
+  auto lib_class = create_plugin(&Logger::instance());
   LOG_WITH_LEVEL(LogLevel::INFO, "class created");
   lib_class->library_function();
   return 0;

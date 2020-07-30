@@ -1,16 +1,6 @@
-#ifdef USE_BOOST_LOGGER
-#include "logger/boostlogger.h"
-#endif
-#ifdef USE_LOG4CXX_LOGGER
-#include "logger/log4cxxlogger.h"
-#endif
-#ifdef USE_STD_LOGGER
-#include "logger/std_logger.h"
-#endif
-
 #include "logger/logger_impl.h"
-
 #include "project.h"
+#include "utils/external_logger.h"
 
 int main() {
 #ifdef USE_LOG4CXX_LOGGER
@@ -23,10 +13,12 @@ int main() {
 #endif
 #ifdef USE_STD_LOGGER
   STDLogger logger_;
-  typedef Logger<STDLogger> LoggerType;
+  typedef LoggerImplementation<STDLogger> LoggerType;
 #endif
 
-  LoggerType::instance().Init(&logger_);  // move logger_ to Logger instance
+  LoggerType logger_impl_;
+  logger_impl_.Init(&logger_);
+  Logger::instance(&logger_impl_);  // move logger_ to Logger instance
 
   dev::Project p;
   return p.run();

@@ -1,5 +1,6 @@
 #pragma once
 #include "shared_lib/ishared_lib.h"
+#include "utils/ilogger.h"
 
 namespace dev {
 
@@ -9,6 +10,5 @@ class SharedLib : public ISharedLib {
   int library_function() override;
 };
 
-extern "C" ISharedLib* Create();
-
 }  // namespace dev
+extern "C" ISharedLib* Create(Logger* logger_instance);

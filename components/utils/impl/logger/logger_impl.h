@@ -25,7 +25,8 @@ class LogMessageLoopThread {
 };
 
 template <class ThirdPartyLogger>
-class LoggerImplementation : public Logger<ThirdPartyLogger> {
+class LoggerImplementation : public Logger,
+                             public LoggerInitializer<ThirdPartyLogger> {
  public:
   LoggerImplementation()
       : impl_(nullptr), loop_thread_([this](const LogMessage& log_message) {
@@ -35,20 +36,19 @@ class LoggerImplementation : public Logger<ThirdPartyLogger> {
   void Init(ThirdPartyLogger* impl) override {
     assert(impl_ == nullptr);
     impl_ = impl;
-    impl_->Init();
+    //    impl_->Init();
     loop_thread_.setHandler(
         [this](LogMessage message) { impl_->PushLog(message); });
   }
   void DeInit() override {
-    impl_->DeInit();
+    //    impl_->DeInit();
   }
   void Enable() {
-    impl_->Enable();
+    return impl_->Enable();
   }
 
   bool Enabled() override {
     return impl_->Enabled();
-    ;
   }
 
   void Disable() override {
@@ -66,10 +66,20 @@ class LoggerImplementation : public Logger<ThirdPartyLogger> {
 
   ThirdPartyLogger* impl_;
   LogMessageLoopThread<LogMessage> loop_thread_;
+  //  static LoggerImplementation<ThirdPartyLogger>* instance_;
 };
 
-template <typename ThirdPartyLogger>
-Logger<ThirdPartyLogger>& Logger<ThirdPartyLogger>::instance() {
-  static LoggerImplementation<ThirdPartyLogger> inst;
-  return inst;
+// template <class ThirdPartyLogger>
+// void Logger<ThirdPartyLogger>::init_singleton(
+//    Logger<ThirdPartyLogger>* instance) {
+//  LoggerImplementation<ThirdPartyLogger>::instance_ = instance;
+//}
+
+Logger& Logger::instance(Logger* pre_init) {
+  static Logger* instance_ = nullptr;
+  if (pre_init) {
+    assert(instance_ == nullptr);
+    instance_ = pre_init;
+  }
+  return *instance_;
 }

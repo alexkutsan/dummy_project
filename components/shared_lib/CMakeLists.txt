@@ -7,3 +7,9 @@ target_link_libraries(SharedLib UtilsLib )
 
 target_include_directories(SharedLib PUBLIC
                                      "impl")
+
+
+#add_executable(LibMain ${SOURCES})
+#target_link_libraries(LibMain SharedLib)
+#target_include_directories(LibMain PUBLIC
+#                                     "impl")

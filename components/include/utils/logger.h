@@ -1,4 +1,5 @@
 #pragma once
+#include <sstream>
 #include <string>
 #include "utils/ilogger.h"
 
@@ -32,13 +33,15 @@ typedef STDLogger ExternalLogger;
   do {                                                            \
     auto location = LOCATTION_INFO;                               \
     auto thread_id = std::this_thread::get_id();                  \
+    std::stringstream ss;                                         \
+    ss << logEvent;                                               \
     LogMessage message{logger_,                                   \
                        logLevel,                                  \
-                       logEvent,                                  \
+                       ss.str(),                                  \
                        std::chrono::high_resolution_clock::now(), \
                        location,                                  \
                        thread_id};                                \
-    Logger<ExternalLogger>::instance().PushLog(message);          \
+    Logger::instance().PushLog(message);                          \
   } while (false)
 
 #undef LOG4CXX_TRACE
