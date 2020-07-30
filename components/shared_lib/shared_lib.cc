@@ -8,7 +8,8 @@ namespace dev {
 CREATE_LOGGERPTR("Main");
 
 int SharedLib::library_function() {
-  LOG_WITH_LEVEL(LogLevel::TRACE, "Logger instance " << &Logger::instance());
+  LOG_WITH_LEVEL(LogLevel::TRACE,
+                 "Logger instance in shared lib " << &Logger::instance());
   return 0;
 }
 

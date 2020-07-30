@@ -34,25 +34,13 @@ class AttributeImpl<TimePoint> : public boost::log::attribute::impl {
  public:
   // The method generates a new attribute value
   boost::log::attribute_value get_value() {
-    //    std::stringstream ss;
-    //    ss << "0x" << std::hex <<value_;;
-    //    std::time_t t = std::chrono::system_clock::to_time_t(value_);
-    //    auto time = std::ctime(&t);
-
-    //    using namespace std::chrono;
-    //    auto ms = duration_cast<milliseconds>(value_.time_since_epoch());
-    //    auto s = duration_cast<seconds>(ms);
-    //    std::time_t t = s.count();
-    //    std::size_t fractional_seconds = ms.count() % 1000;
-    //    std::stringstream ss;
-    //    ss << std::asctime(&t);
     return boost::log::attributes::make_attribute_value(
         format_time_point(value_));
   }
   TimePoint value_;
 };
 
-class BoostLogger : public Logger<void> {
+class BoostLogger : public ThirdPartyLoggerInterface {
  public:
   BoostLogger();
 
