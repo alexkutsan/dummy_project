@@ -5,11 +5,11 @@
 int main() {
 #ifdef USE_LOG4CXX_LOGGER
   Log4CXXLogger logger_("log4cxx.properties");
-  typedef Logger<Log4CXXLogger> LoggerType;
+  typedef LoggerImplementation<Log4CXXLogger> LoggerType;
 #endif
 #ifdef USE_BOOST_LOGGER
   BoostLogger logger_;
-  typedef Logger<BoostLogger> LoggerType;
+  typedef LoggerImplementation<BoostLogger> LoggerType;
 #endif
 #ifdef USE_STD_LOGGER
   STDLogger logger_;

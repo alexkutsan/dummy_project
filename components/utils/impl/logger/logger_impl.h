@@ -36,7 +36,7 @@ class LoggerImplementation : public Logger,
   void Init(ThirdPartyLogger* impl) override {
     assert(impl_ == nullptr);
     impl_ = impl;
-    //    impl_->Init();
+    impl_->Init();
     loop_thread_.setHandler(
         [this](LogMessage message) { impl_->PushLog(message); });
   }
