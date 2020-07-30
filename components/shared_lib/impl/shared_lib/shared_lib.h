@@ -6,6 +6,9 @@ namespace dev {
 class SharedLib : public ISharedLib {
   // IProject interface
  public:
-  int library_function();
+  int library_function() override;
 };
+
+extern "C" ISharedLib* Create();
+
 }  // namespace dev

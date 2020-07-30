@@ -4,8 +4,6 @@
 #include "boost/log/trivial.hpp"
 #include "boost/log/utility/setup.hpp"
 
-// BOOST_LOG_ATTRIBUTE_KEYWORD(line_id, "LineID", unsigned int);
-
 BoostLogger::BoostLogger() {}
 
 template <typename ValueType>
