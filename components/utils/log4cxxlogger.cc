@@ -26,10 +26,15 @@ log4cxx::LevelPtr getLogLevel(LogLevel log_level) {
       assert(false);
   }
 }
-void Log4CXXLogger::PushLog(LogMessage<LocationInfo> log_message) {
+void Log4CXXLogger::PushLog(const LogMessage& log_message) {
   log4cxx::LoggerPtr logger = log4cxx::Logger::getLogger(log_message.logger_);
 
+  auto location_info = log_message.location_;
+  log4cxx::spi::LocationInfo log4cxx_location(
+      location_info.file_name_.c_str(),
+      location_info.function_info.c_str(),
+      location_info.line);
   logger->forcedLog(getLogLevel(log_message.log_level_),
                     log_message.log_event_,
-                    log_message.location_);
+                    log4cxx_location);
 }

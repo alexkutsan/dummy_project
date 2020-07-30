@@ -47,13 +47,13 @@ std::string suverity(LogLevel l) {
   return convert_map.at(l);
 }
 
-void STDLogger::PushLog(const STDLogger::LogMessageImpl& log_message) {
+void STDLogger::PushLog(const LogMessage& log_message) {
   if (enable_) {
     std::cout << "[" << suverity(log_message.log_level_) << "]"
               << "[" << log_message.logger_ << "]"
               << "[" << log_message.thread_id_ << "]"
               << "[" << time_to_str(log_message.timestamp_) << "]"
-              << "[" << log_message.location_ << "]"
+              << "[" << log_message.location_.file_name_ << "]"
               << " " << log_message.log_event_ << std::endl;
   }
 }

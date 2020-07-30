@@ -7,30 +7,33 @@
 enum class LogLevel { TRACE, DEBUG, INFO, WARNIGN, ERROR, FATAL };
 
 typedef std::chrono::high_resolution_clock::time_point TimePoint;
-template <typename LocationInfo>
+
+struct LocationInfo {
+  std::string file_name_;
+  std::string function_info;
+  int line;
+};
+
 struct LogMessage {
   std::string logger_;  // <- component_name
   LogLevel log_level_;
   std::string log_event_;
   TimePoint timestamp_;
-  //  std::string timestamp_;
   LocationInfo location_;
   std::thread::id thread_id_;
 };
 
-template <typename LocationInfo, class ThirdPartyLogger>
+template <class ThirdPartyLogger>
 class Logger {
  public:
-  typedef LogMessage<LocationInfo> LogMessageImpl;
-
   virtual void Init(ThirdPartyLogger* impl) = 0;
   virtual void DeInit() = 0;
   virtual void Enable() = 0;
   virtual bool Enabled() = 0;
   virtual void Disable() = 0;
   virtual void Flush() = 0;
-  virtual void PushLog(const LogMessageImpl& log_message) = 0;
-  static Logger<LocationInfo, ThirdPartyLogger>& instance();
+  virtual void PushLog(const LogMessage& log_message) = 0;
+  static Logger<ThirdPartyLogger>& instance();
 };
 
 #endif  // ILOGGER_H

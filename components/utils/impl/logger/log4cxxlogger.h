@@ -5,7 +5,6 @@
 
 class Log4CXXLogger {
  public:
-  typedef log4cxx::spi::LocationInfo LocationInfo;
   Log4CXXLogger(std::string filename);
   void Init();
   void DeInit() {}
@@ -15,7 +14,7 @@ class Log4CXXLogger {
   }
   void Disable() {}
   void Flush() {}
-  void PushLog(LogMessage<LocationInfo> log_message);
+  void PushLog(const LogMessage& log_message);
   std::string filename_;
 };
 

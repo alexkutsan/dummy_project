@@ -1,9 +1,8 @@
 #pragma once
 #include "utils/ilogger.h"
 
-class STDLogger : public Logger<std::string, void> {
+class STDLogger : public Logger<void> {
  public:
-  typedef std::string LocationInfo;
   STDLogger();
 
   void Init(void* unused = 0) override;
@@ -14,7 +13,7 @@ class STDLogger : public Logger<std::string, void> {
   }
   void Disable() override;
   void Flush() override;
-  void PushLog(const LogMessageImpl& log_message) override;
+  void PushLog(const LogMessage& log_message) override;
 
  private:
   bool enable_;

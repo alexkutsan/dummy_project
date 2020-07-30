@@ -24,13 +24,11 @@ class LogMessageLoopThread {
   std::function<void(T)> blocking_call_;
 };
 
-template <typename LocationInfo, class ThirdPartyLogger>
-class LoggerImplementation : public Logger<LocationInfo, ThirdPartyLogger> {
-  typedef LogMessage<LocationInfo> LogMessageImpl;
-
+template <class ThirdPartyLogger>
+class LoggerImplementation : public Logger<ThirdPartyLogger> {
  public:
   LoggerImplementation()
-      : impl_(nullptr), loop_thread_([this](LogMessageImpl log_message) {
+      : impl_(nullptr), loop_thread_([this](const LogMessage& log_message) {
         std::cerr << "logger not initialized" << std::endl;
       }) {}
 
@@ -39,7 +37,7 @@ class LoggerImplementation : public Logger<LocationInfo, ThirdPartyLogger> {
     impl_ = impl;
     impl_->Init();
     loop_thread_.setHandler(
-        [this](LogMessageImpl message) { impl_->PushLog(message); });
+        [this](LogMessage message) { impl_->PushLog(message); });
   }
   void DeInit() override {
     impl_->DeInit();
@@ -60,19 +58,18 @@ class LoggerImplementation : public Logger<LocationInfo, ThirdPartyLogger> {
     impl_->Flush();
   }
 
-  void PushLog(const LogMessageImpl& log_message) override {
+  void PushLog(const LogMessage& log_message) override {
     loop_thread_.Push(log_message);
     // Optional to use blocking call :
     //    impl_->Log(log_message);
   }
 
   ThirdPartyLogger* impl_;
-  LogMessageLoopThread<LogMessageImpl> loop_thread_;
+  LogMessageLoopThread<LogMessage> loop_thread_;
 };
 
-template <typename LocationInfo, typename ThirdPartyLogger>
-Logger<LocationInfo, ThirdPartyLogger>&
-Logger<LocationInfo, ThirdPartyLogger>::instance() {
-  static LoggerImplementation<LocationInfo, ThirdPartyLogger> inst;
+template <typename ThirdPartyLogger>
+Logger<ThirdPartyLogger>& Logger<ThirdPartyLogger>::instance() {
+  static LoggerImplementation<ThirdPartyLogger> inst;
   return inst;
 }

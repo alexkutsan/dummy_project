@@ -15,15 +15,15 @@
 int main() {
 #ifdef USE_LOG4CXX_LOGGER
   Log4CXXLogger logger_("log4cxx.properties");
-  typedef Logger<Log4CXXLogger::LocationInfo, Log4CXXLogger> LoggerType;
+  typedef Logger<Log4CXXLogger> LoggerType;
 #endif
 #ifdef USE_BOOST_LOGGER
   BoostLogger logger_;
-  typedef Logger<BoostLogger::LocationInfo, BoostLogger> LoggerType;
+  typedef Logger<BoostLogger> LoggerType;
 #endif
 #ifdef USE_STD_LOGGER
   STDLogger logger_;
-  typedef Logger<STDLogger::LocationInfo, STDLogger> LoggerType;
+  typedef Logger<STDLogger> LoggerType;
 #endif
 
   LoggerType::instance().Init(&logger_);  // move logger_ to Logger instance

@@ -39,9 +39,9 @@ void BoostLogger::Init(void* unused) {
   logging::core::get()->add_global_attribute(
       "ThreadID", Attribute<std::thread::id>(thread_id_attribute_impl_));
 
-  location_info_impl_ = new AttributeImpl<std::string>();
+  location_info_impl_ = new AttributeImpl<LocationInfo>();
   logging::core::get()->add_global_attribute(
-      "Location", Attribute<std::string>(location_info_impl_));
+      "Location", Attribute<LocationInfo>(location_info_impl_));
 
   boost::log::add_console_log(std::cout,
                               boost::log::keywords::format = COMMON_FMT,
@@ -60,7 +60,7 @@ void BoostLogger::Init(void* unused) {
       boost::log::keywords::auto_flush = true);
 }
 
-void BoostLogger::PushLog(const Logger::LogMessageImpl& log_message) {
+void BoostLogger::PushLog(const LogMessage& log_message) {
   // Output some simple log message
   location_info_impl_->value_ = log_message.location_;
   thread_id_attribute_impl_->value_ = log_message.thread_id_;

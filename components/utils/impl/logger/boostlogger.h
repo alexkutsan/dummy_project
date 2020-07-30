@@ -1,6 +1,6 @@
 #pragma once
+#include <boost/log/trivial.hpp>
 #include <sstream>
-#include "boost/log/trivial.hpp"
 #include "utils/ilogger.h"
 
 template <typename ValueType>
@@ -52,10 +52,8 @@ class AttributeImpl<TimePoint> : public boost::log::attribute::impl {
   TimePoint value_;
 };
 
-class BoostLogger : public Logger<std::string, void> {
+class BoostLogger : public Logger<void> {
  public:
-  typedef std::string LocationInfo;
-
   BoostLogger();
 
   void Init(void* unused = 0) override;
@@ -66,10 +64,10 @@ class BoostLogger : public Logger<std::string, void> {
   }
   void Disable() override {}
   void Flush() override {}
-  void PushLog(const LogMessageImpl& log_message) override;
+  void PushLog(const LogMessage& log_message) override;
 
  private:
   AttributeImpl<TimePoint>* time_stamp_impl_;
   AttributeImpl<std::thread::id>* thread_id_attribute_impl_;
-  AttributeImpl<std::string>* location_info_impl_;
+  AttributeImpl<LocationInfo>* location_info_impl_;
 };
