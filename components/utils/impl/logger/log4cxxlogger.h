@@ -6,7 +6,7 @@
 class Log4CXXLogger : public ThirdPartyLoggerInterface {
  public:
   Log4CXXLogger(std::string filename);
-  void Init(void* unused = 0);
+  void Init();
   void DeInit() {}
   void Enable() {}
   bool Enabled() {

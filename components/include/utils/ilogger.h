@@ -15,19 +15,12 @@ struct LocationInfo {
 };
 
 struct LogMessage {
-  std::string logger_;  // <- component_name
+  std::string component_;
   LogLevel log_level_;
   std::string log_event_;
   TimePoint timestamp_;
   LocationInfo location_;
   std::thread::id thread_id_;
-};
-
-template <class ThirdPartyLogger>
-class LoggerInitializer {
- public:
-  virtual void Init(ThirdPartyLogger* impl) = 0;
-  virtual void DeInit() = 0;
 };
 
 class Logger {
@@ -38,9 +31,18 @@ class Logger {
   virtual void Flush() = 0;
   virtual void PushLog(const LogMessage& log_message) = 0;
   static Logger& instance(Logger* pre_init = nullptr);
-  //  static void init_singleton(Logger<ThirdPartyLogger>* instance);
 };
 
-class ThirdPartyLoggerInterface : public Logger,
-                                  public LoggerInitializer<void> {};
+class ThirdPartyLoggerInterface : public Logger {
+ public:
+  virtual void Init() = 0;
+  virtual void DeInit() = 0;
+};
+
+class LoggerInitializer {
+ public:
+  virtual void Init(std::unique_ptr<ThirdPartyLoggerInterface>&& impl) = 0;
+  virtual void DeInit() = 0;
+};
+
 #endif  // ILOGGER_H

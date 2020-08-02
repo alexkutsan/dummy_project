@@ -44,7 +44,7 @@ class BoostLogger : public ThirdPartyLoggerInterface {
  public:
   BoostLogger();
 
-  void Init(void* unused = 0) override;
+  void Init() override;
   void DeInit() override {}
   void Enable() override {}
   bool Enabled() override {

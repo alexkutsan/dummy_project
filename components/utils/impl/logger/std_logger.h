@@ -5,7 +5,7 @@ class STDLogger : public ThirdPartyLoggerInterface {
  public:
   STDLogger();
 
-  void Init(void* unused = 0) override;
+  void Init() override;
   void DeInit() override;
   void Enable() override;
   bool Enabled() override {

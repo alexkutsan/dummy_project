@@ -24,24 +24,23 @@ class LogMessageLoopThread {
   std::function<void(T)> blocking_call_;
 };
 
-template <class ThirdPartyLogger>
-class LoggerImplementation : public Logger,
-                             public LoggerInitializer<ThirdPartyLogger> {
+template <bool use_message_loop_thread = true>
+class LoggerImplementation : public Logger, public LoggerInitializer {
  public:
   LoggerImplementation()
       : impl_(nullptr), loop_thread_([this](const LogMessage& log_message) {
         std::cerr << "logger not initialized" << std::endl;
       }) {}
 
-  void Init(ThirdPartyLogger* impl) override {
-    assert(impl_ == nullptr);
-    impl_ = impl;
+  void Init(std::unique_ptr<ThirdPartyLoggerInterface>&& impl) override {
+    assert(impl_.get() == nullptr);
+    impl_ = std::move(impl);
     impl_->Init();
     loop_thread_.setHandler(
         [this](LogMessage message) { impl_->PushLog(message); });
   }
   void DeInit() override {
-    //    impl_->DeInit();
+    impl_->DeInit();
   }
   void Enable() {
     return impl_->Enable();
@@ -59,24 +58,19 @@ class LoggerImplementation : public Logger,
   }
 
   void PushLog(const LogMessage& log_message) override {
-    loop_thread_.Push(log_message);
-    // Optional to use blocking call :
-    //    impl_->Log(log_message);
+    if (use_message_loop_thread) {
+      loop_thread_.Push(log_message);
+    } else {
+      impl_->PushLog(log_message);
+    }
   }
 
-  ThirdPartyLogger* impl_;
+  std::unique_ptr<ThirdPartyLoggerInterface> impl_;
   LogMessageLoopThread<LogMessage> loop_thread_;
-  //  static LoggerImplementation<ThirdPartyLogger>* instance_;
 };
 
-// template <class ThirdPartyLogger>
-// void Logger<ThirdPartyLogger>::init_singleton(
-//    Logger<ThirdPartyLogger>* instance) {
-//  LoggerImplementation<ThirdPartyLogger>::instance_ = instance;
-//}
-
 Logger& Logger::instance(Logger* pre_init) {
-  static Logger* instance_ = nullptr;
+  static Logger* instance_;
   if (pre_init) {
     assert(instance_ == nullptr);
     instance_ = pre_init;

@@ -8,22 +8,6 @@
     "file", "FUNC", __LINE__ \
   }
 
-//#ifdef USE_LOG4CXX_LOGGER
-//#include <log4cxx/logger.h>
-// class Log4CXXLogger;
-// typedef Log4CXXLogger ExternalLogger;
-//#endif
-
-//#ifdef USE_BOOST_LOGGER
-// class BoostLogger;
-// typedef BoostLogger ExternalLogger;
-//#endif
-
-//#ifdef USE_STD_LOGGER
-// class STDLogger;
-// typedef STDLogger ExternalLogger;
-//#endif
-
 #define CREATE_LOGGERPTR(logger_name)      \
   namespace {                              \
   static std::string logger_(logger_name); \

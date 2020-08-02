@@ -4,7 +4,7 @@
 
 Log4CXXLogger::Log4CXXLogger(std::string filename) : filename_(filename) {}
 
-void Log4CXXLogger::Init(void* unused) {
+void Log4CXXLogger::Init() {
   log4cxx::PropertyConfigurator::configure(filename_);
 }
 

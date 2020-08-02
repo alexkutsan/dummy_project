@@ -4,7 +4,7 @@
 
 STDLogger::STDLogger() : enable_(true) {}
 
-void STDLogger::Init(void* unused) {
+void STDLogger::Init() {
   std::cout << "std:logger init" << std::endl;
 }
 
@@ -50,7 +50,7 @@ std::string suverity(LogLevel l) {
 void STDLogger::PushLog(const LogMessage& log_message) {
   if (enable_) {
     std::cout << "[" << suverity(log_message.log_level_) << "]"
-              << "[" << log_message.logger_ << "]"
+              << "[" << log_message.component_ << "]"
               << "[" << log_message.thread_id_ << "]"
               << "[" << time_to_str(log_message.timestamp_) << "]"
               << "[" << log_message.location_.file_name_ << "]"

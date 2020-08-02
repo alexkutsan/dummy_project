@@ -15,7 +15,7 @@ class Attribute : public boost::log::attribute {
       : boost::log::attribute(source.as<AttributeImpl<ValueType> >()) {}
 };
 
-void BoostLogger::Init(void* unused) {
+void BoostLogger::Init() {
   namespace logging = boost::log;
   namespace src = boost::log::sources;
   namespace sinks = boost::log::sinks;
