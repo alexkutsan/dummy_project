@@ -7,7 +7,7 @@ int main() {
   auto logger_ = std::make_unique<Log4CXXLogger>("log4cxx.properties");
 #endif
 #ifdef USE_BOOST_LOGGER
-  auto logger_ = std::make_unique<BoostLogger>();
+//  auto logger_ = std::make_unique<BoostLogger>();
 #endif
 #ifdef USE_STD_LOGGER
   auto logger_ = std::make_unique<STDLogger>();
